@@ -1,18 +1,26 @@
-import { IGitService, GitService } from './services/git'
-import { HiveService } from './services/hive'
-import { SoilService } from './services/soil'
-import { ConfigService, IConfigService } from './services/config'
-import { httpClient, IHttpClient } from './components/http-client'
-import { ITanajuraService, TanajuraService } from './services/tanajura'
-import { ConfigServerService } from './services/config-server'
-import { UIService, IUIService } from './services/ui'
-import { LocalDB } from './services/db'
+import {
+  IGitService,
+  GitService,
+  HiveService,
+  SoilService,
+  ConfigService,
+  IConfigService,
+  ITanajuraService,
+  ConfigServerService,
+  UIService,
+  IUIService,
+  LocalDB,
+  StingerService,
+  IFilesService,
+  TanajuraService,
+  FilesService,
+  httpClient,
+  IHttpClient,
+} from '@formicarium/common'
 import * as low from 'lowdb'
 import * as FileAsync from 'lowdb/adapters/FileAsync'
 import * as path from 'path'
 import * as os from 'os'
-import { StingerService } from './services/stinger'
-import { IFilesService, FilesService } from './services/files-service'
 
 export interface ISystem {
   configService: IConfigService
@@ -42,7 +50,7 @@ export const getSystem = async (): Promise<ISystem> => {
   const stingerService = new StingerService(httpClient, localDB)
   const filesService = new FilesService()
   const uiService = new UIService()
-  
+
   return {
     configService,
     soilService,

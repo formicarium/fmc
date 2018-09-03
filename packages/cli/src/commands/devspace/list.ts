@@ -1,8 +1,6 @@
 import { flags as Flags } from '@oclif/command'
 import * as Table from 'tty-table'
-import * as R from 'ramda'
 import FMCCommand from '../../FMCCommand'
-
 export default class DevspaceList extends FMCCommand {
   public static description = 'List availables Devspaces'
 

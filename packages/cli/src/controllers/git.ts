@@ -1,11 +1,6 @@
 import { areRemotesEqual } from './../logic/git'
-import { RepoAlreadyExists } from './../errors/tanajura'
-import { ITanajuraService } from './../services/tanajura'
-import { IGitService } from '../services/git'
 import { isTanajuraAlreadyInRemotes, getTanajuraRemoteName, getTanajuraGitUrl } from '../logic/git'
-import { NotGitRepo, RemoteNotRegistered } from '../errors/git'
-import { IConfigService } from '../services/config'
-import { IUIService } from '../services/ui'
+import { IUIService, ITanajuraService, IGitService, IConfigService, RemoteNotRegistered, RepoAlreadyExists } from '@formicarium/common'
 
 export const shouldDeleteTanajuraRepo = async (serviceName: string, ui: IUIService): Promise<boolean> => {
   return ui.promptBoolean(`${serviceName} is already on remote git server, delete it ? (y/n)`)

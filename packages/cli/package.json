@@ -1,5 +1,5 @@
 {
-  "name": "fmc",
+  "name": "@formicarium/cli",
   "description": "A CLI to operate on Formicarium",
   "version": "0.0.1",
   "author": "Rafael Ribeiro @rafaelcorreiapoli",
