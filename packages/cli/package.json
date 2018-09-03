@@ -8,7 +8,6 @@
   },
   "bugs": "https://github.com/formicarium/formicarium-cli/issues",
   "dependencies": {
-    "@blueprintjs/core": "^3.2.0",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^2",
