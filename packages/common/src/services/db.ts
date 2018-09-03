@@ -31,7 +31,7 @@ export class LocalDB {
     }).write()
   }
 
-  private startDb = () => {
+  public startDb = () => {
     this.db.defaults({
       devspaces: {},
     }).write()

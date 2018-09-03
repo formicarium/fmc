@@ -29,12 +29,10 @@ const getStatusCode = R.pathOr(0, ['response', 'data', 'statusCode'])
 export class TanajuraService implements ITanajuraService {
   private httpClient: IHttpClient
   private apiUrl: string
-  private gitUrl: string
 
-  constructor(apiUrl: string, gitUrl: string, httpClientInjected: IHttpClient) {
+  constructor(apiUrl: string, httpClientInjected: IHttpClient) {
     this.httpClient = httpClientInjected
     this.apiUrl = apiUrl
-    this.gitUrl = gitUrl
   }
 
   public createRepo(name: string): Promise<ICreateRepoResponse> {

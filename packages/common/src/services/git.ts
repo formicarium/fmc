@@ -56,12 +56,11 @@ export class GitService {
   }
 
   private getCommitMessage = () => moment().format('DD/MM/YYYY HH:mm:ss')
-  private getOriginalGitRepoPath = (basePath: string) => path.join(basePath, GitService.ORIGINAL_GIT_FOLDER)
+
   private getMirrorGitRepoPath = (basePath: string) => path.join(basePath, GitService.MIRROR_GIT_FOLDER)
   private getExcludeFilePath = (basePath: string, gitFolder: string) => path.join(basePath, gitFolder, 'info', 'exclude')
 
   public gitAddAll = async (basePath: string): Promise<void> => {
-    const x = this.getGit(basePath)
     return this.getGit(basePath).add(['.'])
   }
 

@@ -1,5 +1,5 @@
-import { IHttpClient } from './../../cli/src/components/http-client.mock';
 import { AxiosRequestConfig, AxiosPromise } from 'axios'
+import { IHttpClient } from './http-client';
 
 type Handler = (config: AxiosRequestConfig) => AxiosPromise<any>
 

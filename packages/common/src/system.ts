@@ -1,26 +1,9 @@
-import {
-  IGitService,
-  GitService,
-  HiveService,
-  SoilService,
-  ConfigService,
-  IConfigService,
-  ITanajuraService,
-  ConfigServerService,
-  UIService,
-  IUIService,
-  LocalDB,
-  StingerService,
-  IFilesService,
-  TanajuraService,
-  FilesService,
-  httpClient,
-  IHttpClient,
-} from '@formicarium/common'
 import * as low from 'lowdb'
 import * as FileAsync from 'lowdb/adapters/FileAsync'
 import * as path from 'path'
 import * as os from 'os'
+import { IConfigService, HiveService, SoilService, IGitService, ITanajuraService, ConfigServerService, IUIService, LocalDB, StingerService, IFilesService, ConfigService, GitService, TanajuraService, FilesService, UIService } from './services';
+import { IHttpClient, httpClient } from './components';
 
 export interface ISystem {
   configService: IConfigService
@@ -38,11 +21,11 @@ export interface ISystem {
 
 export const getSystem = async (): Promise<ISystem> => {
   const configService = new ConfigService()
-  const { devspace: { hiveApiUrl, tanajuraApiUrl, tanajuraGitUrl, configServerUrl }, soilUrl } = await configService.readConfig()
+  const { devspace: { hiveApiUrl, tanajuraApiUrl, configServerUrl }, soilUrl } = await configService.readConfig()
   const hiveService = new HiveService(hiveApiUrl, httpClient)
   const soilService = new SoilService(soilUrl, httpClient)
   const gitService = new GitService()
-  const tanajuraService = new TanajuraService(tanajuraApiUrl, tanajuraGitUrl, httpClient)
+  const tanajuraService = new TanajuraService(tanajuraApiUrl, httpClient)
   const configServerService = new ConfigServerService(configServerUrl, httpClient)
   const dbPath = path.resolve(os.homedir(), '.fmc/db.json')
   const db = await low(new FileAsync(dbPath))

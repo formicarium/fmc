@@ -1,6 +1,7 @@
 
 {
   "compilerOptions": {
+    "rootDir": "src",
     "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": true,
@@ -15,17 +16,13 @@
       "es2017",
       "dom",
       "esnext.asynciterable"
-    ],
-    "paths": {
-      "@formicarium/*": ["./packages/*/src"]
-    }
+    ]
   },
   "include": [
-    "src/**/*",
-    "@formicarium/*"
+    "src/**/*"
   ],
   "exclude": [
-    ".git"
+    "node_modules"
   ],
   "awesomeTypescriptLoaderOptions": {
     "errorsAsWarnings": true,
