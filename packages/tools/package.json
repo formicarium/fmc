@@ -1,0 +1,20 @@
+{
+  "name": "tools",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/jest": "^23.3.1",
+    "electron": "^2.0.8",
+    "express": "^4.16.3",
+    "jest": "^23.5.0",
+    "nodemon": "^1.18.4",
+    "parcel-bundler": "^1.9.7",
+    "ts-jest": "^23.1.4",
+    "ts-node": "^7.0.1",
+    "ts-node-dev": "^1.0.0-pre.26",
+    "tsconfig-paths": "^3.5.0",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.3"
+  }
+}
