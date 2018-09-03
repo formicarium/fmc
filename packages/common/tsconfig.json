@@ -1,16 +1,14 @@
-
 {
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "./dist/",
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
+    "outDir": "dist",
     "module": "commonjs",
-    "target": "es5",
-    "jsx": "react",
     "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "declaration": true,
     "lib": [
       "es2015",
       "es2017",
@@ -19,17 +17,10 @@
     ]
   },
   "include": [
-    "src/**/*"
+    "./src/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
-  ],
-  "awesomeTypescriptLoaderOptions": {
-    "errorsAsWarnings": true,
-    "useCache": true,
-    "forceIsolatedModules": true,
-    "reportFiles": [
-      "src/**/*.{ts,tsx}"
-    ]
-  }
+    "node_modules",
+    "dist"
+  ]
 }
