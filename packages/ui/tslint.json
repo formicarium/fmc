@@ -1,0 +1,23 @@
+{
+  "extends": "tslint:latest",
+  "rules": {
+    "curly": true,
+    "object-literal-sort-keys": false,
+    "ordered-imports": [true, {"import-sources-order": "any", "named-imports-order": "any"}],
+    "quotemark": [true, "single", "avoid-escape"],
+    "max-classes-per-file": [false],
+    "max-line-length": [false],
+    "eofline": true,
+    "member-ordering": [false],
+    "no-unused-variable": [true, {"ignore-pattern": "^React$"}],
+    "semicolon": false,
+    "no-object-literal-type-assertion": false,
+    "no-console": [false, "log", "warning"],
+    "no-submodule-imports": false
+  },
+  "jsRules": {
+    "curly": true,
+    "quotemark": [true, "single", "avoid-escape"]
+  },
+  "rulesDirectory": []
+}
