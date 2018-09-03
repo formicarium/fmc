@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "frontend-monorepo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "lerna": "^3.2.1"
+  }
+}
