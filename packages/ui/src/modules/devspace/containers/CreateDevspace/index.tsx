@@ -1,9 +1,11 @@
 import React from 'react'
-import { CreateDevspaceForm } from '../../components/CreateDevspaceForm';
+import { CreateDevspaceForm, IValues } from '../../components/CreateDevspaceForm';
+import { sleep } from 'common';
 
-export class CreateDevspace extends React.Component {
-  private handleSubmit = () => {
-
+export class CreateDevspaceContainer extends React.Component {
+  private handleSubmit = async (values: IValues) => {
+    await sleep(2500)
+    console.log(values)
   }
   public render() {
     return (

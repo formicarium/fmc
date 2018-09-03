@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/rafa93br/.nvm/versions/node/v10.8.0/bin/node /usr/local/Cellar/yarn/1.9.4/libexec/bin/yarn.js add @formicarium/common
+  /Users/rafa93br/.nvm/versions/node/v10.8.0/bin/node /usr/local/Cellar/yarn/1.9.4/libexec/bin/yarn.js add -D @types/final-form @types/react-final-form
 
 PATH: 
   /Users/rafa93br/dev/nu/ios-cli:/Users/rafa93br/.rbenv/shims:/Users/rafa93br/dev/nu/nucli:/Users/rafa93br/dev/nu/nudev:/Users/rafa93br/.nvm/versions/node/v10.8.0/bin:/Users/rafa93br/bin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/rafa93br/Library/Python/3.6/bin:/Users/rafa93br/dev/nu/nucli:/Users/rafa93br/Library/Android/sdk/platform-tools:/Users/rafa93br/Library/Android/sdk/tools:/Users/rafa93br/go-workspace/bin:/usr/local/opt/go/libexec/bin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@formicarium%2fcommon: Not found
+  Error: https://registry.yarnpkg.com/@types%2ffinal-form: Not found
       at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:64202:18)
       at Request.self.callback (/usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:137468:22)
       at Request.emit (events.js:182:13)
@@ -28,9 +28,10 @@ Trace:
 
 npm manifest: 
   {
-    "name": "@formicarium/ui",
+    "name": "ui",
     "version": "1.0.0",
     "main": "electron/main.js",
+    "source": true,
     "license": "MIT",
     "dependencies": {
       "apollo-boost": "^0.1.15",
@@ -41,6 +42,7 @@ npm manifest:
       "apollo-link-error": "^1.1.0",
       "apollo-link-http": "^1.5.4",
       "apollo-link-state": "^0.4.1",
+      "final-form": "^4.10.0",
       "graphql": "^0.13.2",
       "graphql-tag": "^2.9.2",
       "lodash": "^4.17.10",
@@ -49,6 +51,7 @@ npm manifest:
       "react": "^16.4.2",
       "react-apollo": "^2.1.11",
       "react-dom": "^16.4.2",
+      "react-final-form": "^3.6.5",
       "react-graph-vis": "^1.0.2",
       "react-key-handler": "^1.2.0-beta.2",
       "react-router": "^4.3.1",
@@ -69,6 +72,7 @@ npm manifest:
       "test": "jest"
     },
     "devDependencies": {
+      "@types/history": "^4.7.0",
       "@types/lodash": "^4.14.116",
       "@types/moment": "^2.13.0",
       "@types/ramda": "^0.25.37",
@@ -877,7 +881,7 @@ Lockfile:
     version "0.13.4"
     resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.13.4.tgz#55ae9c29f0fd6b85ee536f5c72b4769d5c5e06b1"
   
-  "@types/history@*":
+  "@types/history@*", "@types/history@^4.7.0":
     version "4.7.0"
     resolved "https://registry.yarnpkg.com/@types/history/-/history-4.7.0.tgz#2fac51050c68f7d6f96c5aafc631132522f4aa3f"
   
@@ -4087,6 +4091,10 @@ Lockfile:
       is-number "^3.0.0"
       repeat-string "^1.6.1"
       to-regex-range "^2.1.0"
+  
+  final-form@^4.10.0:
+    version "4.10.0"
+    resolved "https://registry.yarnpkg.com/final-form/-/final-form-4.10.0.tgz#6179bca7676925202510e9877eb1ad2ad1cd3460"
   
   finalhandler@1.1.1:
     version "1.1.1"
@@ -8017,6 +8025,10 @@ Lockfile:
       loose-envify "^1.1.0"
       object-assign "^4.1.1"
       prop-types "^15.6.0"
+  
+  react-final-form@^3.6.5:
+    version "3.6.5"
+    resolved "https://registry.yarnpkg.com/react-final-form/-/react-final-form-3.6.5.tgz#191324bc686b20e9e49c929a79949f34b38ba8e5"
   
   react-graph-vis@^1.0.2:
     version "1.0.2"
