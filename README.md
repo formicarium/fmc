@@ -1,8 +1,12 @@
 <h1 align="center">
-  <img src="http://www.infantv.com.br/infantv/wp-content/uploads/2016/07/antom2.jpg" height="300"/>
+  <img src="http://www.infantv.com.br/infantv/wp-content/uploads/2016/07/antom2.jpg" />
   <br/>
-  Formicarium frontend monorepo
+  Formicarium
 </h1>
+
+- CLI
+- Electron UI
+- Common
 
 # Setup
 On the project root:
