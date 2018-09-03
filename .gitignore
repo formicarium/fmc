@@ -3,3 +3,4 @@ dist/
 .cache/
 build/
 build-electron/
+deprecate/

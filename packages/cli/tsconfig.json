@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "sourceMap": true,
+    "module": "commonjs",
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./lib",
+    "rootDirs": [
+      "./src"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "*": ["./*"]
+    },
+    "strict": true,
+    "target": "es2017",
+    "jsx": "react",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "lib": [
+      "esnext",
+      "dom"
+    ]
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "mancini",
+  "build-tool": "lein",
+  "local": true,
+  "environment-variables": {
+    "NU_ENV_CONFIG": "{\"environment\": \"local\", \"zk_primary\": \"zookeeper\"}",
+    "AWS_ACCESS_KEY_ID": "-",
+    "AWS_SECRET_ACCESS_KEY": "-"
+  },
+  "ports": [{
+    "port": 8654,
+    "name": "default"
+  }, {
+    "port": 35000,
+    "type": "tcp",
+    "name": "repl"
+  }]
+}
