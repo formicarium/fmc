@@ -1,0 +1,18 @@
+#!/bin/bash
+
+NAMESPACE="$1"
+POD_NAME="$2"
+POD_FOLDER="$3"
+LOCAL_FOLDER="$4"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
+while true; do
+  FILENAME=$(watchman-wait "$LOCAL_FOLDER" --relative "$LOCAL_FOLDER")
+  echo "$FILENAME changed"
+  RESULT=$?
+  if [[ $RESULT -ne 0 ]]; then
+    break
+  fi
+  sleep 0.5
+  "$DIR/cp" "$NAMESPACE" "$POD_NAME" "$POD_FOLDER" "$LOCAL_FOLDER" "$FILENAME"
+done
