@@ -8,6 +8,7 @@ export interface IPromiseState<T> {
 }
 
 type RetryFunction = () => void
+type PatchData<T> = (data: T) => void
 
 export interface IErrorComponentProps {
   error: Error
@@ -18,7 +19,7 @@ export interface IPromiseManagerProps<T> {
   promise: () => Promise<T>
   LoadingComponent: React.ComponentType
   ErrorComponent: React.ComponentType<IErrorComponentProps>
-  children: (promiseState: IPromiseState<T>, retry: RetryFunction) => JSX.Element
+  children: (promiseState: IPromiseState<T>, retry: RetryFunction, patchData: PatchData<T>) => JSX.Element
 }
 
 export class PromiseManager<T> extends React.Component<IPromiseManagerProps<T>, IPromiseState<T>> {
@@ -61,6 +62,9 @@ export class PromiseManager<T> extends React.Component<IPromiseManagerProps<T>, 
     this.dispatchPromise()
   }
 
+  private patchData = (data: T) => this.setState({
+    data,
+  })
   public render() {
     const {
       loading,
@@ -87,7 +91,7 @@ export class PromiseManager<T> extends React.Component<IPromiseManagerProps<T>, 
     }
 
     return (
-      this.props.children(this.state, this.retry)
+      this.props.children(this.state, this.retry, this.patchData)
     )
   }
 }

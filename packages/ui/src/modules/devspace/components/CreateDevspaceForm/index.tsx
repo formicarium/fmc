@@ -1,7 +1,6 @@
 import React from 'react'
 import { Form as SemanticForm, Button, Segment } from 'semantic-ui-react';
 import { Form, Field } from 'react-final-form'
-import { PromiseButton } from '~/modules/common/components/PromiseButton';
 
 const validate = () => {
   return {}
@@ -22,9 +21,9 @@ export const CreateDevspaceForm: React.SFC<ICreateDevspaceFormProps> = ({
     <Form
       onSubmit={onSubmit}
       validate={validate}
-      render={({handleSubmit, submitting, invalid}) => {
+      render={({handleSubmit, submitting, invalid, form}) => {
         return (
-          <SemanticForm>
+          <SemanticForm onSubmit={() => handleSubmit().then(form.reset)}>
             <SemanticForm.Field disabled={submitting}>
               <label>Name</label>
               <Field
@@ -34,12 +33,14 @@ export const CreateDevspaceForm: React.SFC<ICreateDevspaceFormProps> = ({
               />
             </SemanticForm.Field>
             <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-              <PromiseButton
-                onClick={(e: any) => handleSubmit(e)}
+              <Button
+                type='submit'
                 color='purple'
-                basic>
+                loading={submitting}
+                disabled={submitting || invalid}
+                basic >
                 Submit
-              </PromiseButton>
+              </Button>
             </div>
           </SemanticForm>
         )

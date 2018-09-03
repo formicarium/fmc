@@ -38,7 +38,7 @@ export class PromiseButton extends React.Component<ButtonProps, IPromiseButtonSt
     }
   }
 
-  private isDisabled = () => this.state.promiseState === PromiseState.LOADING
+  private isDisabled = () => this.state.promiseState === PromiseState.LOADING || this.props.disabled
   private isLoading = () => this.state.promiseState === PromiseState.LOADING
   private getColor = (): SemanticCOLORS => {
     switch (this.state.promiseState) {

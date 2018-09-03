@@ -7,12 +7,14 @@ export interface IDevspaceListProps {
   devspaces: IDevspace[]
   onDeleteDevspace: (devspace: IDevspace) => Promise<void>
   onUseDevspace: (devspace: IDevspace) => Promise<void>
+  selectedDevspaceName: string
 }
 
 export const DevspaceList: React.SFC<IDevspaceListProps> = ({
   devspaces,
   onDeleteDevspace,
   onUseDevspace,
+  selectedDevspaceName,
 }) => (
   <Table celled>
     <Table.Header>
@@ -24,12 +26,12 @@ export const DevspaceList: React.SFC<IDevspaceListProps> = ({
     </Table.Header>
     <Table.Body>
       {devspaces && devspaces.map((devspace) => (
-        <Table.Row key={devspace.name}>
+        <Table.Row key={devspace.name} active={devspace.name === selectedDevspaceName}>
           <Table.Cell width={12}>{devspace.name}</Table.Cell>
           <Table.Cell width={2} textAlign='center'>
             <PromiseButton
-              basic={devspace.name !== 'devspcae 1'}
-              disabled={devspace.name === 'devspcae 1'}
+              basic
+              disabled={devspace.name === selectedDevspaceName}
               color='purple'
               onClick={() => onUseDevspace(devspace)}
             >
@@ -37,9 +39,9 @@ export const DevspaceList: React.SFC<IDevspaceListProps> = ({
             </PromiseButton>
           </Table.Cell>
           <Table.Cell width={2} textAlign='center'>
-            <Button color='red' onClick={() => onDeleteDevspace(devspace)}>
+            <PromiseButton color='red' onClick={() => onDeleteDevspace(devspace)}>
               Delete
-            </Button>
+            </PromiseButton>
           </Table.Cell>
         </Table.Row>
       ))}

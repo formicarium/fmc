@@ -6,6 +6,7 @@ import { SegmentHeader } from '../../../common/components/SegmentHeader';
 import { PromiseManager, IErrorComponentProps } from '~/modules/common/render-props/PromiseManager';
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { sleep, devspaceToDevspaceConfig } from 'common'
+import { toast, ToastType } from 'react-toastify';
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -46,18 +47,51 @@ export const DevspacesPage: React.SFC = () => (
     <WithFMCSystem>
       {(system) => (
         <PromiseManager
-          promise={() => system.soilService.getDevspaces()}
+          promise={() => Promise.all([system.soilService.getDevspaces(), system.configService.readConfig()])}
           LoadingComponent={DisplayLoader}
           ErrorComponent={DisplayError}>
-          {(promiseState) => (
+          {({ data: [devspaces, config]}, refetch, patchData) => (
             <DevspaceList
-              devspaces={promiseState.data}
-              onDeleteDevspace={() => {
-                // impl
+              devspaces={devspaces}
+              selectedDevspaceName={config.devspace.name}
+              onDeleteDevspace={async (devspace) => {
+                try {
+                  await system.soilService.deleteDevspace(devspace.name)
+                  toast('Success', {
+                    type: 'success' as ToastType,
+                  })
+                  patchData([
+                    devspaces.filter((dev) => dev.name !== devspace.name),
+                    config,
+                  ])
+                } catch (err) {
+                  toast('Error', {
+                    type: 'error' as ToastType,
+                  })
+                }
               }}
               onUseDevspace={async (devspace) => {
                 const devspaceConfig = devspaceToDevspaceConfig(devspace)
-                await system.configService.setDevspaceConfig(devspaceConfig)
+                try {
+                  await system.configService.setDevspaceConfig(devspaceConfig)
+                  patchData([
+                    devspaces,
+                    {
+                      ...config,
+                      devspace: {
+                        ...config.devspace,
+                        name: devspace.name,
+                      },
+                    },
+                  ])
+                  toast('Success', {
+                    type: 'success' as ToastType,
+                  })
+                } catch (err) {
+                  toast('Error', {
+                    type: 'error' as ToastType,
+                  })
+                }
               }}
             />
           )}

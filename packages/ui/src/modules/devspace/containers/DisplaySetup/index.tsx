@@ -7,19 +7,11 @@ import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { ISystem, IApplicationDefinition } from 'common';
 // import { ApplicationsList } from '~/modules/application/components/ApplicationsList';
 
-import { toast, ToastType } from 'react-toastify';
-
 export class DisplaySetupContainer extends React.Component {
 
   private readSetupFile = (system: ISystem) => () => {
     const setupFile = path.resolve(os.homedir(), '.fmc/setup.json')
     return system.filesService.safelyReadJSON<IApplicationDefinition[]>(setupFile)
-  }
-
-  public componentDidMount() {
-    toast('🚀 Devspace created!', {
-      type: 'success' as ToastType,
-    })
   }
 
   public render() {
@@ -39,7 +31,6 @@ export class DisplaySetupContainer extends React.Component {
               // <ApplicationsList
               //   applications={data}
               // />
-
             )}
           </PromiseManager>
         )}
