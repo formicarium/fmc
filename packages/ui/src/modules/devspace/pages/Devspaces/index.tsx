@@ -1,19 +1,37 @@
 import React from 'react'
-import { Button, Icon, Segment } from 'semantic-ui-react';
+import { Button, Icon, Segment, Loader, Dimmer } from 'semantic-ui-react';
 import { DevspaceList } from '../../components/DevspaceList';
 import styled from 'styled-components';
 import { SegmentHeader } from '../../../common/components/SegmentHeader';
-
-const DEVSPACES = [{
-  name: 'devspcae 1',
-}, {
-  name: 'devspcae 2',
-}]
+import { PromiseManager, IErrorComponentProps } from '~/modules/common/render-props/PromiseManager';
+import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
+import { sleep, devspaceToDevspaceConfig } from 'common'
 
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
 `
+
+const DisplayError: React.SFC<IErrorComponentProps> = ({
+  error,
+  retry,
+}) => (
+  <div>
+    {error.toString()}
+    <Button
+      onClick={retry}
+    >
+      Tentar novamente
+    </Button>
+  </div>
+)
+
+const DisplayLoader: React.SFC = () => (
+  <Dimmer page active>
+    <Loader indeterminate>Loading...</Loader>
+  </Dimmer>
+)
+
 export const DevspacesPage: React.SFC = () => (
   <Segment>
     <SegmentHeader title='Devspaces' icon='list' />
@@ -25,14 +43,26 @@ export const DevspacesPage: React.SFC = () => (
       </Button>
     </ButtonWrapper>
 
-    <DevspaceList
-      devspaces={DEVSPACES}
-      onDeleteDevspace={() => {
-        // impl
-      }}
-      onUseDevspace={() => {
-        // impl
-      }}
-    />
+    <WithFMCSystem>
+      {(system) => (
+        <PromiseManager
+          promise={() => system.soilService.getDevspaces()}
+          LoadingComponent={DisplayLoader}
+          ErrorComponent={DisplayError}>
+          {(promiseState) => (
+            <DevspaceList
+              devspaces={promiseState.data}
+              onDeleteDevspace={() => {
+                // impl
+              }}
+              onUseDevspace={async (devspace) => {
+                const devspaceConfig = devspaceToDevspaceConfig(devspace)
+                await system.configService.setDevspaceConfig(devspaceConfig)
+              }}
+            />
+          )}
+        </PromiseManager>
+      )}
+    </WithFMCSystem>
   </Segment>
 )

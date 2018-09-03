@@ -1,6 +1,6 @@
 import { makeExecutableSchema } from 'graphql-tools'
 import { TOP_LEVEL_DOMAIN } from '../const'
-import { GraphQLClientMock } from '@formicarium/common';
+import { GraphQLClientMock } from 'common'
 
 const typeDefs = `
 type Repo {

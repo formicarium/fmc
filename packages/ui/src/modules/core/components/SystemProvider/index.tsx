@@ -1,5 +1,5 @@
 import React from 'react'
-import { Nullable, Subtract, ISystem } from '@formicarium/common'
+import { Nullable, Subtract, ISystem } from 'common'
 
 export const SystemContext = React.createContext<any>(null)
 
@@ -33,5 +33,19 @@ export const withSystem = <P extends ISystemProps>(WrappedComponent: React.Compo
         </SystemContext.Consumer>
       )
     }
+  }
+}
+
+interface IWithSystemProps<T> {
+  children: (system: T) => JSX.Element
+}
+
+export class WithSystem<T> extends React.Component<IWithSystemProps<T>> {
+  public render() {
+    return (
+      <SystemContext.Consumer>
+        {this.props.children}
+      </SystemContext.Consumer>
+    )
   }
 }

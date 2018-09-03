@@ -1,7 +1,7 @@
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
 import chalk from 'chalk'
-import { devspaceToDevspaceConfig } from '@formicarium/common'
+import { devspaceToDevspaceConfig } from 'common'
 
 export default class DevspaceUse extends FMCCommand {
   public static description = 'Configures to use one Devspace context'

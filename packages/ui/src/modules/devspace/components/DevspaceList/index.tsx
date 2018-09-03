@@ -1,9 +1,6 @@
 import React from 'react'
 import { Table, Button, Icon } from 'semantic-ui-react';
-
-export interface IDevspace {
-  name: string
-}
+import { IDevspace } from 'common';
 
 export interface IDevspaceListProps {
   devspaces: IDevspace[]

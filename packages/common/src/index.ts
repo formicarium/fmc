@@ -5,5 +5,5 @@ export * from './model'
 export * from './logic'
 export * from './typings'
 export * from './system'
-
-export const sum = (a: number, b: number) => a * b + 20
+ 
+export const sum = (a: number, b: number) => 100

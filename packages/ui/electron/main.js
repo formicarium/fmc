@@ -13,7 +13,12 @@ const url = require('url');
 let mainWindow;
 
 app.on('ready', () => {
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({
+    width: 800, height: 600,
+    webPreferences: {
+      webSecurity: false,
+    }
+  });
 
   const startUrl = process.env.ELECTRON_START_URL || url.format({
     // pathname: path.join(__dirname, './build/index.html'),

@@ -4,14 +4,13 @@ import { Provider } from 'unstated';
 import { ApolloProvider } from 'react-apollo'
 import { BrowserRouter } from 'react-router-dom';
 import { client } from '../../../../system/apollo';
-import { MainLayout } from '../../MainLayout';
-import { sum } from '@formicarium/common';
+import { MainLayout } from '~/modules/core/MainLayout';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { SystemProvider } from '../SystemProvider';
+import { Nullable, ISystem, getSystem } from 'common'
 
-console.log(sum(1, 5))
 interface IState {
-  // system: Nullable<ISystem>
+  system: Nullable<ISystem>
 }
 
 export class App extends React.Component<{}, IState> {
@@ -22,10 +21,11 @@ export class App extends React.Component<{}, IState> {
     }
   }
   public async componentDidMount() {
-    // const system = await getSystem()
-    // this.setState({
-    //   system,
-    // })
+    const system = await getSystem()
+
+    this.setState({
+      system,
+    })
   }
 
   public render() {
@@ -38,7 +38,7 @@ export class App extends React.Component<{}, IState> {
     }
 
     return (
-      // <SystemProvider system={this.state.system}>
+      <SystemProvider system={this.state.system}>
         <Provider>
           <ApolloProvider client={client}>
             <BrowserRouter>
@@ -46,7 +46,7 @@ export class App extends React.Component<{}, IState> {
             </BrowserRouter>
           </ApolloProvider>
         </Provider>
-      // </SystemProvider>
+      </SystemProvider>
     )
   }
 }

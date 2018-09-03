@@ -1,11 +1,10 @@
 {
-  "name": "@formicarium/ui",
+  "name": "ui",
   "version": "1.0.0",
   "main": "electron/main.js",
   "source": true,
   "license": "MIT",
   "dependencies": {
-    "@formicarium/common": "1.0.0",
     "apollo-boost": "^0.1.15",
     "apollo-cache": "^1.1.16",
     "apollo-cache-inmemory": "^1.2.9",
