@@ -1,5 +1,8 @@
-# frontend-monorepo
-CLI + Electron + Common + Tools
+<h1 align="center">
+  <img src="http://www.infantv.com.br/infantv/wp-content/uploads/2016/07/antom2.jpg" height="300"/>
+  <br/>
+  Formicarium frontend monorepo
+</h1>
 
 # Setup
 On the project root:
