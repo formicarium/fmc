@@ -1,7 +1,8 @@
 import React from 'react'
-import { IInterface, InterfacesList } from '../InterfacesList';
+import { InterfacesList } from '../InterfacesList';
 import styled from 'styled-components';
 import { Header, Image, Button, Segment } from 'semantic-ui-react';
+import { IInterface } from 'common';
 
 export interface IApplicationProps {
   name: string

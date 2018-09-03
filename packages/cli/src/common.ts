@@ -1,6 +1,5 @@
-import {Maybe, Nullable} from './typings/common';
-import * as fs from 'fs-extra';
-import {IArgs} from './services/soil';
+import {Maybe, Nullable} from './typings/common'
+import * as fs from 'fs-extra'
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 

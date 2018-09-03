@@ -1,10 +1,6 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react';
-
-export interface IInterface {
-  name: string
-  link: string
-}
+import { IInterface } from 'common';
 
 export interface IInterfacesListProps {
   interfaces: IInterface[]

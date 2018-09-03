@@ -1,17 +1,22 @@
 import React from 'react'
 import { CreateDevspaceForm, IValues } from '../../components/CreateDevspaceForm';
-import { sleep } from 'common';
+import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
+import { ISystem, IApplicationDefinition } from 'common';
 
 export class CreateDevspaceContainer extends React.Component {
-  private handleSubmit = async (values: IValues) => {
-    await sleep(2500)
-    console.log(values)
+  private handleSubmit = (system: ISystem) => async (values: IValues) => {
+    return system.soilService.createDevspace(values.name, [])
   }
+
   public render() {
     return (
-      <CreateDevspaceForm
-        onSubmit={this.handleSubmit}
-      />
+      <WithFMCSystem>
+        {(system) => (
+          <CreateDevspaceForm
+            onSubmit={this.handleSubmit(system)}
+          />
+        )}
+      </WithFMCSystem>
     )
   }
 }

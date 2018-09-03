@@ -1,5 +1,6 @@
 import React from 'react'
 import './styles.css'
+// import 'react-toastify/dist/ReactToastify.min.css';
 import { Provider } from 'unstated';
 import { ApolloProvider } from 'react-apollo'
 import { BrowserRouter } from 'react-router-dom';
