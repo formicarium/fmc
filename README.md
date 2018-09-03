@@ -8,6 +8,7 @@ yarn install
 ```
 
 # Developing
+Everything is watched/hot reloaded. You don't need to worry about anything
 ## CLI
 ```
 cd packages/cli
@@ -32,7 +33,7 @@ This will automatically open your browser
 
 ## Common
 Just add code there and import it on any other package/app.
-If this package/app lives inside the monorepo (just like `UI` and `CLI`), you will always get the last version on your imports.
+If this package/app lives inside the monorepo (just like `UI` and `CLI`), you will always get the latest code version on your imports.
 
 ## Tools
 Anything installed here will be available for the other packages inside the monorepo. Good things to be here:
