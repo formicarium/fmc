@@ -2,8 +2,10 @@
   "name": "@formicarium/ui",
   "version": "1.0.0",
   "main": "electron/main.js",
+  "source": true,
   "license": "MIT",
   "dependencies": {
+    "@formicarium/common": "1.0.0",
     "apollo-boost": "^0.1.15",
     "apollo-cache": "^1.1.16",
     "apollo-cache-inmemory": "^1.2.9",
@@ -29,8 +31,7 @@
     "react-transition-group": "^2.4.0",
     "semantic-ui-react": "^0.82.3",
     "styled-components": "^3.4.5",
-    "unstated": "^2.1.1",
-    "@formicarium/common": "1.0.0"
+    "unstated": "^2.1.1"
   },
   "scripts": {
     "start": "node electron/bundler.js",
@@ -41,6 +42,7 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@types/history": "^4.7.0",
     "@types/lodash": "^4.14.116",
     "@types/moment": "^2.13.0",
     "@types/ramda": "^0.25.37",
