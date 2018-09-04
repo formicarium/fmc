@@ -1,7 +1,7 @@
 import React from 'react'
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { ApplicationsList } from '~/modules/application/components/ApplicationsList';
-import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
+import { PromiseManager, PatchData } from '~/modules/common/render-props/PromiseManager';
 import { DisplayLoader } from '~/modules/common/components/DisplayLoader';
 import { DisplayError } from '~/modules/common/components/DisplayError';
 import { ISystem, IApplication } from 'common';
@@ -13,9 +13,10 @@ export class DevspaceServices extends React.Component {
     return devspace.applications
   }
 
-  private handleDelete = (system: ISystem) => async (application: IApplication) => {
+  private handleDelete = (system: ISystem, patchData: PatchData<IApplication[]>, oldData: IApplication[]) => async (application: IApplication) => {
     const currentDevspace = await system.configService.readDevspaceConfig()
     await system.soilService.deleteService(currentDevspace.name, application.name)
+    patchData(oldData.filter((app) => app.name !== application.name))
   }
 
   private handleRestart = (system: ISystem) => async (application: IApplication) => {
@@ -28,10 +29,10 @@ export class DevspaceServices extends React.Component {
       <WithFMCSystem>
         {(system) => (
           <PromiseManager promise={this.fetchServices(system)} LoadingComponent={DisplayLoader} ErrorComponent={DisplayError}>
-            {({ data}) => (
+            {({ data }, _, patchData) => (
               <ApplicationsList
                 applications={data}
-                onClickDelete={this.handleDelete(system)}
+                onClickDelete={this.handleDelete(system, patchData, data)}
                 onClickRestart={this.handleRestart(system)}
               />
             )}

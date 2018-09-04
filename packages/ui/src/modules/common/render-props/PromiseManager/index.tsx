@@ -8,7 +8,7 @@ export interface IPromiseState<T> {
 }
 
 type RetryFunction = () => void
-type PatchData<T> = (data: T) => void
+export type PatchData<T> = (data: T) => void
 
 export interface IErrorComponentProps {
   error: Error
