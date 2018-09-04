@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const TerminalWrapper = styled.div`
   font-family: 'Courier New';
   white-space: pre-line;
-  height: 800;
+  height: 500;
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;

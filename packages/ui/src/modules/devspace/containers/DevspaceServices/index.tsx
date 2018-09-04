@@ -5,6 +5,8 @@ import { PromiseManager, PatchData } from '~/modules/common/render-props/Promise
 import { DisplayError } from '~/modules/common/components/DisplayError';
 import { ISystem, IApplication } from 'common';
 import { ApplicationListPlaceholder } from '~/modules/application/components/ApplicationsList/index.shimmer';
+import { Subscribe } from 'unstated';
+import { LogsState } from '~/modules/devspace/state/Logs';
 
 export class DevspaceServices extends React.Component {
   private fetchServices = (system: ISystem) => async () => {
@@ -20,16 +22,13 @@ export class DevspaceServices extends React.Component {
   }
 
   private handleRestart = (system: ISystem) => async (application: IApplication) => {
-    try {
-      // const pod = await system.kubectl.getPodByLabel('sasa', application.name)
-      const cp = await system.kubectl.streamLogs('sasa', application.name)
-      console.log(cp)
-    } catch (err) {
-      console.log(err)
-    }
+    const stingerUrl = application.links.stinger as string
+    await system.stingerService.restartServiceByUrl(stingerUrl)
+  }
 
-    // const stingerUrl = application.links.stinger as string
-    // await system.stingerService.restartServiceByUrl(stingerUrl)
+  private handleLogs = (logsState: LogsState) => (application: IApplication) => {
+    console.log(application)
+    logsState.toggleLogsForApplication(application.name)
   }
 
   public render() {
@@ -41,11 +40,17 @@ export class DevspaceServices extends React.Component {
             LoadingComponent={() => <ApplicationListPlaceholder n={3} />}
             ErrorComponent={DisplayError}>
             {({ data }, _, patchData) => (
-              <ApplicationsList
-                applications={data}
-                onClickDelete={this.handleDelete(system, patchData, data)}
-                onClickRestart={this.handleRestart(system)}
-              />
+              <Subscribe to={[LogsState]}>
+              {(logsState: LogsState) => (
+                <ApplicationsList
+                  applicationsShowingLogs={logsState.state.applicationsShowingLogs}
+                  applications={data}
+                  onClickDelete={this.handleDelete(system, patchData, data)}
+                  onClickRestart={this.handleRestart(system)}
+                  onClickLogs={this.handleLogs(logsState)}
+                />
+              )}
+              </Subscribe>
             )}
           </PromiseManager>
 

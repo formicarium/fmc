@@ -37,7 +37,7 @@ const Actions: React.SFC<IActionsProps> = ({
   onClickLogs,
 }) => (
   <Button.Group>
-    <Button color='yellow' onClick={onClickRestart} basic>Logs</Button>
+    <Button color='yellow' onClick={onClickLogs} basic>Logs</Button>
     <PromiseButton color='purple' onClick={onClickRestart} basic>Restart</PromiseButton>
     <PromiseButton color='red' onClick={onClickDelete}>Delete</PromiseButton>
   </Button.Group>
@@ -81,13 +81,11 @@ export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
       />
     </ActionsWrapper>
 
-    {
-      (showLogs || true) && (
+    {(showLogs) && (
       <ApplicationLogs
-        namespace={'sasa'}
+        namespace={'rafa'}
         applicationName={name}
       />
-      )
-    }
+    )}
   </Segment>
 )

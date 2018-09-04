@@ -11,6 +11,7 @@ export class DevspaceInfra extends React.Component {
     await sleep(1000)
     const currentDevspace = await system.configService.readDevspaceConfig()
     const devspace = await system.soilService.getDevspace(currentDevspace.name)
+    console.log(devspace)
     return [devspace.hive, devspace.tanajura]
   }
   public render() {
@@ -23,11 +24,15 @@ export class DevspaceInfra extends React.Component {
             ErrorComponent={DisplayError}>
             {({ data }) => (
               <ApplicationsList
+                applicationsShowingLogs={{}}
                 applications={data}
                 onClickDelete={() => {
                   alert('abre um pr')
                 }}
                 onClickRestart={() => {
+                  alert('abre um pr')
+                }}
+                onClickLogs={() => {
                   alert('abre um pr')
                 }}
               />
