@@ -1,8 +1,8 @@
 import React from 'react'
 import { withSystem, ISystemProps } from '~/modules/core/components/SystemProvider';
 import { Segment, Dimmer, Loader } from 'semantic-ui-react';
-import Ansi from 'ansi-to-react'
-import styled from 'styled-components';
+import { TerminalScreen } from '~/modules/application/components/TerminalScreen';
+import { ChildProcess } from 'child_process';
 
 export interface IApplicationLogsProps {
   namespace: string,
@@ -13,36 +13,9 @@ interface IApplicationLogsState {
   loading: boolean
 }
 
-const TerminalWrapper = styled.div`
-  font-family: 'Courier New';
-  white-space: pre-line;
-  height: 800;
-  overflow-x: hidden;
-  overflow-y: auto;
-`
-
-export interface ITerminalScreenProps {
-  text: string
-}
-
-class TerminalScreen extends React.Component<ITerminalScreenProps> {
-  private scrollRef = React.createRef<HTMLDivElement>()
-  public componentDidUpdate() {
-    if (this.scrollRef.current) {
-      this.scrollRef.current.scrollTop = this.scrollRef.current.scrollHeight
-    }
-  }
-  public render() {
-    return (
-    <TerminalWrapper innerRef={this.scrollRef}>
-        <Ansi>
-          {this.props.text}
-        </Ansi>
-      </TerminalWrapper>
-    )
-  }
-}
 export class ApplicationLogsInner extends React.Component<ISystemProps & IApplicationLogsProps, IApplicationLogsState> {
+  private childProcess: ChildProcess
+
   public state = {
     streamedText: '',
     loading: true,
@@ -59,26 +32,36 @@ export class ApplicationLogsInner extends React.Component<ISystemProps & IApplic
     })
     const podName = pod.metadata.name
     const childProcess = system.kubectl.streamLogs(namespace, podName)
+    this.childProcess = childProcess
     childProcess.stdout.on('data', (data) => {
       this.setState((state) => ({
         streamedText: `${state.streamedText}${data.toString()}`,
       }))
     })
   }
+
+  public componentWillUnmount() {
+    if (this.childProcess) {
+      this.childProcess.kill('SIGINT')
+    }
+  }
+
   public render() {
     if (this.state.loading) {
       return (
-        <Dimmer>
-          <Loader active />
-        </Dimmer>
+        <Segment inverted style={{width: '100%', height: 200}} vertical>
+          <Loader active inverted>
+            Obtaining POD...
+          </Loader>
+        </Segment>
       )
     }
     return (
-      <Segment inverted>
+      <Segment inverted style={{width: '100%'}}>
         <TerminalScreen text={this.state.streamedText} />
       </Segment>
     )
   }
 }
 
-export const ApplicatLogs = withSystem(ApplicationLogsInner)
+export const ApplicationLogs = withSystem(ApplicationLogsInner)

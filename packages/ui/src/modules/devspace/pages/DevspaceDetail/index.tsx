@@ -20,7 +20,7 @@ export const DevspaceDetailPage: React.SFC<RouteComponentProps<{}>> = () => (
       <div>
         <SideMenu />
       </div>
-      <div style={{flexGrow: 1, paddingLeft: 20}}>
+      <div style={{flexGrow: 1, paddingLeft: 20, width: 0}}>
         <Switch>
           <Route path='/my-devspace/' exact component={DevspaceInfraPage}/>
           <Route path='/my-devspace/services' exact component={DevspaceServicesPage}/>

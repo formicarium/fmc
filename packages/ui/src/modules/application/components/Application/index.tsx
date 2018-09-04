@@ -4,11 +4,13 @@ import styled from 'styled-components';
 import { Header, Image, Button, Segment } from 'semantic-ui-react';
 import { IApplicationLinks } from 'common';
 import { PromiseButton } from '~/modules/common/components/PromiseButton';
+import { ApplicationLogs } from '~/modules/application/containers/ApplicationLogs';
 
 export interface IApplicationProps {
   name: string
   links: IApplicationLinks
   className?: string
+  showLogs: boolean;
 }
 
 const StatusImage = styled(Image)`
@@ -27,12 +29,15 @@ const ONLINE_ICON = 'https://cdn4.iconfinder.com/data/icons/fugue/icon_shadowles
 export interface IActionsProps {
   onClickDelete: () => void
   onClickRestart: () => void;
+  onClickLogs: () => void;
 }
 const Actions: React.SFC<IActionsProps> = ({
   onClickDelete,
   onClickRestart,
+  onClickLogs,
 }) => (
   <Button.Group>
+    <Button color='yellow' onClick={onClickRestart} basic>Logs</Button>
     <PromiseButton color='purple' onClick={onClickRestart} basic>Restart</PromiseButton>
     <PromiseButton color='red' onClick={onClickDelete}>Delete</PromiseButton>
   </Button.Group>
@@ -50,8 +55,10 @@ export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
   name,
   links,
   className,
+  showLogs,
   onClickDelete,
   onClickRestart,
+  onClickLogs,
 }) => (
   <Segment className={className}>
     <StyledHeader dividing>
@@ -70,8 +77,17 @@ export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
       <Actions
         onClickDelete={onClickDelete}
         onClickRestart={onClickRestart}
+        onClickLogs={onClickLogs}
       />
     </ActionsWrapper>
 
+    {
+      (showLogs || true) && (
+      <ApplicationLogs
+        namespace={'sasa'}
+        applicationName={name}
+      />
+      )
+    }
   </Segment>
 )
