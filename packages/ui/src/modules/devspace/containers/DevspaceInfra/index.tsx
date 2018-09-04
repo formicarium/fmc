@@ -2,12 +2,13 @@ import React from 'react'
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { ApplicationsList } from '~/modules/application/components/ApplicationsList';
 import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
-import { DisplayLoader } from '~/modules/common/components/DisplayLoader';
 import { DisplayError } from '~/modules/common/components/DisplayError';
-import { ISystem } from 'common';
+import { ISystem, sleep } from 'common';
+import { ApplicationListPlaceholder } from '~/modules/application/components/ApplicationsList/index.shimmer';
 
 export class DevspaceInfra extends React.Component {
   private fetchInfra = (system: ISystem) => async () => {
+    await sleep(1000)
     const currentDevspace = await system.configService.readDevspaceConfig()
     const devspace = await system.soilService.getDevspace(currentDevspace.name)
     return [devspace.hive, devspace.tanajura]
@@ -18,11 +19,17 @@ export class DevspaceInfra extends React.Component {
         {(system) => (
           <PromiseManager
             promise={this.fetchInfra(system)}
-            LoadingComponent={DisplayLoader}
+            LoadingComponent={() => <ApplicationListPlaceholder n={3} />}
             ErrorComponent={DisplayError}>
-            {({ data}) => (
+            {({ data }) => (
               <ApplicationsList
                 applications={data}
+                onClickDelete={() => {
+                  alert('abre um pr')
+                }}
+                onClickRestart={() => {
+                  alert('abre um pr')
+                }}
               />
             )}
           </PromiseManager>

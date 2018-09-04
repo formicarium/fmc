@@ -7,8 +7,8 @@ import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { devspaceToDevspaceConfig } from 'common'
 import { toast, ToastType } from 'react-toastify';
-import { DisplayLoader } from '~/modules/common/components/DisplayLoader';
 import { DisplayError } from '~/modules/common/components/DisplayError';
+import { DevspaceListPlaceholder } from '~/modules/devspace/components/DevspaceList/index.shimmer';
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ export const DevspacesPage: React.SFC = () => (
       {(system) => (
         <PromiseManager
           promise={() => Promise.all([system.soilService.getDevspaces(), system.configService.readConfig()])}
-          LoadingComponent={DisplayLoader}
+          LoadingComponent={() => <DevspaceListPlaceholder n={5} />}
           ErrorComponent={DisplayError}>
           {({ data: [devspaces, config]}, refetch, patchData) => (
             <DevspaceList

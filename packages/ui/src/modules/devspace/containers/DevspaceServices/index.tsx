@@ -2,9 +2,9 @@ import React from 'react'
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { ApplicationsList } from '~/modules/application/components/ApplicationsList';
 import { PromiseManager, PatchData } from '~/modules/common/render-props/PromiseManager';
-import { DisplayLoader } from '~/modules/common/components/DisplayLoader';
 import { DisplayError } from '~/modules/common/components/DisplayError';
 import { ISystem, IApplication } from 'common';
+import { ApplicationListPlaceholder } from '~/modules/application/components/ApplicationsList/index.shimmer';
 
 export class DevspaceServices extends React.Component {
   private fetchServices = (system: ISystem) => async () => {
@@ -28,7 +28,10 @@ export class DevspaceServices extends React.Component {
     return (
       <WithFMCSystem>
         {(system) => (
-          <PromiseManager promise={this.fetchServices(system)} LoadingComponent={DisplayLoader} ErrorComponent={DisplayError}>
+          <PromiseManager
+            promise={this.fetchServices(system)}
+            LoadingComponent={() => <ApplicationListPlaceholder n={3} />}
+            ErrorComponent={DisplayError}>
             {({ data }, _, patchData) => (
               <ApplicationsList
                 applications={data}
