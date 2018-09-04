@@ -11,10 +11,6 @@
     "lerna": "^3.2.1"
   },
   "scripts": {
-    "ui:dev": "node electron/bundler.js",
-    "ui:electron": "ELECTRON_START_URL=http://localhost:1235 electron packages/ui",
-    "ui:browser": "parcel serve packages/ui/src/index.html -d packages/ui/build --open",
-    "start": "lerna run --stream --scope @formicarium/ui start",
     "build:watch": "lerna run build:watch"
   }
 }

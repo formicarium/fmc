@@ -26,6 +26,12 @@ export const SideMenuInner: React.SFC<RouteComponentProps<{}>> = ({
       active={location.pathname === `${match.url}/settings`}
       onClick={() => history.push(`${match.url}/settings`)}
     />
+    <Menu.Item
+      icon={<Icon name='rocket' />}
+      name='Deploy service'
+      active={location.pathname === `${match.url}/services/deploy`}
+      onClick={() => history.push(`${match.url}/services/deploy`)}
+    />
   </Menu>
 )
 

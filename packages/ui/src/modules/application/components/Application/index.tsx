@@ -3,7 +3,7 @@ import { InterfacesList } from '../InterfacesList';
 import styled from 'styled-components';
 import { Header, Image, Button, Segment } from 'semantic-ui-react';
 import { IApplicationLinks } from 'common';
-import { PromiseButton } from 'ui/src/modules/common/components/PromiseButton';
+import { PromiseButton } from '~/modules/common/components/PromiseButton';
 
 export interface IApplicationProps {
   name: string
