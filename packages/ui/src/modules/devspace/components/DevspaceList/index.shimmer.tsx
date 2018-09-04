@@ -5,7 +5,7 @@ import ContentLoader from 'react-content-loader'
 export const DevspaceListItemPlaceholder: React.SFC<{style?: any}> = ({
   style,
 }) => (
-  <ContentLoader height={46} width={900} style={{height: 46, width: 900, ...style}} />
+  <ContentLoader height={46} width={'100%' as any} style={{height: 46, width: '100%', ...style}} />
 )
 
 export const DevspaceListPlaceholder: React.SFC<{n: number}> = ({
