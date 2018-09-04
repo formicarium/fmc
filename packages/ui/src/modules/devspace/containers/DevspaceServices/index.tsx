@@ -8,7 +8,8 @@ import { ISystem } from 'common';
 
 export class DevspaceServices extends React.Component {
   private fetchServices = (system: ISystem) => async () => {
-    const devspace = await system.soilService.getDevspace('karen')
+    const currentDevspace = await system.configService.readDevspaceConfig()
+    const devspace = await system.soilService.getDevspace(currentDevspace.name)
     return devspace.applications
   }
   public render() {

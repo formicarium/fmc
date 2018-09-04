@@ -8,7 +8,8 @@ import { ISystem } from 'common';
 
 export class DevspaceInfra extends React.Component {
   private fetchInfra = (system: ISystem) => async () => {
-    const devspace = await system.soilService.getDevspace('karen')
+    const currentDevspace = await system.configService.readDevspaceConfig()
+    const devspace = await system.soilService.getDevspace(currentDevspace.name)
     return [devspace.hive, devspace.tanajura]
   }
   public render() {
