@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form as SemanticForm, Button, Segment } from 'semantic-ui-react';
+import { Form as SemanticForm, Button } from 'semantic-ui-react';
 import { Form, Field } from 'react-final-form'
 import { FolderPathInput } from '~/modules/common/components/FolderPathInput';
 import { OpenDialogOptions } from 'electron';
@@ -10,7 +10,10 @@ import { FieldArray } from 'react-final-form-arrays'
 import arrayMutators from 'final-form-arrays'
 
 export interface IDeployServiceFormValues {
+  sourceCodePath: string
   name: string
+  applicationDefinitionPath: string
+  argsArray: Array<{key: string, value: string}>
 }
 
 export interface IDeployServiceFormProps {
@@ -82,7 +85,7 @@ export const DeployServiceForm: React.SFC<IDeployServiceFormProps> = ({
                 Arbitrary arg map
               </label>
 
-              <FieldArray name='customers'>
+              <FieldArray name='argsArray'>
                 {({ fields }) =>
                   fields.map((name, index) => (
                     <div key={name} style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
@@ -112,7 +115,7 @@ export const DeployServiceForm: React.SFC<IDeployServiceFormProps> = ({
                 basic
                 onClick={(e) => {
                   e.preventDefault()
-                  push('customers', undefined)
+                  push('argsArray', undefined)
                 }}
                 style={{marginBottom: 10}}
               />
