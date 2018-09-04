@@ -8,6 +8,7 @@
     "jsx": "react",
     "sourceMap": true,
     "noImplicitAny": true,
+    "experimentalDecorators": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,

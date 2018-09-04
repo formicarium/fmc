@@ -28,7 +28,10 @@ export const withSystem = <P extends ISystemProps>(WrappedComponent: React.Compo
       return (
         <SystemContext.Consumer>
           {(system) => (
-            <WrappedComponent system={system} />
+            <WrappedComponent
+              {...this.props}
+              system={system}
+            />
           )}
         </SystemContext.Consumer>
       )

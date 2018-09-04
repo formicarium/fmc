@@ -20,8 +20,16 @@ export class DevspaceServices extends React.Component {
   }
 
   private handleRestart = (system: ISystem) => async (application: IApplication) => {
-    const stingerUrl = application.links.stinger as string
-    await system.stingerService.restartServiceByUrl(stingerUrl)
+    try {
+      // const pod = await system.kubectl.getPodByLabel('sasa', application.name)
+      const cp = await system.kubectl.streamLogs('sasa', application.name)
+      console.log(cp)
+    } catch (err) {
+      console.log(err)
+    }
+
+    // const stingerUrl = application.links.stinger as string
+    // await system.stingerService.restartServiceByUrl(stingerUrl)
   }
 
   public render() {

@@ -4,3 +4,5 @@ dist/
 build/
 build-electron/
 deprecate/
+packages/ui/build/
+packages/ui/build-electron/

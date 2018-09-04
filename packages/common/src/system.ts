@@ -4,6 +4,7 @@ import * as path from 'path'
 import * as os from 'os'
 import { IConfigService, HiveService, SoilService, IGitService, ITanajuraService, ConfigServerService, IUIService, LocalDB, StingerService, IFilesService, ConfigService, GitService, TanajuraService, FilesService, UIService } from './services';
 import { IHttpClient, httpClient } from './components';
+import { KubectlService, IKubectlService } from './services/kubectl';
 
 export interface ISystem {
   configService: IConfigService
@@ -17,6 +18,7 @@ export interface ISystem {
   stingerService: StingerService
   httpClient: IHttpClient
   filesService: IFilesService
+  kubectl: IKubectlService
 }
 
 export const getSystem = async (): Promise<ISystem> => {
@@ -33,6 +35,7 @@ export const getSystem = async (): Promise<ISystem> => {
   const stingerService = new StingerService(httpClient, localDB)
   const filesService = new FilesService()
   const uiService = new UIService()
+  const kubectl = new KubectlService()
 
   return {
     configService,
@@ -46,5 +49,6 @@ export const getSystem = async (): Promise<ISystem> => {
     stingerService,
     httpClient,
     filesService,
+    kubectl
   }
 }

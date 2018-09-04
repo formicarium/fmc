@@ -5,6 +5,7 @@
   "source": true,
   "license": "MIT",
   "dependencies": {
+    "ansi-to-react": "^3.3.1",
     "apollo-boost": "^0.1.15",
     "apollo-cache": "^1.1.16",
     "apollo-cache-inmemory": "^1.2.9",

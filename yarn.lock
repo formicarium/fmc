@@ -1097,6 +1097,10 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
+anser@^1.4.1:
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/anser/-/anser-1.4.7.tgz#78c0ce6aefffaa09bed267bd7d26ee5b9fb6d575"
+
 ansi-align@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ansi-align/-/ansi-align-2.0.0.tgz#c36aeccba563b89ceb556f3690f0b1d9e3547f7f"
@@ -1130,6 +1134,14 @@ ansi-to-html@^0.6.4:
   resolved "https://registry.yarnpkg.com/ansi-to-html/-/ansi-to-html-0.6.6.tgz#58a8d04b87ec9a85e3ad273c12a5fbc7147b9c42"
   dependencies:
     entities "^1.1.1"
+
+ansi-to-react@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/ansi-to-react/-/ansi-to-react-3.3.1.tgz#7517e2efe50912ef7caeb585a209e723b120f98b"
+  dependencies:
+    anser "^1.4.1"
+    babel-runtime "^6.26.0"
+    escape-carriage "^1.2.0"
 
 ansicolors@~0.2.1:
   version "0.2.1"
@@ -3619,6 +3631,10 @@ es6-promisify@^5.0.0:
   resolved "https://registry.yarnpkg.com/es6-promisify/-/es6-promisify-5.0.0.tgz#5109d62f3e56ea967c4b63505aef08291c8a5203"
   dependencies:
     es6-promise "^4.0.3"
+
+escape-carriage@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/escape-carriage/-/escape-carriage-1.2.0.tgz#35ce51a7960efcb5ae8bb59b83f566a98c946dfd"
 
 escape-html@~1.0.3:
   version "1.0.3"
