@@ -5,6 +5,8 @@ import { IApplication } from 'common';
 
 export interface IApplicationsListProps {
   applications: IApplication[]
+  onClickDelete: (application: IApplication) => void;
+  onClickRestart: (application: IApplication) => void;
 }
 
 const Wrapper = styled.div`
@@ -15,6 +17,8 @@ const StyledApplication = styled(Application)`
 `
 export const ApplicationsList: React.SFC<IApplicationsListProps> = ({
   applications,
+  onClickDelete,
+  onClickRestart,
 }) => (
   <Wrapper>
     {applications && applications.map((application) => (
@@ -22,12 +26,8 @@ export const ApplicationsList: React.SFC<IApplicationsListProps> = ({
         key={application.name}
         name={application.name}
         links={application.links}
-        onClickDelete={() => {
-          // impl
-        }}
-        onClickRestart={() => {
-          // impl
-        }}
+        onClickDelete={() => onClickDelete(application)}
+        onClickRestart={() => onClickRestart(application)}
       />
     ))}
   </Wrapper>

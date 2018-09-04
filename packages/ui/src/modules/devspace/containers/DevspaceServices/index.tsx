@@ -4,7 +4,7 @@ import { ApplicationsList } from '~/modules/application/components/ApplicationsL
 import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
 import { DisplayLoader } from '~/modules/common/components/DisplayLoader';
 import { DisplayError } from '~/modules/common/components/DisplayError';
-import { ISystem } from 'common';
+import { ISystem, IApplication } from 'common';
 
 export class DevspaceServices extends React.Component {
   private fetchServices = (system: ISystem) => async () => {
@@ -12,6 +12,17 @@ export class DevspaceServices extends React.Component {
     const devspace = await system.soilService.getDevspace(currentDevspace.name)
     return devspace.applications
   }
+
+  private handleDelete = (system: ISystem) => async (application: IApplication) => {
+    const currentDevspace = await system.configService.readDevspaceConfig()
+    await system.soilService.deleteService(currentDevspace.name, application.name)
+  }
+
+  private handleRestart = (system: ISystem) => async (application: IApplication) => {
+    const stingerUrl = application.links.stinger as string
+    await system.stingerService.restartServiceByUrl(stingerUrl)
+  }
+
   public render() {
     return (
       <WithFMCSystem>
@@ -20,6 +31,8 @@ export class DevspaceServices extends React.Component {
             {({ data}) => (
               <ApplicationsList
                 applications={data}
+                onClickDelete={this.handleDelete(system)}
+                onClickRestart={this.handleRestart(system)}
               />
             )}
           </PromiseManager>

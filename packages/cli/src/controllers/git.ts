@@ -53,8 +53,8 @@ export const createRepo = async (namespace: string, serviceName: string, tanajur
   try {
     await tanajuraService.createRepo(serviceName)
   } catch (err) {
-    switch (err.constructor) {
-      case RepoAlreadyExists:
+    switch (err.type) {
+      case 'RepoAlreadyExists':
         if (await shouldDeleteTanajuraRepo(serviceName, ui)) {
           await tanajuraService.deleteRepo(serviceName)
           return createRepo(namespace, serviceName, tanajuraService, ui)

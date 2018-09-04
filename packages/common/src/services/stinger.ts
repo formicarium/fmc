@@ -23,6 +23,10 @@ export class StingerService {
 
     const { stingerUrl } = service
 
+    return this.restartServiceByUrl(stingerUrl)
+  }
+
+  public restartServiceByUrl = async (stingerUrl: string): Promise<IStartResponse> =>  {
     return this.httpClient.request<IStartResponse>({
       method: 'post',
       baseURL: stingerUrl,

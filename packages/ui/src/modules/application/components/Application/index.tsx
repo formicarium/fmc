@@ -3,6 +3,7 @@ import { InterfacesList } from '../InterfacesList';
 import styled from 'styled-components';
 import { Header, Image, Button, Segment } from 'semantic-ui-react';
 import { IApplicationLinks } from 'common';
+import { PromiseButton } from 'ui/src/modules/common/components/PromiseButton';
 
 export interface IApplicationProps {
   name: string
@@ -32,8 +33,8 @@ const Actions: React.SFC<IActionsProps> = ({
   onClickRestart,
 }) => (
   <Button.Group>
-    <Button color='purple' onClick={onClickRestart} basic>Restart</Button>
-    <Button color='red' onClick={onClickDelete}>Delete</Button>
+    <PromiseButton color='purple' onClick={onClickRestart} basic>Restart</PromiseButton>
+    <PromiseButton color='red' onClick={onClickDelete}>Delete</PromiseButton>
   </Button.Group>
 )
 
