@@ -11,7 +11,6 @@ export class DevspaceInfra extends React.Component {
     await sleep(1000)
     const currentDevspace = await system.configService.readDevspaceConfig()
     const devspace = await system.soilService.getDevspace(currentDevspace.name)
-    console.log(devspace)
     return [devspace.hive, devspace.tanajura]
   }
   public render() {

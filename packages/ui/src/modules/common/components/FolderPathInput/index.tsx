@@ -16,7 +16,6 @@ const defaultOptions = {
 
 export class FolderPathInput extends React.Component<FieldRenderProps & IFolderPathInputProps> {
   private pickFolderPath = (): Nullable<string> => {
-    console.log('pick')
     const path = electron.remote.dialog.showOpenDialog(this.props.options || defaultOptions);
     if (path && path.length) {
       return path[0]

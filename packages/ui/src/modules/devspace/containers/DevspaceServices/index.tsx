@@ -27,7 +27,6 @@ export class DevspaceServices extends React.Component {
   }
 
   private handleLogs = (logsState: LogsState) => (application: IApplication) => {
-    console.log(application)
     logsState.toggleLogsForApplication(application.name)
   }
 

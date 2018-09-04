@@ -30,7 +30,6 @@ export class ApplicationLogsInner extends React.Component<ISystemProps & IApplic
     this.setState({
       loading: false,
     })
-    console.log(pod)
     const podName = pod.metadata.name
     const childProcess = system.kubectl.streamLogs(namespace, podName)
     this.childProcess = childProcess

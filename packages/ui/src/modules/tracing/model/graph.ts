@@ -26,12 +26,12 @@ export interface IEdge {
   from: string,
   to: string
   label: string
-  type: EdgeType
+  type?: EdgeType
   color?: string
   hidden?: boolean
 
-  traceId: string
-  spanId: string
+  traceId?: string
+  spanId?: string
   parentId?: string
 }
 

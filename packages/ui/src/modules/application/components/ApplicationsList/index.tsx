@@ -27,7 +27,7 @@ export const ApplicationsList: React.SFC<IApplicationsListProps> = ({
   <Wrapper>
     {applications && applications.map((application) => (
       <StyledApplication
-        showLogs={console.log(applicationsShowingLogs) || applicationsShowingLogs[application.name]}
+        showLogs={applicationsShowingLogs[application.name]}
         key={application.name}
         name={application.name}
         links={application.links}

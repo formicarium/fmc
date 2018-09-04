@@ -6,7 +6,7 @@ export enum MessageType {
 
 // MESSAGE-META
 export interface IBaseMessageMeta {
-  timestamp: Date,
+  timestamp: number,
   service: string
   traceId: string
   spanId: string
@@ -32,6 +32,10 @@ export enum EventType {
   HTTP = 'HTTP',
 }
 
+export enum Direction {
+  PRODUCER = 'PRODUCER',
+  CONSUMER = 'CONSUMER',
+}
 // HTTP
 export enum HttpDirection {
   OUT_REQUEST = 'OUT_REQUEST',
@@ -40,7 +44,7 @@ export enum HttpDirection {
 
 export interface IHttpPayload {
   type: EventType.HTTP
-  direction: HttpDirection
+  direction: Direction
   data: {
     endpoint: {
       uri: string
@@ -57,7 +61,7 @@ export enum KafkaDirection {
 
 export interface IKafkaPayload {
   type: EventType.KAFKA
-  direction: KafkaDirection
+  direction: Direction
   data: {
     endpoint: {
       topic: string,
