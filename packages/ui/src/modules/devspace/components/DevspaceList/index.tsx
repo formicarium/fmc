@@ -26,17 +26,17 @@ export const DevspaceList: React.SFC<IDevspaceListProps> = ({
     </Table.Header>
     <Table.Body>
       {devspaces && devspaces.map((devspace) => (
-        <Table.Row key={devspace.name} active={devspace.name === selectedDevspaceName}>
+        <Table.Row key={devspace.name}>
           <Table.Cell width={12}>{devspace.name}</Table.Cell>
           <Table.Cell width={2} textAlign='center'>
-            <PromiseButton
+            <Button
               basic
               disabled={devspace.name === selectedDevspaceName}
-              color='purple'
+              color={devspace.name === selectedDevspaceName ? 'green' : 'purple'}
               onClick={() => onUseDevspace(devspace)}
             >
-              Use
-            </PromiseButton>
+              {devspace.name === selectedDevspaceName ? <Icon name='check' color='green' style={{margin: 0}} /> : 'Use'}
+            </Button>
           </Table.Cell>
           <Table.Cell width={2} textAlign='center'>
             <PromiseButton color='red' onClick={() => onDeleteDevspace(devspace)}>

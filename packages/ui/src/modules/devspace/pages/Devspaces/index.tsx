@@ -66,9 +66,6 @@ export const DevspacesPage: React.SFC = () => (
                       },
                     },
                   ])
-                  toast('Success', {
-                    type: 'success' as ToastType,
-                  })
                 } catch (err) {
                   toast('Error', {
                     type: 'error' as ToastType,
