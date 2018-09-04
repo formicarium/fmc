@@ -1,10 +1,10 @@
 import React from 'react'
 import { Application } from '../Application';
 import styled from 'styled-components';
-import { IApplicationDefinition } from 'common';
+import { IApplication } from 'common';
 
 export interface IApplicationsListProps {
-  applications: IApplicationDefinition[]
+  applications: IApplication[]
 }
 
 const Wrapper = styled.div`
@@ -21,7 +21,7 @@ export const ApplicationsList: React.SFC<IApplicationsListProps> = ({
       <StyledApplication
         key={application.name}
         name={application.name}
-        interfaces={application.interfaces}
+        links={application.links}
         onClickDelete={() => {
           // impl
         }}

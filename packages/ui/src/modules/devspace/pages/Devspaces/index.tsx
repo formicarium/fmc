@@ -1,37 +1,19 @@
 import React from 'react'
-import { Button, Icon, Segment, Loader, Dimmer } from 'semantic-ui-react';
+import { Button, Icon, Segment } from 'semantic-ui-react';
 import { DevspaceList } from '../../components/DevspaceList';
 import styled from 'styled-components';
 import { SegmentHeader } from '../../../common/components/SegmentHeader';
-import { PromiseManager, IErrorComponentProps } from '~/modules/common/render-props/PromiseManager';
+import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
-import { sleep, devspaceToDevspaceConfig } from 'common'
+import { devspaceToDevspaceConfig } from 'common'
 import { toast, ToastType } from 'react-toastify';
+import { DisplayLoader } from '~/modules/common/components/DisplayLoader';
+import { DisplayError } from '~/modules/common/components/DisplayError';
 
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
 `
-
-const DisplayError: React.SFC<IErrorComponentProps> = ({
-  error,
-  retry,
-}) => (
-  <div>
-    {error.toString()}
-    <Button
-      onClick={retry}
-    >
-      Tentar novamente
-    </Button>
-  </div>
-)
-
-const DisplayLoader: React.SFC = () => (
-  <Dimmer page active>
-    <Loader indeterminate>Loading...</Loader>
-  </Dimmer>
-)
 
 export const DevspacesPage: React.SFC = () => (
   <Segment>

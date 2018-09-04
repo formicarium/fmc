@@ -1,19 +1,20 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react';
-import { IInterface } from 'common';
+import { IApplicationLinks } from 'common';
+import R from 'ramda'
 
 export interface IInterfacesListProps {
-  interfaces: IInterface[]
+  links: IApplicationLinks
 }
 export const InterfacesList: React.SFC<IInterfacesListProps> = ({
-  interfaces,
+  links,
 }) => (
   <Table style={{backgroundColor: '#fdfdfd'}}>
     <Table.Body>
-    {interfaces && interfaces.map((interfacee) => (
-      <Table.Row key={interfacee.name}>
-        <Table.Cell>{interfacee.name}</Table.Cell>
-        <Table.Cell>{interfacee.link}</Table.Cell>
+    {links && R.toPairs(links).map(([name, uri]) => (
+      <Table.Row key={name}>
+        <Table.Cell>{name}</Table.Cell>
+        <Table.Cell>{uri}</Table.Cell>
       </Table.Row>
     ))}
     </Table.Body>

@@ -2,11 +2,11 @@ import React from 'react'
 import { InterfacesList } from '../InterfacesList';
 import styled from 'styled-components';
 import { Header, Image, Button, Segment } from 'semantic-ui-react';
-import { IInterface } from 'common';
+import { IApplicationLinks } from 'common';
 
 export interface IApplicationProps {
   name: string
-  interfaces: IInterface[]
+  links: IApplicationLinks
   className?: string
 }
 
@@ -47,7 +47,7 @@ const ActionsWrapper = styled.div`
 
 export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
   name,
-  interfaces,
+  links,
   className,
   onClickDelete,
   onClickRestart,
@@ -58,11 +58,11 @@ export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
     </StyledHeader>
 
     <Header size='tiny'>
-      Interfaces
+      Links
     </Header>
 
     <InterfacesList
-      interfaces={interfaces}
+      links={links}
     />
 
     <ActionsWrapper>
