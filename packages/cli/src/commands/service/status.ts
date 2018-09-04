@@ -1,9 +1,9 @@
-import { AppStatus } from './../../services/soil'
+
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
 import * as Table from 'tty-table'
 import * as moment from 'moment'
-import { IApp } from '../../services/soil'
+import { IApp, AppStatus } from 'common'
 
 const CHECK = '🚀'
 const ERROR = '🔴'
