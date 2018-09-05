@@ -11,7 +11,6 @@ export interface IFilesService {
 export class FilesService implements IFilesService {
   public startWatching = (rootPath: string, cb: ChangedEvent, filter?: any): fs.FSWatcher => {
     return watch(rootPath, { recursive: true, filter }, (evt: string, name: string) => {
-      console.log(evt, name)
       cb(evt, name)
     }) as fs.FSWatcher
   }

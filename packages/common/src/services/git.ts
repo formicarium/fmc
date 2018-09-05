@@ -29,7 +29,6 @@ export class GitService {
   }
 
   private getGit = (basePath: string, log: boolean = false) => {
-    console.log(basePath, GitService.MIRROR_GIT_FOLDER)
     return this.simpleGit(basePath)
       .env('GIT_DIR', GitService.MIRROR_GIT_FOLDER)
       .env('GIT_WORK_TREE', basePath)
