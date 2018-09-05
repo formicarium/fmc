@@ -44,7 +44,7 @@ export class App extends React.Component<{}, IState> {
         <Provider inject={[new SyncState(this.state.system)]}>
           <ApolloProvider client={client}>
             <Subscribe to={[SyncState]}>
-              {(syncState) => (
+              {(syncState: SyncState) => (
                 <BrowserRouter>
                   <MainLayout syncState={syncState} />
                 </BrowserRouter>

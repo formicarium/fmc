@@ -3,21 +3,20 @@ import { Container } from 'semantic-ui-react';
 import { TopMenu } from '../TopMenu';
 import { Routes } from '../components/Routes';
 import { ToastContainer } from 'react-toastify';
+import { SyncState } from '~/modules/sync/state/SyncState';
 
-export class MainLayout extends React.Component {
-  constructor(props) {
+interface IMainLayoutProps {
+  syncState: SyncState
+}
+export class MainLayout extends React.Component<IMainLayoutProps> {
+  constructor(props: IMainLayoutProps) {
     super(props)
-    if (module.hot) {
-      module.hot.dispose(function() {
-        console.log('dispose')
+    const hotModule = (module as any).hot
+    if (hotModule) {
+      hotModule.dispose(() => {
         props.syncState.clearAllWatchers()
       });
-
-      module.hot.accept(function() {
-        console.log('accept')
-      });
     }
-
   }
   public render() {
     return (
