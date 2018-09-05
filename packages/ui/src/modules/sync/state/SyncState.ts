@@ -30,9 +30,12 @@ export interface ISyncState {
   syncMap: ISyncMap
 }
 
-const getSyncId = (devspace: string, applicationName: string) => `${devspace}/${applicationName}`
 const baseRegexTest = (x: string) => !/\.git|\.fmcgit/.test(x)
-const getSyncedFilesLensForId = (id: string) => R.lensPath(['syncMap', id, 'syncedFiles'])
+
+const getSyncId = (devspace: string, applicationName: string) => `${devspace}/${applicationName}`
+const syncMapLens = R.lensProp('syncMap')
+const getSyncedFilesLensForId = (id: string) => R.compose(syncMapLens, R.lensPath([id, 'syncedFiles'])) as R.Lens
+
 const buildSyncedFile = (path: string) => ({
   path,
   status: SyncedFileStatus.WAITING,
@@ -113,7 +116,6 @@ export class SyncState extends Container<ISyncState> {
       watcher,
     }
 
-    const syncMapLens = R.lensPath(['syncMap'])
     const addSyncById = R.assoc(sync.id, sync)
     const addSyncToMap = R.over(syncMapLens, addSyncById)
     this.setState(addSyncToMap)
@@ -125,7 +127,6 @@ export class SyncState extends Container<ISyncState> {
     const id = getSyncId(devspaceName, applicationName)
     const sync = this.state.syncMap[id]
     if (sync) {
-      const syncMapLens = R.lensPath(['syncMap'])
       const dissocBySyncId = R.dissoc(sync.id)
       sync.watcher.close()
       const removeSyncFromMap = R.over(syncMapLens, dissocBySyncId)
@@ -148,26 +149,3 @@ export class SyncState extends Container<ISyncState> {
     }), {})
   }
 }
-
-  // public getSyncList = (): ISync[] => ([
-  //   {
-  //     id: 'a',
-  //     devspace: 'a',
-  //     applicationName: 'a',
-  //     folder: 'a',
-  //     syncedFiles: [{
-  //       path: '/tmp/a',
-  //       status: SyncedFileStatus.ERROR,
-  //       timestamp: new Date().getTime(),
-  //     }, {
-  //       path: '/tmp/b',
-  //       status: SyncedFileStatus.WAITING,
-  //       timestamp: new Date().getTime() - 100000,
-  //     }, {
-  //       path: '/tmp/c',
-  //       status: SyncedFileStatus.SYNCED,
-  //       timestamp: new Date().getTime() - 50000,
-  //     }].sort((a, b) => b.timestamp - a.timestamp),
-  //     watcher: null,
-  //   },
-  // ])
