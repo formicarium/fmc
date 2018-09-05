@@ -128,10 +128,19 @@ export class SyncState extends Container<ISyncState> {
     }, baseRegexTest)
   }
 
-  public startSyncing = (devspace: string, applicationName: string, folder: string) => {
+  public startSyncing = async (devspace: string, applicationName: string, folder: string) => {
+    const { tanajuraService, configService } = this.system
+    const { devspace: { tanajuraApiUrl } } = await configService.readConfig()
     this.stopSyncing(devspace, applicationName)
 
-    // this.system.tanajuraService.getRepo()
+    const repoExists = await tanajuraService.repoExists(tanajuraApiUrl, applicationName)
+    if (!repoExists) {
+      console.log('creating repo...')
+      tanajuraService.createRepo(tanajuraApiUrl, applicationName)
+    } else {
+      console.log(`repo ${applicationName} already exists on ${tanajuraApiUrl}`)
+    }
+
     const id = getSyncId(devspace, applicationName)
     const watcher = this.setupWatcher(id, folder)
     const sync: ISync = {

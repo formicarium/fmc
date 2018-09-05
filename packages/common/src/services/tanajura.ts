@@ -22,6 +22,7 @@ export interface ITanajuraService {
   deleteRepo(apiUrl: string, name: string): Promise<IDeleteRepoResponse>
   getRepo(apiUrl: string, name: string): Promise<IRepo>
   getVersion: (apiUrl: string) => Promise<string>
+  repoExists:(apiUrl: string, name: string) => Promise<boolean>
 }
 
 const getStatusCode = R.pathOr(0, ['response', 'data', 'statusCode'])
@@ -74,7 +75,8 @@ export class TanajuraService implements ITanajuraService {
 
   public getRepo(apiUrl: string, name: string): Promise<IRepo> {
     return this.httpClient.request<IRepo>({
-      url: `${apiUrl}/api/repo/${name}`,
+      url: `/api/repo/${name}`,
+      baseURL: apiUrl,
       method: 'get',
     })
     .then((response) => response.data)
@@ -87,6 +89,17 @@ export class TanajuraService implements ITanajuraService {
           throw err
       }
     })
+  }
+
+  public repoExists = (apiUrl: string, name: string): Promise<boolean> => {
+    return this.getRepo(apiUrl, name)
+      .then(() => true)
+      .catch((err) => {
+        switch (err.type) {
+          case 'RepoNotFound': return false
+          default: throw err
+        }
+      })
   }
 
   public getVersion = async (apiUrl: string): Promise<string> => {
