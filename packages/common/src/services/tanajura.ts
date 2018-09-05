@@ -18,26 +18,25 @@ export interface IRepo {
   name: string
 }
 export interface ITanajuraService {
-  createRepo(name: string): Promise<ICreateRepoResponse>
-  deleteRepo(name: string): Promise<IDeleteRepoResponse>
-  getRepo(name: string): Promise<IRepo>
-  getVersion: () => Promise<string>
+  createRepo(apiUrl: string, name: string): Promise<ICreateRepoResponse>
+  deleteRepo(apiUrl: string, name: string): Promise<IDeleteRepoResponse>
+  getRepo(apiUrl: string, name: string): Promise<IRepo>
+  getVersion: (apiUrl: string) => Promise<string>
 }
 
 const getStatusCode = R.pathOr(0, ['response', 'data', 'statusCode'])
 
 export class TanajuraService implements ITanajuraService {
   private httpClient: IHttpClient
-  private apiUrl: string
 
-  constructor(apiUrl: string, httpClientInjected: IHttpClient) {
+  constructor(httpClientInjected: IHttpClient) {
     this.httpClient = httpClientInjected
-    this.apiUrl = apiUrl
   }
 
-  public createRepo(name: string): Promise<ICreateRepoResponse> {
+  public createRepo(apiUrl: string, name: string): Promise<ICreateRepoResponse> {
     return this.httpClient.request<ICreateRepoResponse>({
-      url: `${this.apiUrl}/api/repo`,
+      url: `/api/repo`,
+      baseURL: apiUrl,
       data: {
         name,
       },
@@ -55,9 +54,10 @@ export class TanajuraService implements ITanajuraService {
     })
   }
 
-  public deleteRepo(name: string): Promise<IDeleteRepoResponse> {
+  public deleteRepo(apiUrl: string, name: string): Promise<IDeleteRepoResponse> {
     return this.httpClient.request<IDeleteRepoResponse>({
-      url: `${this.apiUrl}/api/repo/${name}`,
+      url: `/api/repo/${name}`,
+      baseURL: apiUrl,
       method: 'delete',
     })
     .then((response) => response.data)
@@ -72,9 +72,9 @@ export class TanajuraService implements ITanajuraService {
     })
   }
 
-  public getRepo(name: string): Promise<IRepo> {
+  public getRepo(apiUrl: string, name: string): Promise<IRepo> {
     return this.httpClient.request<IRepo>({
-      url: `${this.apiUrl}/api/repo/${name}`,
+      url: `${apiUrl}/api/repo/${name}`,
       method: 'get',
     })
     .then((response) => response.data)
@@ -89,11 +89,11 @@ export class TanajuraService implements ITanajuraService {
     })
   }
 
-  public getVersion = async (): Promise<string> => {
+  public getVersion = async (apiUrl: string): Promise<string> => {
     return this.httpClient.request<ITanajuraVersion>({
       method: 'get',
       url: '/api/version',
-      baseURL: this.apiUrl,
+      baseURL: apiUrl,
     }).then((d) => d.data.version)
   }
 
