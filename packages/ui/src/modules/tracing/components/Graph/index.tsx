@@ -16,7 +16,7 @@ const options = {
     size: 30,
     font: {
       size: 20,
-      color: '#ffffff',
+      color: '#000',
       face: 'Open Sans',
     },
     borderWidth: 4,
@@ -34,10 +34,10 @@ const options = {
   edges: {
     width: 4,
     color: {
-      color: '#30434D',
+      color: '#d3d3d3',
     },
     font: {
-      color: 'rgba(255, 255, 255, 0.75)',
+      color: '#000',
       strokeWidth: 0,
     },
     smooth: {
@@ -84,8 +84,6 @@ interface ISelectNodeEvent {
   edges: string[]
 }
 
-const HIGHLIGHTED_EDGE = {color: '#f1c40f'}
-
 const buildVisGraph = (graph: IGraphDescription) => {
   return {
     edges: graph.edges.map((edge) => ({
@@ -110,7 +108,6 @@ export class Graph extends React.Component<IGraph> {
       onSelectNode,
       onDeselectNode,
     } = this.props
-    console.log(graph)
     return (
       <VisGraph
         graph={buildVisGraph(graph)}

@@ -5,13 +5,11 @@ import { EventListState } from '../../state/EventList';
 import { Graph } from '../../components/Graph';
 import { IEventMessage } from '../../model/event';
 import _ from 'lodash'
-import { buildGraphFromEventMessages } from '../../logic/event-graph';
 import { IGraphDescription, IEdge } from '../../model/graph';
 import * as R from 'ramda'
 import { DashboardState } from '../../state/DashboardState';
 import { FilterState } from '../../state/FilterState';
-
-const contains = (arr: string[]) => (str: string) => R.contains(str, arr)
+import { getGraphFromEvents } from '~/modules/tracing/logic/event-graph';
 
 const selectMessages = (messages: IEventMessage[], eventListState: EventListState, dashboardState: DashboardState): IEventMessage[] => {
   const {
@@ -65,8 +63,8 @@ export const DynamicGraph: React.SFC = () => (
         {(eventListState: EventListState, dashboardState: DashboardState, filterState: FilterState) => (
           <Graph
             graph={R.pipe(
-              buildGraphFromEventMessages,
-              highlightGraph(filterState.state.traceId),
+              getGraphFromEvents,
+              // highlightGraph(filterState.state.traceId),
             )(selectMessages(messages, eventListState, dashboardState))}
             onSelectEdge={_.noop}
             onDeselectEdge={_.noop}

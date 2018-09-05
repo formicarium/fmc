@@ -1,11 +1,16 @@
 import React from 'react'
 import { Menu } from 'semantic-ui-react';
 import { withRouter, RouteComponentProps } from 'react-router';
+import styled from 'styled-components';
 
+const StyledMenu = styled(Menu)`
+  z-index: 9999;
+  position: relative;
+`
 export const TopMenuInner: React.SFC<RouteComponentProps<{}>> = ({
   history,
 }) => (
-  <Menu>
+  <StyledMenu>
     <Menu.Item>
       <img src='https://www.nubank.com.br/images/nu-icon.png'/>
     </Menu.Item>
@@ -29,7 +34,7 @@ export const TopMenuInner: React.SFC<RouteComponentProps<{}>> = ({
       active={history.location.pathname === '/tracing'}
       onClick={(e, { name }) => history.push('/tracing')}
     />
-  </Menu>
+  </StyledMenu>
 )
 
 export const TopMenu = withRouter(TopMenuInner)

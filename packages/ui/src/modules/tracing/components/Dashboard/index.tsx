@@ -16,12 +16,11 @@ const StyledSearchBar = styled(SearchBar)`
   margin-bottom: 20px;
 `
 const Wrapper = styled.div`
-  background-color: #26363E;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Open Sans', sans-serif;
-  /* padding: 20px; */
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
 `
 
 class DashboardInner extends React.Component<{dashboard: DashboardState}> {
@@ -78,7 +77,7 @@ class DashboardInner extends React.Component<{dashboard: DashboardState}> {
           <DynamicGraph />
         </div>
 
-        <div style={{position: 'absolute', left: 20, top: 20, bottom: 20, width: 600, display: 'flex', flexDirection: 'column' }}>
+        <div style={{position: 'absolute', left: 0, top: 0, bottom: 0, width: 300, display: 'flex', flexDirection: 'column' }}>
           <EventListContainer />
           <Container style={{backgroundColor: '#FFF', padding: 20}}>
             <Subscribe to={[EventListState]}>

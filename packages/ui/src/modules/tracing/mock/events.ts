@@ -1,147 +1,14 @@
+import { Direction } from '~/modules/tracing/model/event';
 import { IEventMessage, MessageType, EventType, HttpDirection, KafkaDirection } from '../model/event';
-import * as R from 'ramda'
-const exampleKafkaMessage: IEventMessage = {
-  id: '1',
-  identity: 'service-1',
-  meta: {
-    type: MessageType.EVENT,
-    timestamp: new Date(),
-    service: 'service-1',
-    traceId: 'A',
-    spanId: 'B',
-  },
-  payload: {
-    type: EventType.KAFKA,
-    direction: KafkaDirection.CONSUMER,
-    data: {
-      endpoint: {
-        topic: 'topic-1',
-      },
-    },
-  },
-}
-const exampleHttpMessage: IEventMessage = {
-  id: '2',
-  identity: 'service-1',
-  meta: {
-    type: MessageType.EVENT,
-    timestamp: new Date(),
-    service: 'service-1',
-    traceId: 'A',
-    spanId: 'C',
-    parentId: 'B',
-  },
-  payload: {
-    type: EventType.HTTP,
-    direction: HttpDirection.IN_REQUEST,
-    data: {
-      endpoint: {
-        uri: '/blabla',
-        service: 'service-2',
-      },
-    },
-  },
-}
 
-const exampleHttpOutMessage: IEventMessage = {
-  id: '3',
-  identity: 'service-1',
-  meta: {
-    type: MessageType.EVENT,
-    timestamp: new Date(),
-    service: 'service-1',
-    traceId: 'A',
-    spanId: 'D',
-    parentId: 'C',
-  },
-  payload: {
-    type: EventType.HTTP,
-    direction: HttpDirection.OUT_REQUEST,
-    data: {
-      endpoint: {
-        uri: '/blabla',
-        service: 'service-2',
-      },
-    },
-  },
-}
-
-const exampleKafkaProduceMessage: IEventMessage = {
-  id: '4',
-  identity: 'service-1',
-  meta: {
-    type: MessageType.EVENT,
-    timestamp: new Date(),
-    service: 'service-1',
-    traceId: 'A',
-    spanId: 'E',
-    parentId: 'D',
-  },
-  payload: {
-    type: EventType.KAFKA,
-    direction: KafkaDirection.PRODUCER,
-    data: {
-      endpoint: {
-        topic: 'topic-2',
-      },
-    },
-  },
-}
-
-const buildService = (i) => ({
-  name: `service-${i}`,
-})
-
-const buildTopic = (i) => ({
-  name: `topic-${i}`,
-})
-
-const servicePool = R.range(0, 10).map(buildService)
-const topicPool = R.range(0, 10).map(buildTopic)
-
-const randomArrayItem = <T>(items: T[]) => items[Math.floor(Math.random() * items.length)];
-
-const randomService = () => randomArrayItem(servicePool)
-const randomTopic = () => randomArrayItem(topicPool)
-
-const kafkaDirections = [KafkaDirection.CONSUMER, KafkaDirection.PRODUCER]
-const randomKafkaDirection = () => randomArrayItem(kafkaDirections)
-
-const httpDirections = [HttpDirection.IN_REQUEST, HttpDirection.OUT_REQUEST]
-const randomHttpDirection = () => randomArrayItem(httpDirections)
-
-const randomKafkaMessage = (svc: string, topic: string, direction: KafkaDirection, traceId: string, spanId: string, parentId?: string): IEventMessage => {
+const createHttpMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId?: string): IEventMessage => {
   return {
-    id: `${Math.random()}`,
-    identity: svc,
+    id: `ev_${timestamp}`,
+    identity: reporter,
     meta: {
       type: MessageType.EVENT,
-      timestamp: new Date(),
-      service: svc,
-      traceId,
-      spanId,
-      parentId,
-    },
-    payload: {
-      type: EventType.KAFKA,
-      direction,
-      data: {
-        endpoint: {
-          topic,
-        },
-      },
-    },
-  }
-}
-
-const randomHttpMessage = (svc1: string, svc2: string, direction: HttpDirection, traceId: string, spanId: string, parentId?: string): IEventMessage => {
-  return {
-    id: `${Math.random()}`,
-    identity: svc1,
-    meta: {
-      type: MessageType.EVENT,
-      timestamp: new Date(),
-      service: svc1,
+      timestamp,
+      service: reporter,
       traceId,
       spanId,
       parentId,
@@ -152,23 +19,66 @@ const randomHttpMessage = (svc1: string, svc2: string, direction: HttpDirection,
       data: {
         endpoint: {
           uri: '/blabla',
-          service: svc2,
+          service: 'xxx',
+        },
+      },
+    },
+  }
+}
+const createKafkaMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId?: string): IEventMessage => {
+  return {
+    id: `ev_${timestamp}`,
+    identity: reporter,
+    meta: {
+      type: MessageType.EVENT,
+      timestamp,
+      service: reporter,
+      traceId,
+      spanId,
+      parentId,
+    },
+    payload: {
+      type: EventType.KAFKA,
+      direction,
+      data: {
+        endpoint: {
+          topic: 'xablau',
         },
       },
     },
   }
 }
 
-// export const MESSAGES = R.range(0, 100).map((i) => i % 2 === 0 ? randomKafkaMessage() : randomHttpMessage())
+const http0 = createHttpMessage(0,	'X',	Direction.PRODUCER,	'O.A'	, 'O', 'O')
+const http1 = createHttpMessage(1,	'Y',	Direction.CONSUMER,	'O.A.B', 'O', 'O.A')
+const http2 = createHttpMessage(2,	'Y',	Direction.PRODUCER,	'O.A.B.C', 'O',	'O.A.B')
+const http3 = createHttpMessage(3,	'Y',	Direction.PRODUCER,	'O.A.B.Cx', 'O', 'O.A.B')
+const http4 = createHttpMessage(4,	'Z',	Direction.CONSUMER,	'O.A.B.C.D', 'O',	'O.A.B.C')
+const http5 = createHttpMessage(5,	'Z',	Direction.PRODUCER,	'O.A.B.C.D'	, 'O', 'O.A.B.C')
+const http6 = createHttpMessage(6,	'Y',	Direction.CONSUMER,	'O.A.B.C'	, 'O',	'O.A.B')
+const http7 = createHttpMessage(7,	'W',	Direction.CONSUMER,	'O.A.B.Cx.Dx'	, 'O',	'O.A.B.Cx')
+const http8 = createHttpMessage(8,	'W',	Direction.PRODUCER,	'O.A.B.Cx.Dx'	, 'O',	'O.A.B.Cx')
+const http9 = createHttpMessage(9,	'Y',	Direction.CONSUMER,	'O.A.B.Cx'	, 'O',	'O.A.B')
+const http10 = createHttpMessage(10, 'Y',	Direction.PRODUCER,	'O.A.B',	'O',	'O.A')
+const http11 = createHttpMessage(11, 'X',	Direction.CONSUMER,	'O.A',	'O',	'O')
+const kafka12 = createKafkaMessage(12,	'Z', Direction.PRODUCER, 'O.A.B.C.D.E',	'O',	'O.A.B.C.D')
+const kafka13 = createKafkaMessage(13,	'X', Direction.CONSUMER, 'O.A.B.C.D.E.F',	'O',	'O.A.B.C.D.E')
+const kafka14 = createKafkaMessage(14,	'K', Direction.CONSUMER, 'O.A.B.C.D.E.Fx',	'O',	'O.A.B.C.D.E')
 
 export const MESSAGES = [
-  randomHttpMessage('svc1', 'svc2', HttpDirection.OUT_REQUEST, 'X', 'X.B'),
-  randomHttpMessage('svc1', 'svc2', HttpDirection.IN_REQUEST, 'X', 'X.B.C', 'X.B'),
-  randomKafkaMessage('svc2', 'topic1', KafkaDirection.PRODUCER, 'X', 'X.B.D', 'X.B'),
-  randomKafkaMessage('svc3', 'topic1', KafkaDirection.CONSUMER, 'X', 'X.B.E', 'X.B'),
-
-  randomHttpMessage('svc1', 'svc2', HttpDirection.OUT_REQUEST, 'Y', 'Y.B'),
-  randomHttpMessage('svc1', 'svc2', HttpDirection.IN_REQUEST, 'Y', 'Y.B.C', 'Y.B'),
-  randomKafkaMessage('svc2', 'topic1', KafkaDirection.PRODUCER, 'Y', 'Y.B.D', 'Y.B'),
-  randomKafkaMessage('svc3', 'topic1', KafkaDirection.CONSUMER, 'Y', 'Y.B.E', 'Y.B'),
+  http0,
+  http1,
+  http2,
+  http3,
+  http4,
+  http5,
+  http6,
+  http7,
+  http8,
+  http9,
+  http10,
+  http11,
+  kafka12,
+  kafka13,
+  kafka14,
 ]
