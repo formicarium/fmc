@@ -9,7 +9,7 @@ export class SyncListContainer extends React.Component {
       <Subscribe to={[SyncState]}>
         {(syncState: SyncState) => (
           <SyncList
-            syncs={syncState.state.syncs}
+            syncs={syncState.getSyncList()}
           />
         )}
       </Subscribe>

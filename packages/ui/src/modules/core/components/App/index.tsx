@@ -9,6 +9,7 @@ import { MainLayout } from '~/modules/core/MainLayout';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { SystemProvider } from '../SystemProvider';
 import { Nullable, ISystem, getSystem } from 'common'
+import { SyncState } from '~/modules/sync/state/SyncState';
 
 interface IState {
   system: Nullable<ISystem>
@@ -40,7 +41,7 @@ export class App extends React.Component<{}, IState> {
 
     return (
       <SystemProvider system={this.state.system}>
-        <Provider>
+        <Provider inject={[new SyncState(this.state.system)]}>
           <ApolloProvider client={client}>
             <BrowserRouter>
               <MainLayout />

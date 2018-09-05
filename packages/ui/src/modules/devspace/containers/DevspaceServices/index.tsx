@@ -33,7 +33,7 @@ export class DevspaceServices extends React.Component {
   private handleToggleSync = (syncState: SyncState, system: ISystem) => async (application: IApplication, sync: boolean) => {
     if (sync) {
       const currentDevspace = await system.configService.readDevspaceConfig()
-      syncState.startSyncing(currentDevspace.name, application.name, '~/tmp/x')
+      syncState.startSyncing(currentDevspace.name, application.name, '/tmp/test')
     } else {
       alert('remove')
     }

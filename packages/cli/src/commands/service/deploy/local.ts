@@ -79,7 +79,7 @@ export default class ServiceDeployLocal extends FMCCommand {
      * Deploy service on soil
      */
     uiService.spinner.start('Deploying service...')
-    const response = await this.system.soilService.deployService(devspace.name, serviceName, applicationDefinition, args)
+    const response = await this.system.soilService.deployService(devspace.name, serviceName, applicationDefinition as any, args)
 
     await localDB.registerServiceForDevspace(devspace.name, {
       name: serviceName,

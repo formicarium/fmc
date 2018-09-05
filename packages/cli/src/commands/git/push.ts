@@ -1,13 +1,13 @@
-import { LocalDB } from './../../services/db'
+
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
 import * as fs from 'fs-extra'
 import * as path from 'path'
 import * as gitignoreParser from 'gitignore-parser'
 import * as R from 'ramda'
-import { IGitService } from '../../services/git'
 import * as __ from 'lodash'
 import { gitPush } from '../../controllers/git'
+import { LocalDB, IGitService } from 'common'
 
 const removeSubpathFromPath = (subpath: string, pathString: string) => pathString.replace(subpath, '')
 const clearSlash = (pathString: string) => {

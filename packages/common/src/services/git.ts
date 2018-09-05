@@ -75,6 +75,9 @@ export class GitService {
 
   private safelyAddExcludeToGit = async (basePath: string, gitFolder: string) => {
     const filePath = this.getExcludeFilePath(basePath, gitFolder)
+    if (!await fs.pathExists(filePath)) {
+      return
+    }
     const fileContent = await fs.readFile(filePath, 'utf8')
     const lines = this.fileToLines(fileContent)
     const newLines = this.hasAlreadyExcluded(lines) ? lines : this.addExclude(lines)

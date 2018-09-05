@@ -4,16 +4,16 @@ import * as fs from 'fs-extra'
 type ChangedEvent = (evt: string, name: string) => void
 
 export interface IFilesService {
-  startWatching: (rootPath: string, cb: ChangedEvent,  filter: any) => Promise<void>
+  startWatching: (rootPath: string, cb: ChangedEvent,  filter: any) => fs.FSWatcher
   safelyReadJSON: <T>(filePath: string) => Promise<T>
 }
 
 export class FilesService implements IFilesService {
-  public startWatching = async (rootPath: string, cb: ChangedEvent, filter?: any) => {
-    watch(rootPath, { recursive: true, filter }, (evt: string, name: string) => {
+  public startWatching = (rootPath: string, cb: ChangedEvent, filter?: any): fs.FSWatcher => {
+    return watch(rootPath, { recursive: true, filter }, (evt: string, name: string) => {
       console.log(evt, name)
       cb(evt, name)
-    })
+    }) as fs.FSWatcher
   }
   
   public safelyReadJSON = async <T>(filePath: string): Promise<T> => {

@@ -3,12 +3,11 @@ import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { ApplicationsList } from '~/modules/application/components/ApplicationsList';
 import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
 import { DisplayError } from '~/modules/common/components/DisplayError';
-import { ISystem, sleep } from 'common';
+import { ISystem } from 'common';
 import { ApplicationListPlaceholder } from '~/modules/application/components/ApplicationsList/index.shimmer';
 
 export class DevspaceInfra extends React.Component {
   private fetchInfra = (system: ISystem) => async () => {
-    await sleep(1000)
     const currentDevspace = await system.configService.readDevspaceConfig()
     const devspace = await system.soilService.getDevspace(currentDevspace.name)
     if (devspace) {
@@ -29,12 +28,6 @@ export class DevspaceInfra extends React.Component {
                 applicationsShowingLogs={{}}
                 applicationsSyncing={{}}
                 applications={data}
-                onClickDelete={() => {
-                  alert('abre um pr')
-                }}
-                onClickRestart={() => {
-                  alert('abre um pr')
-                }}
                 onClickLogs={() => {
                   alert('abre um pr')
                 }}
