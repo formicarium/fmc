@@ -34,6 +34,8 @@ export class DevspaceInfra extends React.Component {
                 onClickLogs={() => {
                   alert('abre um pr')
                 }}
+                showDelete={false}
+                showRestart={false}
               />
             )}
           </PromiseManager>

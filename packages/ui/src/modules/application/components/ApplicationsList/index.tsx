@@ -9,6 +9,8 @@ export interface IApplicationsListProps {
   onClickDelete: (application: IApplication) => void;
   onClickRestart: (application: IApplication) => void;
   onClickLogs: (application: IApplication) => void;
+  showDelete: boolean;
+  showRestart: boolean;
 }
 
 const Wrapper = styled.div`
@@ -23,6 +25,8 @@ export const ApplicationsList: React.SFC<IApplicationsListProps> = ({
   onClickRestart,
   onClickLogs,
   applicationsShowingLogs,
+  showDelete,
+  showRestart,
 }) => (
   <Wrapper>
     {applications && applications.map((application) => (
@@ -34,6 +38,8 @@ export const ApplicationsList: React.SFC<IApplicationsListProps> = ({
         onClickDelete={() => onClickDelete(application)}
         onClickRestart={() => onClickRestart(application)}
         onClickLogs={() => onClickLogs(application)}
+        showDelete={showDelete}
+        showRestart={showRestart}
       />
     ))}
   </Wrapper>

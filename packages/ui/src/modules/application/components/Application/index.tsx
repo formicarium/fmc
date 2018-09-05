@@ -30,16 +30,20 @@ export interface IActionsProps {
   onClickDelete: () => void
   onClickRestart: () => void;
   onClickLogs: () => void;
+  showDelete: boolean;
+  showRestart: boolean;
 }
 const Actions: React.SFC<IActionsProps> = ({
   onClickDelete,
   onClickRestart,
   onClickLogs,
+  showDelete,
+  showRestart,
 }) => (
   <Button.Group>
     <Button color='yellow' onClick={onClickLogs} basic>Logs</Button>
-    <PromiseButton color='purple' onClick={onClickRestart} basic>Restart</PromiseButton>
-    <PromiseButton color='red' onClick={onClickDelete}>Delete</PromiseButton>
+    { showRestart && <PromiseButton color='purple' onClick={onClickRestart} basic>Restart</PromiseButton>}
+    { showDelete && <PromiseButton color='red' onClick={onClickDelete}>Delete</PromiseButton>}
   </Button.Group>
 )
 
@@ -59,6 +63,8 @@ export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
   onClickDelete,
   onClickRestart,
   onClickLogs,
+  showDelete,
+  showRestart,
 }) => (
   <Segment className={className}>
     <StyledHeader dividing>
@@ -78,6 +84,8 @@ export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
         onClickDelete={onClickDelete}
         onClickRestart={onClickRestart}
         onClickLogs={onClickLogs}
+        showDelete={showDelete}
+        showRestart={showRestart}
       />
     </ActionsWrapper>
 
