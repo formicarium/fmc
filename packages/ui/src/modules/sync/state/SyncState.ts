@@ -32,7 +32,12 @@ export interface ISyncState {
 
 const getSyncId = (devspace: string, applicationName: string) => `${devspace}/${applicationName}`
 const baseRegexTest = (x: string) => !/\.git|\.fmcgit/.test(x)
-
+const getSyncedFilesLensForId = (id: string) => R.lensPath(['syncMap', id, 'syncedFiles'])
+const buildSyncedFile = (path: string) => ({
+  path,
+  status: SyncedFileStatus.WAITING,
+  timestamp: new Date().getTime(),
+})
 export class SyncState extends Container<ISyncState> {
   private system: ISystem
 
@@ -83,23 +88,12 @@ export class SyncState extends Container<ISyncState> {
   private debouncedSyncFlow = _.debounce(this.syncFlow, 100)
 
   private setupWatcher = (id: string, folder: string): fs.FSWatcher => {
-    console.log('setup watcher')
     return this.system.filesService.startWatching('/tmp/test', (ev, filePath) => {
-      this.setState((state) => ({
-        syncMap: {
-          ...state.syncMap,
-          [id]: {
-            ...state.syncMap[id],
-            syncedFiles: [
-              ...state.syncMap[id].syncedFiles, {
-                path: filePath,
-                status: SyncedFileStatus.WAITING,
-                timestamp: new Date().getTime(),
-              },
-            ],
-          },
-        },
-      }))
+      const syncedFilesLens = getSyncedFilesLensForId(id)
+      const syncedFile = buildSyncedFile(folder)
+      const addSyncedFileToState = R.over(syncedFilesLens, R.append(syncedFile))
+      this.setState(addSyncedFileToState)
+
       if (this.state.syncMap[id]) {
         this.debouncedSyncFlow(this.state.syncMap[id])
       }
@@ -119,12 +113,10 @@ export class SyncState extends Container<ISyncState> {
       watcher,
     }
 
-    this.setState((state) => ({
-      syncMap: {
-        ...state.syncMap,
-        [sync.id]: sync,
-      },
-    }))
+    const syncMapLens = R.lensPath(['syncMap'])
+    const addSyncById = R.assoc(sync.id, sync)
+    const addSyncToMap = R.over(syncMapLens, addSyncById)
+    this.setState(addSyncToMap)
   }
 
   public getSyncList = (): ISync[] => R.values(this.state.syncMap)
@@ -133,12 +125,11 @@ export class SyncState extends Container<ISyncState> {
     const id = getSyncId(devspaceName, applicationName)
     const sync = this.state.syncMap[id]
     if (sync) {
-      console.log('closing watcher')
+      const syncMapLens = R.lensPath(['syncMap'])
+      const dissocBySyncId = R.dissoc(sync.id)
       sync.watcher.close()
-      this.setState((state) => ({
-        ...state,
-        syncMap: R.omit([sync.id], state.syncMap),
-      }))
+      const removeSyncFromMap = R.over(syncMapLens, dissocBySyncId)
+      this.setState(removeSyncFromMap)
     }
   }
 

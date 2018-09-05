@@ -13,6 +13,7 @@ export interface IApplicationProps {
   showLogs: boolean;
   isSyncing: boolean;
   onToggleSync: (sync: boolean)  => void;
+  showSync: boolean;
 }
 
 const StatusImage = styled(Image)`
@@ -34,7 +35,6 @@ export interface IActionsProps {
   onClickLogs: () => void;
   showDelete: boolean;
   showRestart: boolean;
-  showSync: boolean;
 }
 const Actions: React.SFC<IActionsProps> = ({
   onClickDelete,
