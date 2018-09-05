@@ -1,5 +1,5 @@
 import React from 'react'
-import { Segment, List, Header } from 'semantic-ui-react';
+import { Segment, Header } from 'semantic-ui-react';
 import { ISync } from '~/modules/sync/state/SyncState';
 import { SyncedFilesList } from '~/modules/sync/components/SyncedFilesList';
 import styled from 'styled-components';
