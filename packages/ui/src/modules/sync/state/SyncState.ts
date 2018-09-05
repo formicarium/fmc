@@ -105,14 +105,10 @@ export class SyncState extends Container<ISyncState> {
     }
 
     await gitService.push(folder, gitRemoteName, 'tanajura')
-
-    throw new Error('blabla')
     const syncedFilesLens = R.lensPath(['syncMap', id, 'syncedFiles'])
     const updateSyncFilesState = R.over(syncedFilesLens, R.map(updateSyncedFileToSynced))
     this.setState(updateSyncFilesState)
   }
-
-  private debouncedSyncFlow = _.debounce(this.syncFlow, 100)
 
   private setupWatcher = (id: string, folder: string): fs.FSWatcher => {
     return this.system.filesService.startWatching('/tmp/test', async (ev, filePath) => {
