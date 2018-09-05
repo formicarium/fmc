@@ -50,11 +50,7 @@ const buildSyncedFile = (path: string) => ({
 type SyncedFileTransformer = (syncedFile: ISyncedFile) => ISyncedFile
 
 const updateIfWaiting = (fn: SyncedFileTransformer) => R.cond([
-  [(x) => {
-    console.log(x)
-    console.log(fn(x))
-    return R.pathEq(['status'], SyncedFileStatus.WAITING, x)
-  }, fn],
+  [R.pathEq(['status'], SyncedFileStatus.WAITING), fn],
   [R.T, R.identity],
 ])
 
@@ -135,10 +131,7 @@ export class SyncState extends Container<ISyncState> {
 
     const repoExists = await tanajuraService.repoExists(tanajuraApiUrl, applicationName)
     if (!repoExists) {
-      console.log('creating repo...')
       tanajuraService.createRepo(tanajuraApiUrl, applicationName)
-    } else {
-      console.log(`repo ${applicationName} already exists on ${tanajuraApiUrl}`)
     }
 
     const id = getSyncId(devspace, applicationName)
@@ -172,7 +165,6 @@ export class SyncState extends Container<ISyncState> {
 
   public clearAllWatchers = () => {
     Object.keys(this.state.syncMap).forEach((id) => {
-      console.log('clearing watcher for ', id)
       const { watcher } = this.state.syncMap[id]
       watcher.close()
     })
