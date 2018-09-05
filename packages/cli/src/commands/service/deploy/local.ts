@@ -1,12 +1,11 @@
-import { IBaseArgs } from './../../../services/soil'
+
 import { gitSetup } from './../../../controllers/git'
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../../FMCCommand'
-import { IArgs } from '../../../services/soil'
 import * as fs from 'fs-extra'
-import { Nullable, Maybe } from '../../../typings/common'
+import { Nullable } from '../../../typings/common'
 import * as path from 'path'
-import { IApplicationDefinition } from '../../../model/devspace'
+import { IApplicationDefinition, IArgs } from 'common'
 
 export default class ServiceDeployLocal extends FMCCommand {
   public static description = 'Deploys service'

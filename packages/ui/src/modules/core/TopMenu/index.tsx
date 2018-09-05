@@ -17,22 +17,27 @@ export const TopMenuInner: React.SFC<RouteComponentProps<{}>> = ({
     <Menu.Item
       active={history.location.pathname === '/'}
       name='Devspaces'
-      onClick={(e, { name }) => history.push('/')}
+      onClick={() => history.push('/')}
     />
     <Menu.Item
       active={history.location.pathname === '/devspaces/create'}
       name='Create devspace'
-      onClick={(e, { name }) => history.push('/devspaces/create')}
+      onClick={() => history.push('/devspaces/create')}
     />
     <Menu.Item
       name='My Devspace'
       active={history.location.pathname.indexOf('/my-devspace') !== -1}
-      onClick={(e, { name }) => history.push('/my-devspace')}
+      onClick={() => history.push('/my-devspace')}
     />
     <Menu.Item
       name='Tracing'
       active={history.location.pathname === '/tracing'}
-      onClick={(e, { name }) => history.push('/tracing')}
+      onClick={() => history.push('/tracing')}
+    />
+    <Menu.Item
+      name='Sync'
+      active={history.location.pathname === '/sync'}
+      onClick={() => history.push('/sync')}
     />
   </StyledMenu>
 )

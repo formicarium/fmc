@@ -7,6 +7,7 @@ import { ISystem, IApplication } from 'common';
 import { ApplicationListPlaceholder } from '~/modules/application/components/ApplicationsList/index.shimmer';
 import { Subscribe } from 'unstated';
 import { LogsState } from '~/modules/devspace/state/Logs';
+import { SyncState } from '~/modules/sync/state/SyncState';
 
 export class DevspaceServices extends React.Component {
   private fetchServices = (system: ISystem) => async () => {
@@ -29,6 +30,14 @@ export class DevspaceServices extends React.Component {
   private handleLogs = (logsState: LogsState) => (application: IApplication) => {
     logsState.toggleLogsForApplication(application.name)
   }
+  private handleToggleSync = (syncState: SyncState, system: ISystem) => async (application: IApplication, sync: boolean) => {
+    if (sync) {
+      const currentDevspace = await system.configService.readDevspaceConfig()
+      syncState.startSyncing(currentDevspace.name, application.name, '~/tmp/x')
+    } else {
+      alert('remove')
+    }
+  }
 
   public render() {
     return (
@@ -39,16 +48,18 @@ export class DevspaceServices extends React.Component {
             LoadingComponent={() => <ApplicationListPlaceholder n={3} />}
             ErrorComponent={DisplayError}>
             {({ data }, _, patchData) => (
-              <Subscribe to={[LogsState]}>
-              {(logsState: LogsState) => (
+              <Subscribe to={[LogsState, SyncState]}>
+              {(logsState: LogsState, syncState: SyncState) => (
                 <ApplicationsList
                   applicationsShowingLogs={logsState.state.applicationsShowingLogs}
+                  applicationsSyncing={syncState.getApplicationsSyncing()}
                   applications={data}
                   onClickDelete={this.handleDelete(system, patchData, data)}
                   onClickRestart={this.handleRestart(system)}
                   onClickLogs={this.handleLogs(logsState)}
                   showDelete
                   showRestart
+                  onToggleSync={this.handleToggleSync(syncState, system)}
                 />
               )}
               </Subscribe>

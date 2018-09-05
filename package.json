@@ -12,5 +12,6 @@
   },
   "scripts": {
     "build:watch": "lerna run build:watch"
-  }
+  },
+  "devDependencies": {}
 }

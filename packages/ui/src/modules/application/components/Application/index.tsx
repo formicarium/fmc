@@ -1,7 +1,7 @@
 import React from 'react'
 import { InterfacesList } from '../InterfacesList';
 import styled from 'styled-components';
-import { Header, Image, Button, Segment } from 'semantic-ui-react';
+import { Header, Image, Button, Segment, Checkbox } from 'semantic-ui-react';
 import { IApplicationLinks } from 'common';
 import { PromiseButton } from '~/modules/common/components/PromiseButton';
 import { ApplicationLogs } from '~/modules/application/containers/ApplicationLogs';
@@ -11,6 +11,8 @@ export interface IApplicationProps {
   links: IApplicationLinks
   className?: string
   showLogs: boolean;
+  isSyncing: boolean;
+  onToggleSync: (sync: boolean)  => void;
 }
 
 const StatusImage = styled(Image)`
@@ -52,7 +54,8 @@ const ActionsWrapper = styled.div`
   margin-right: 10px;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
 `
 
 export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
@@ -60,9 +63,11 @@ export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
   links,
   className,
   showLogs,
+  isSyncing,
   onClickDelete,
   onClickRestart,
   onClickLogs,
+  onToggleSync,
   showDelete,
   showRestart,
 }) => (
@@ -80,6 +85,7 @@ export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
     />
 
     <ActionsWrapper>
+      <Checkbox label='Sync files' toggle checked={isSyncing} onChange={(e, data) => onToggleSync(data.checked)}/>
       <Actions
         onClickDelete={onClickDelete}
         onClickRestart={onClickRestart}

@@ -11,7 +11,10 @@ export class DevspaceInfra extends React.Component {
     await sleep(1000)
     const currentDevspace = await system.configService.readDevspaceConfig()
     const devspace = await system.soilService.getDevspace(currentDevspace.name)
-    return [devspace.hive, devspace.tanajura]
+    if (devspace) {
+      return [devspace.hive, devspace.tanajura]
+    }
+    return []
   }
   public render() {
     return (
@@ -24,6 +27,7 @@ export class DevspaceInfra extends React.Component {
             {({ data }) => (
               <ApplicationsList
                 applicationsShowingLogs={{}}
+                applicationsSyncing={{}}
                 applications={data}
                 onClickDelete={() => {
                   alert('abre um pr')
