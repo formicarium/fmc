@@ -23,11 +23,11 @@ export interface ISystem {
 
 export const getSystem = async (): Promise<ISystem> => {
   const configService = new ConfigService()
-  const { devspace: { hiveApiUrl, tanajuraApiUrl, configServerUrl }, soilUrl } = await configService.readConfig()
+  const { devspace: { hiveApiUrl, configServerUrl }, soilUrl } = await configService.readConfig()
   const hiveService = new HiveService(hiveApiUrl, httpClient)
   const soilService = new SoilService(soilUrl, httpClient)
   const gitService = new GitService()
-  const tanajuraService = new TanajuraService(tanajuraApiUrl, httpClient)
+  const tanajuraService = new TanajuraService(httpClient)
   const configServerService = new ConfigServerService(configServerUrl, httpClient)
   const dbPath = path.resolve(os.homedir(), '.fmc/db.json')
   const db = await low(new FileAsync(dbPath))

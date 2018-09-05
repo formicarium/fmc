@@ -73,7 +73,7 @@ export default class ServiceDeployLocal extends FMCCommand {
       argMap: argMap ? `${JSON.stringify(argMap)}` : '-',
     })
 
-    await gitSetup(devspace.name, serviceName, absoluteLocalRepoPath, tanajuraService, gitService, configService, uiService)
+    await gitSetup(devspace.name, serviceName, absoluteLocalRepoPath, devspace.tanajuraApiUrl, tanajuraService, gitService, configService, uiService)
 
     /**
      * Deploy service on soil

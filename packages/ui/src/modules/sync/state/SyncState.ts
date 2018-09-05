@@ -130,6 +130,8 @@ export class SyncState extends Container<ISyncState> {
 
   public startSyncing = (devspace: string, applicationName: string, folder: string) => {
     this.stopSyncing(devspace, applicationName)
+
+    // this.system.tanajuraService.getRepo()
     const id = getSyncId(devspace, applicationName)
     const watcher = this.setupWatcher(id, folder)
     const sync: ISync = {

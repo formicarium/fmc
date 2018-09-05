@@ -32,18 +32,19 @@ export default class DevspaceUse extends FMCCommand {
       }
       return v
     }
+    const { devspace: { hiveApiUrl, hiveReplUrl, tanajuraApiUrl, tanajuraGitUrl }, soilUrl } = await configService.readConfig()
+
     /**
      * Get versions
      */
     const soilVersion = soilService.getVersion().catch(() => NoVersion).then(increment)
     const hiveVersion = hiveService.getVersion().catch(() => NoVersion).then(increment)
-    const tanajuraVersion = tanajuraService.getVersion().catch(() => NoVersion).then(increment)
+    const tanajuraVersion = tanajuraService.getVersion(tanajuraApiUrl).catch(() => NoVersion).then(increment)
     const configServerVersion = configServerService.getVersion().catch(() => NoVersion).then(increment)
 
     /**
      * Render table
      */
-    const { devspace: { hiveApiUrl, hiveReplUrl, tanajuraApiUrl, tanajuraGitUrl }, soilUrl } = await configService.readConfig()
     const headers = [{ value: 'Service' }, { value: 'Version' }, { value: 'URL' }]
     const columns = [
       ['Hive', await hiveVersion, `${hiveApiUrl}\n${hiveReplUrl}`],

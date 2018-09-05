@@ -49,15 +49,15 @@ export const addRemote = async (namespace: string, localFolderPath: string, serv
  * @param serviceName string
  * @param tanajuraService TanajuraService
  */
-export const createRepo = async (namespace: string, serviceName: string, tanajuraService: ITanajuraService, ui: IUIService): Promise<void> => {
+export const createRepo = async (namespace: string, serviceName: string, tanajuraApiUrl: string, tanajuraService: ITanajuraService, ui: IUIService): Promise<void> => {
   try {
-    await tanajuraService.createRepo(serviceName)
+    await tanajuraService.createRepo(tanajuraApiUrl, serviceName)
   } catch (err) {
     switch (err.type) {
       case 'RepoAlreadyExists':
         if (await shouldDeleteTanajuraRepo(serviceName, ui)) {
-          await tanajuraService.deleteRepo(serviceName)
-          return createRepo(namespace, serviceName, tanajuraService, ui)
+          await tanajuraService.deleteRepo(tanajuraApiUrl, serviceName)
+          return createRepo(namespace, serviceName, tanajuraApiUrl, tanajuraService, ui)
         }
 
         break
@@ -79,7 +79,16 @@ export const createRepo = async (namespace: string, serviceName: string, tanajur
  * @param configService ConfigService
  * @param ui UIService
  */
-export const gitSetup = async (namespace: string, serviceName: string, localFolderPath: string, tanajuraService: ITanajuraService, gitService: IGitService, configService: IConfigService, ui: IUIService): Promise<void> => {
+export const gitSetup = async (
+  namespace: string,
+  serviceName: string,
+  localFolderPath: string,
+  tanajuraApiUrl: string,
+  tanajuraService: ITanajuraService,
+  gitService: IGitService,
+  configService: IConfigService,
+  ui: IUIService,
+): Promise<void> => {
   const isRepo = await gitService.checkIfRepo(localFolderPath)
   if (!isRepo) {
     console.log('Creating repo')
@@ -89,7 +98,7 @@ export const gitSetup = async (namespace: string, serviceName: string, localFold
 
   // const interactive = ui.newInteractive()
   ui.info('Step 1. create repo')
-  await createRepo(namespace, serviceName, tanajuraService, ui)
+  await createRepo(namespace, serviceName, tanajuraApiUrl, tanajuraService, ui)
   ui.success('OK!')
   ui.log(`\n\n\n`)
 
