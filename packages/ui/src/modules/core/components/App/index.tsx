@@ -1,7 +1,7 @@
 import React from 'react'
 import './styles.css'
 // import 'react-toastify/dist/ReactToastify.min.css';
-import { Provider } from 'unstated';
+import { Provider, Subscribe } from 'unstated';
 import { ApolloProvider } from 'react-apollo'
 import { BrowserRouter } from 'react-router-dom';
 import { client } from '../../../../system/apollo';
@@ -43,9 +43,13 @@ export class App extends React.Component<{}, IState> {
       <SystemProvider system={this.state.system}>
         <Provider inject={[new SyncState(this.state.system)]}>
           <ApolloProvider client={client}>
-            <BrowserRouter>
-              <MainLayout />
-            </BrowserRouter>
+            <Subscribe to={[SyncState]}>
+              {(syncState) => (
+                <BrowserRouter>
+                  <MainLayout syncState={syncState} />
+                </BrowserRouter>
+              )}
+            </Subscribe>
           </ApolloProvider>
         </Provider>
       </SystemProvider>

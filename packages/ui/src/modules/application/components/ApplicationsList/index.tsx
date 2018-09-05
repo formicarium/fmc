@@ -39,7 +39,7 @@ export const ApplicationsList: React.SFC<IApplicationsListProps> = ({
     {applications && applications.map((application) => (
       <StyledApplication
         showLogs={applicationsShowingLogs[application.name]}
-        isSyncing={applicationsSyncing[application.name]}
+        isSyncing={applicationsSyncing[application.name] || false}
         key={application.name}
         name={application.name}
         links={application.links}

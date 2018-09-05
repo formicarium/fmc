@@ -31,11 +31,11 @@ export class DevspaceServices extends React.Component {
     logsState.toggleLogsForApplication(application.name)
   }
   private handleToggleSync = (syncState: SyncState, system: ISystem) => async (application: IApplication, sync: boolean) => {
+    const currentDevspace = await system.configService.readDevspaceConfig()
     if (sync) {
-      const currentDevspace = await system.configService.readDevspaceConfig()
       syncState.startSyncing(currentDevspace.name, application.name, '/tmp/test')
     } else {
-      alert('remove')
+      syncState.stopSyncing(currentDevspace.name, application.name)
     }
   }
 

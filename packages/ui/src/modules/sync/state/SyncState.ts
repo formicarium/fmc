@@ -48,21 +48,15 @@ export class SyncState extends Container<ISyncState> {
     const { gitService, configService } = this.system
     const { folder, id, devspace, applicationName } = sync
 
-    console.log('starting sync flow')
-    console.log(sync)
-
     // Create mirror .git
     if (!await gitService.alreadyHasMirrorRepo(folder)) {
-      console.log('creating mirror .git')
       await gitService.createMirrorRepo(folder)
     }
 
     // Add in mirror .git
-    console.log('add all')
     await gitService.gitAddAll(folder)
 
     // Commit in mirror .git
-    console.log('committing')
     await gitService.gitCommit(folder)
 
     const gitRemoteName = getTanajuraRemoteName(devspace)
@@ -75,27 +69,15 @@ export class SyncState extends Container<ISyncState> {
       await gitService.addRemote(folder, gitRemoteName, gitRemoteUrl)
     }
 
-    console.log('pushing')
     await gitService.push(folder, gitRemoteName, 'tanajura')
 
-    console.log('updating state')
-    this.setState((state) => ({
-      syncMap: {
-        ...state.syncMap,
-        [id]: {
-          ...state.syncMap[id],
-          syncedFiles: state.syncMap[id].syncedFiles.map((syncedFile) => {
-            if (syncedFile.status === SyncedFileStatus.WAITING) {
-              return {
-                ...syncedFile,
-                status: SyncedFileStatus.SYNCED,
-              }
-            }
-            return syncedFile
-          }),
-        },
-      },
-    }))
+    const updateSyncedFileStatus = R.cond([
+        [R.pathEq(['status'], SyncedFileStatus.WAITING), R.assoc('status', SyncedFileStatus.SYNCED)],
+        [R.T, R.identity],
+      ])
+    const syncedFilesLens = R.lensPath(['syncMap', id, 'syncedFiles'])
+    const updateSyncFilesState = R.over(syncedFilesLens, R.map(updateSyncedFileStatus))
+    this.setState(updateSyncFilesState)
   }
 
   private debouncedSyncFlow = _.debounce(this.syncFlow, 100)
@@ -125,6 +107,7 @@ export class SyncState extends Container<ISyncState> {
   }
 
   public startSyncing = (devspace: string, applicationName: string, folder: string) => {
+    this.stopSyncing(devspace, applicationName)
     const id = getSyncId(devspace, applicationName)
     const watcher = this.setupWatcher(id, folder)
     const sync: ISync = {
@@ -145,6 +128,35 @@ export class SyncState extends Container<ISyncState> {
   }
 
   public getSyncList = (): ISync[] => R.values(this.state.syncMap)
+
+  public stopSyncing = (devspaceName: string, applicationName: string) => {
+    const id = getSyncId(devspaceName, applicationName)
+    const sync = this.state.syncMap[id]
+    if (sync) {
+      console.log('closing watcher')
+      sync.watcher.close()
+      this.setState((state) => ({
+        ...state,
+        syncMap: R.omit([sync.id], state.syncMap),
+      }))
+    }
+  }
+
+  public clearAllWatchers = () => {
+    Object.keys(this.state.syncMap).forEach((id) => {
+      console.log('clearing watcher for ', id)
+      const { watcher } = this.state.syncMap[id]
+      watcher.close()
+    })
+  }
+
+  public getApplicationsSyncing = (): IHashMap<boolean> => {
+    return R.keys(this.state.syncMap).reduce((acc, id) => ({
+      ...acc,
+      [this.state.syncMap[id].applicationName]: true,
+    }), {})
+  }
+}
 
   // public getSyncList = (): ISync[] => ([
   //   {
@@ -168,16 +180,3 @@ export class SyncState extends Container<ISyncState> {
   //     watcher: null,
   //   },
   // ])
-
-  public stopSyncing = (id: string) => {
-    const sync = this.state.syncMap[id]
-    if (sync) {
-      sync.watcher.close()
-      this.setState((state) => R.omit([sync.id], state))
-    }
-  }
-
-  public getApplicationsSyncing = (): IHashMap<boolean> => {
-    return R.mapObjIndexed(R.always(true), this.state.syncMap)
-  }
-}
