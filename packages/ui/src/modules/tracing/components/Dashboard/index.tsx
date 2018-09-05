@@ -23,6 +23,19 @@ const Wrapper = styled.div`
   bottom: 0px;
 `
 
+const LateralMenuWrapper = styled.div`
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  background-color: #FFF;
+`
+const LateralMenuBottomAreaWrapper = styled.div`
+  padding: 20px;
+`
 class DashboardInner extends React.Component<{dashboard: DashboardState}> {
   public componentDidMount() {
     this.props.dashboard.fetchGraph()
@@ -77,9 +90,9 @@ class DashboardInner extends React.Component<{dashboard: DashboardState}> {
           <DynamicGraph />
         </div>
 
-        <div style={{position: 'absolute', left: 0, top: 0, bottom: 0, width: 300, display: 'flex', flexDirection: 'column' }}>
+        <LateralMenuWrapper>
           <EventListContainer />
-          <Container style={{backgroundColor: '#FFF', padding: 20}}>
+          <LateralMenuBottomAreaWrapper>
             <Subscribe to={[EventListState]}>
               {(eventListState: EventListState) => (
                 <Fragment>
@@ -104,8 +117,8 @@ class DashboardInner extends React.Component<{dashboard: DashboardState}> {
                 </Fragment>
               )}
             </Subscribe>
-          </Container>
-        </div>
+          </LateralMenuBottomAreaWrapper>
+        </LateralMenuWrapper>
       </Wrapper>
     )
   }

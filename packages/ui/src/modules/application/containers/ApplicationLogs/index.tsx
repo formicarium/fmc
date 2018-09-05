@@ -3,6 +3,7 @@ import { withSystem, ISystemProps } from '~/modules/core/components/SystemProvid
 import { Segment, Dimmer, Loader } from 'semantic-ui-react';
 import { TerminalScreen } from '~/modules/application/components/TerminalScreen';
 import { ChildProcess } from 'child_process';
+import styled from 'styled-components';
 
 export interface IApplicationLogsProps {
   namespace: string,
@@ -13,6 +14,14 @@ interface IApplicationLogsState {
   loading: boolean
 }
 
+const LoadingWrapper = styled(Segment)`
+  width: 100%;
+  height: 200px;
+`
+
+const TerminalWrapper = styled(Segment)`
+  width: 100%;
+`
 export class ApplicationLogsInner extends React.Component<ISystemProps & IApplicationLogsProps, IApplicationLogsState> {
   private childProcess: ChildProcess
 
@@ -49,17 +58,17 @@ export class ApplicationLogsInner extends React.Component<ISystemProps & IApplic
   public render() {
     if (this.state.loading) {
       return (
-        <Segment inverted style={{width: '100%', height: 200}} vertical>
+        <LoadingWrapper inverted vertical>
           <Loader active inverted>
             Obtaining POD...
           </Loader>
-        </Segment>
+        </LoadingWrapper>
       )
     }
     return (
-      <Segment inverted style={{width: '100%'}}>
+      <TerminalWrapper inverted>
         <TerminalScreen text={this.state.streamedText} />
-      </Segment>
+      </TerminalWrapper>
     )
   }
 }
