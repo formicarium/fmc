@@ -59,6 +59,8 @@ const ActionsWrapper = styled.div`
   align-items: center;
 `
 
+const isSyncable = (links: IApplicationLinks): boolean => !!links.stinger
+
 export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
   name,
   links,
@@ -87,7 +89,11 @@ export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
     />
 
     <ActionsWrapper>
-      { showSync && <Checkbox label='Sync files' toggle checked={isSyncing} onChange={(e, data) => onToggleSync(data.checked)}/>}
+      { (showSync && isSyncable(links))
+        ? <Checkbox label='Sync files' toggle checked={isSyncing} onChange={(e, data) => onToggleSync(data.checked)}/>
+        : <div />
+      }
+
       <Actions
         onClickDelete={onClickDelete}
         onClickRestart={onClickRestart}
