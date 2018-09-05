@@ -33,6 +33,7 @@ export class DevspaceInfra extends React.Component {
                 }}
                 showDelete={false}
                 showRestart={false}
+                showSync={false}
               />
             )}
           </PromiseManager>

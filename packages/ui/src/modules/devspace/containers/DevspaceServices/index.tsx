@@ -57,9 +57,10 @@ export class DevspaceServices extends React.Component {
                   onClickDelete={this.handleDelete(system, patchData, data)}
                   onClickRestart={this.handleRestart(system)}
                   onClickLogs={this.handleLogs(logsState)}
+                  onToggleSync={this.handleToggleSync(syncState, system)}
                   showDelete
                   showRestart
-                  onToggleSync={this.handleToggleSync(syncState, system)}
+                  showSync
                 />
               )}
               </Subscribe>

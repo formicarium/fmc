@@ -34,6 +34,7 @@ export interface IActionsProps {
   onClickLogs: () => void;
   showDelete: boolean;
   showRestart: boolean;
+  showSync: boolean;
 }
 const Actions: React.SFC<IActionsProps> = ({
   onClickDelete,
@@ -70,6 +71,7 @@ export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
   onToggleSync,
   showDelete,
   showRestart,
+  showSync,
 }) => (
   <Segment className={className}>
     <StyledHeader dividing>
@@ -85,7 +87,7 @@ export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
     />
 
     <ActionsWrapper>
-      <Checkbox label='Sync files' toggle checked={isSyncing} onChange={(e, data) => onToggleSync(data.checked)}/>
+      { showSync && <Checkbox label='Sync files' toggle checked={isSyncing} onChange={(e, data) => onToggleSync(data.checked)}/>}
       <Actions
         onClickDelete={onClickDelete}
         onClickRestart={onClickRestart}

@@ -13,6 +13,7 @@ export interface IApplicationsListProps {
   onToggleSync?: (application: IApplication, sync: boolean) => void;
   showDelete: boolean;
   showRestart: boolean;
+  showSync: boolean;
   isSyncing?: boolean;
 }
 
@@ -31,6 +32,7 @@ export const ApplicationsList: React.SFC<IApplicationsListProps> = ({
   applicationsSyncing,
   showDelete,
   showRestart,
+  showSync,
   onToggleSync,
 }) => (
   <Wrapper>
@@ -46,6 +48,7 @@ export const ApplicationsList: React.SFC<IApplicationsListProps> = ({
         onClickLogs={() => onClickLogs(application)}
         showDelete={showDelete}
         showRestart={showRestart}
+        showSync={showSync}
         onToggleSync={(sync) => onToggleSync(application, sync)}
       />
     ))}
