@@ -23,6 +23,8 @@ export interface IPromiseManagerProps<T> {
 }
 
 export class PromiseManager<T> extends React.Component<IPromiseManagerProps<T>, IPromiseState<T>> {
+  private mounted: boolean
+
   constructor(props: IPromiseManagerProps<T>) {
     super(props)
     this.state = {
@@ -43,21 +45,30 @@ export class PromiseManager<T> extends React.Component<IPromiseManagerProps<T>, 
       })
       const data = await promise()
 
-      this.setState({
-        data,
-        loading: false,
-      })
+      if (this.mounted) {
+        this.setState({
+          data,
+          loading: false,
+        })
+      }
+
     } catch (error) {
-      this.setState({
-        error,
-        loading: false,
-      })
+      if (this.mounted) {
+        this.setState({
+          error,
+          loading: false,
+        })
+      }
     }
   }
   public componentDidMount() {
+    this.mounted = true
     this.dispatchPromise()
   }
 
+  public componentWillUnmount() {
+    this.mounted = false
+  }
   private retry = () => {
     this.dispatchPromise()
   }
