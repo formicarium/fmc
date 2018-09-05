@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Icon, Loader, Popup } from 'semantic-ui-react';
+import { Table, Icon, Popup } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { ISyncedFile, SyncedFileStatus } from '~/modules/sync/state/SyncState';
 import moment from 'moment'
