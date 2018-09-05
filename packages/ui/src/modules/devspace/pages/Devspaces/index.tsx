@@ -9,18 +9,21 @@ import { devspaceToDevspaceConfig } from 'common'
 import { toast, ToastType } from 'react-toastify';
 import { DisplayError } from '~/modules/common/components/DisplayError';
 import { DevspaceListPlaceholder } from '~/modules/devspace/components/DevspaceList/index.shimmer';
+import { RouteComponentProps } from 'react-router';
 
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
 `
 
-export const DevspacesPage: React.SFC = () => (
+export const DevspacesPage: React.SFC<RouteComponentProps<{}>> = ({
+  history,
+}) => (
   <Segment>
     <SegmentHeader title='Devspaces' icon='list' />
 
     <ButtonWrapper>
-      <Button color='green'>
+      <Button color='green' onClick={() => history.push('/devspaces/create')}>
         <Icon name='add circle' />
         New devspace
       </Button>
