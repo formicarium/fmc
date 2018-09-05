@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Icon, Loader } from 'semantic-ui-react';
+import { Table, Icon, Loader, Popup } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { ISyncedFile, SyncedFileStatus } from '~/modules/sync/state/SyncState';
 import moment from 'moment'
@@ -11,12 +11,17 @@ export interface ISyncedFilesListProps {
   syncedFiles: ISyncedFile[]
 }
 
-const DisplaySyncedFileStatus: React.SFC<{status: SyncedFileStatus}> = ({
+const DisplaySyncedFileStatus: React.SFC<{status: SyncedFileStatus, error?: Error}> = ({
   status,
+  error,
 }) => {
   switch (status) {
     case SyncedFileStatus.ERROR:
-      return <Icon name='close' color='red' />
+      return (
+        <Popup trigger={<Icon name='close' color='red' />} wide='very'>
+          {error ? error.toString() : 'Something wrong!'}
+        </Popup>
+      )
     case SyncedFileStatus.SYNCED:
       return <Icon name='check' color='green' />
     case SyncedFileStatus.WAITING:
@@ -29,7 +34,7 @@ export const SyncedFilesList: React.SFC<ISyncedFilesListProps> = ({
 }) => (
   <StyleTable>
     <Table.Body>
-    {syncedFiles && syncedFiles.map(({ path, timestamp, status }) => (
+    {syncedFiles && syncedFiles.map(({ path, timestamp, status, error }) => (
       <Table.Row
         key={timestamp}
         positive={status === SyncedFileStatus.SYNCED}
@@ -37,7 +42,7 @@ export const SyncedFilesList: React.SFC<ISyncedFilesListProps> = ({
         warning={status === SyncedFileStatus.WAITING}>
         <Table.Cell>{path}</Table.Cell>
         <Table.Cell>{moment(timestamp).fromNow()}</Table.Cell>
-        <Table.Cell><DisplaySyncedFileStatus status={status} /></Table.Cell>
+        <Table.Cell><DisplaySyncedFileStatus status={status} error={error}/></Table.Cell>
       </Table.Row>
     ))}
     </Table.Body>

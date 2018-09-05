@@ -1,5 +1,7 @@
+// Most of this code should be extracted to a SyncService
+
 import { Container } from 'unstated';
-import { IHashMap, ISystem, getTanajuraRemoteName, RemoteNotRegistered, isTanajuraAlreadyInRemotes, getTanajuraGitUrl } from 'common';
+import { IHashMap, ISystem, getTanajuraRemoteName, isTanajuraAlreadyInRemotes, getTanajuraGitUrl } from 'common';
 import fs from 'fs'
 import R from 'ramda'
 import _ from 'lodash'
@@ -13,6 +15,7 @@ export interface ISyncedFile {
   path: string
   status: SyncedFileStatus
   timestamp: number
+  error?: Error
 }
 
 export interface ISync {
@@ -30,6 +33,8 @@ export interface ISyncState {
   syncMap: ISyncMap
 }
 
+const leftMerge = <T1, T2>(a: T1) => (b: T2): T2 & T1 => R.merge(b, a)
+
 const baseRegexTest = (x: string) => !/\.git|\.fmcgit/.test(x)
 
 const getSyncId = (devspace: string, applicationName: string) => `${devspace}/${applicationName}`
@@ -41,6 +46,28 @@ const buildSyncedFile = (path: string) => ({
   status: SyncedFileStatus.WAITING,
   timestamp: new Date().getTime(),
 })
+
+type SyncedFileTransformer = (syncedFile: ISyncedFile) => ISyncedFile
+
+const updateIfWaiting = (fn: SyncedFileTransformer) => R.cond([
+  [(x) => {
+    console.log(x)
+    console.log(fn(x))
+    return R.pathEq(['status'], SyncedFileStatus.WAITING, x)
+  }, fn],
+  [R.T, R.identity],
+])
+
+const updateSyncedFileToSynced = updateIfWaiting(leftMerge({
+  status: SyncedFileStatus.SYNCED,
+  error: undefined,
+}))
+
+const updateSyncedFileToErrorWith = (error: Error) => updateIfWaiting(leftMerge({
+  status: SyncedFileStatus.ERROR,
+  error,
+}))
+
 export class SyncState extends Container<ISyncState> {
   private system: ISystem
 
@@ -79,26 +106,28 @@ export class SyncState extends Container<ISyncState> {
 
     await gitService.push(folder, gitRemoteName, 'tanajura')
 
-    const updateSyncedFileStatus = R.cond([
-        [R.pathEq(['status'], SyncedFileStatus.WAITING), R.assoc('status', SyncedFileStatus.SYNCED)],
-        [R.T, R.identity],
-      ])
+    throw new Error('blabla')
     const syncedFilesLens = R.lensPath(['syncMap', id, 'syncedFiles'])
-    const updateSyncFilesState = R.over(syncedFilesLens, R.map(updateSyncedFileStatus))
+    const updateSyncFilesState = R.over(syncedFilesLens, R.map(updateSyncedFileToSynced))
     this.setState(updateSyncFilesState)
   }
 
   private debouncedSyncFlow = _.debounce(this.syncFlow, 100)
 
   private setupWatcher = (id: string, folder: string): fs.FSWatcher => {
-    return this.system.filesService.startWatching('/tmp/test', (ev, filePath) => {
+    return this.system.filesService.startWatching('/tmp/test', async (ev, filePath) => {
       const syncedFilesLens = getSyncedFilesLensForId(id)
       const syncedFile = buildSyncedFile(folder)
       const addSyncedFileToState = R.over(syncedFilesLens, R.append(syncedFile))
       this.setState(addSyncedFileToState)
 
       if (this.state.syncMap[id]) {
-        this.debouncedSyncFlow(this.state.syncMap[id])
+        try {
+          await this.syncFlow(this.state.syncMap[id])
+        } catch (error) {
+          const updateSyncFilesState = R.over(syncedFilesLens, R.map(updateSyncedFileToErrorWith(error)))
+          this.setState(updateSyncFilesState)
+        }
       }
     }, baseRegexTest)
   }
