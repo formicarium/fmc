@@ -6,9 +6,42 @@ import { ToastService } from '~/modules/common/services/ToastService';
 import _ from 'lodash'
 
 export class DeployServiceContainer extends React.Component {
-  private handleSubmit = ({ gitService, filesService, configService, soilService, tanajuraService }: ISystem) => async ({ name, applicationDefinitionPath, argsArray, folder, syncable }: IDeployServiceFormValues) => {
+  private syncSetup = async (system: ISystem, folder: string, devspaceName: string, applicationName: string) => {
+    const { gitService, configService, tanajuraService } = system
     const { devspace: { tanajuraApiUrl, tanajuraGitUrl } } = await configService.readConfig()
-    const currentDevspace = await configService.readDevspaceConfig()
+    // Create repo on Tanajura
+    const repoExists = await tanajuraService.repoExists(tanajuraApiUrl, applicationName)
+    if (!repoExists) {
+      await tanajuraService.createRepo(tanajuraApiUrl, applicationName)
+      ToastService.toastSuccess('🐜   Created remote repo on Tanajura')
+    }
+
+    // Create mirror .git
+    if (!await gitService.alreadyHasMirrorRepo(folder)) {
+      await gitService.createMirrorRepo(folder)
+    }
+    ToastService.toastSuccess('🗂   Created mirror git repo')
+
+    // Add in mirror .git
+    await gitService.gitAddAll(folder)
+
+    // Commit in mirror .git
+    await gitService.gitCommit(folder)
+
+    // Add remote
+    const gitRemoteName = getTanajuraRemoteName(devspaceName)
+    const gitRemoteUrl = getTanajuraGitUrl(tanajuraGitUrl, applicationName)
+    await gitService.removeRemote(folder, gitRemoteName).catch(_.noop)
+    await gitService.addRemote(folder, gitRemoteName, gitRemoteUrl)
+
+    // Push
+    await gitService.push(folder, gitRemoteName, 'tanajura')
+    ToastService.toastSuccess('⬆️   Pushed to remote repo')
+  }
+
+  private handleSubmit = (system: ISystem) => async ({ applicationName, applicationDefinitionPath, argsArray, folder, syncable }: IDeployServiceFormValues) => {
+    const { filesService, configService, soilService } = system
+    const { name: devspaceName } = await configService.readDevspaceConfig()
     let applicationDefinition: Nullable<IApplicationDefinition> = null
     if (applicationDefinitionPath) {
       applicationDefinition = await filesService.safelyReadJSON<IApplicationDefinition>(applicationDefinitionPath)
@@ -19,38 +52,11 @@ export class DeployServiceContainer extends React.Component {
     }), {}) : null
 
     try {
-      const repoExists = await tanajuraService.repoExists(tanajuraApiUrl, name)
-      if (!repoExists) {
-        await tanajuraService.createRepo(tanajuraApiUrl, name)
-        ToastService.toastSuccess('🐜   Created remote repo on Tanajura')
+      if (syncable) {
+        await this.syncSetup(system, folder, devspaceName, applicationName)
       }
-
-      // Create mirror .git
-      if (!await gitService.alreadyHasMirrorRepo(folder)) {
-        await gitService.createMirrorRepo(folder)
-      }
-      ToastService.toastSuccess('🗂   Created mirror git repo')
-
-      // Add in mirror .git
-      await gitService.gitAddAll(folder)
-
-      // Commit in mirror .git
-      await gitService.gitCommit(folder)
-
-      // Add remote
-      const gitRemoteName = getTanajuraRemoteName(currentDevspace.name)
-      const gitRemoteUrl = getTanajuraGitUrl(tanajuraGitUrl, name)
-      console.log(gitRemoteName, gitRemoteUrl)
-      console.log(folder)
-      await gitService.removeRemote(folder, gitRemoteName).catch(_.noop)
-      await gitService.addRemote(folder, gitRemoteName, gitRemoteUrl)
-
-      // Push
-      await gitService.push(folder, gitRemoteName, 'tanajura')
-      ToastService.toastSuccess('⬆️   Pushed to remote repo')
-
       // Deploy
-      await soilService.deployService(currentDevspace.name, name, applicationDefinition, argMap, syncable)
+      await soilService.deployService(devspaceName, applicationName, applicationDefinition, argMap, syncable)
       ToastService.toastSuccess('🚀   Service deployed')
     } catch (err) {
       ToastService.toastError(err.toString())

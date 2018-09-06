@@ -13,7 +13,7 @@ import { BooleanInput } from '~/modules/common/components/BooleanInput';
 export interface IDeployServiceFormValues {
   syncable: boolean
   folder?: string
-  name: string
+  applicationName: string
   applicationDefinitionPath: string
   argsArray: Array<{key: string, value: string}>
 }
@@ -48,9 +48,9 @@ export const DeployServiceForm: React.SFC<IDeployServiceFormProps> = ({
         render={({handleSubmit, submitting, invalid, form: {reset, mutators: { push, pop } }, values }) => (
           <SemanticForm onSubmit={() => handleSubmit().then(reset)}>
             <SemanticForm.Field disabled={submitting}>
-              <label>Name</label>
+              <label>Application Name</label>
               <Field
-                name='name'
+                name='applicationName'
                 component='input'
               />
             </SemanticForm.Field>
