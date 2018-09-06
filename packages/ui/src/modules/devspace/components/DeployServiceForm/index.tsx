@@ -8,9 +8,11 @@ import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { FieldArray } from 'react-final-form-arrays'
 import arrayMutators from 'final-form-arrays'
+import { BooleanInput } from '~/modules/common/components/BooleanInput';
 
 export interface IDeployServiceFormValues {
-  sourceCodePath: string
+  syncable: boolean
+  folder?: string
   name: string
   applicationDefinitionPath: string
   argsArray: Array<{key: string, value: string}>
@@ -53,12 +55,20 @@ export const DeployServiceForm: React.SFC<IDeployServiceFormProps> = ({
               />
             </SemanticForm.Field>
             <SemanticForm.Field disabled={submitting}>
-              <label>Source code path</label>
               <Field
-                name='sourceCodePath'
-                component={FolderPathInput}
+                toggle
+                label='Syncable?'
+                name='syncable'
+                component={BooleanInput}
               />
             </SemanticForm.Field>
+            {values.syncable && <SemanticForm.Field disabled={submitting}>
+              <label>Source code path</label>
+              <Field
+                name='folder'
+                component={FolderPathInput}
+              />
+            </SemanticForm.Field>}
             <SemanticForm.Field disabled={submitting}>
               <label>Application definition JSON path</label>
               <Field

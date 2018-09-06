@@ -78,9 +78,15 @@ export class SoilService {
     }).then((response) => response.data)
   }
 
-  public deployService = async (devspace: string, name: string, applicationDefinition: Nullable<IApplicationDefinition>, args: Nullable<IArgs>): Promise<IApplicationLinks> => {
+  public deployService = async (
+    devspace: string, name: string,
+    applicationDefinition: Nullable<IApplicationDefinition>,
+    args: Nullable<IArgs>,
+    syncable: boolean,
+  ): Promise<IApplicationLinks> => {
     const data = R.pickBy((val) => val !== null, {
       name,
+      syncable,
       args,
       definition: applicationDefinition,
     })

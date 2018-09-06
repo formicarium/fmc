@@ -99,7 +99,7 @@ export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
         onClickRestart={onClickRestart}
         onClickLogs={onClickLogs}
         showDelete={showDelete}
-        showRestart={showRestart}
+        showRestart={showRestart && isSyncable(links)}
       />
     </ActionsWrapper>
 

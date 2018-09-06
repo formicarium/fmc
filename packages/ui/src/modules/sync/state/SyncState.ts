@@ -131,7 +131,7 @@ export class SyncState extends Container<ISyncState> {
 
     const repoExists = await tanajuraService.repoExists(tanajuraApiUrl, applicationName)
     if (!repoExists) {
-      tanajuraService.createRepo(tanajuraApiUrl, applicationName)
+      await tanajuraService.createRepo(tanajuraApiUrl, applicationName)
     }
 
     const id = getSyncId(devspace, applicationName)
