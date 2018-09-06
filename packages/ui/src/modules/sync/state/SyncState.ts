@@ -107,7 +107,7 @@ export class SyncState extends Container<ISyncState> {
   }
 
   private setupWatcher = (id: string, folder: string): fs.FSWatcher => {
-    return this.system.filesService.startWatching('/tmp/test', async (ev, filePath) => {
+    return this.system.filesService.startWatching(folder, async (ev, filePath) => {
       const syncedFilesLens = getSyncedFilesLensForId(id)
       const syncedFile = buildSyncedFile(folder)
       const addSyncedFileToState = R.over(syncedFilesLens, R.append(syncedFile))

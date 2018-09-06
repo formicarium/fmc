@@ -3,11 +3,12 @@ import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { ApplicationsList } from '~/modules/application/components/ApplicationsList';
 import { PromiseManager, PatchData } from '~/modules/common/render-props/PromiseManager';
 import { DisplayError } from '~/modules/common/components/DisplayError';
-import { ISystem, IApplication } from 'common';
+import { ISystem, IApplication, Nullable } from 'common';
 import { ApplicationListPlaceholder } from '~/modules/application/components/ApplicationsList/index.shimmer';
 import { Subscribe } from 'unstated';
 import { LogsState } from '~/modules/devspace/state/Logs';
 import { SyncState } from '~/modules/sync/state/SyncState';
+import electron, { OpenDialogOptions } from 'electron'
 
 export class DevspaceServices extends React.Component {
   private fetchServices = (system: ISystem) => async () => {
@@ -30,10 +31,40 @@ export class DevspaceServices extends React.Component {
   private handleLogs = (logsState: LogsState) => (application: IApplication) => {
     logsState.toggleLogsForApplication(application.name)
   }
+
+  private pickFolderPath = (): Nullable<string> => {
+    const path = electron.remote.dialog.showOpenDialog({
+      properties: ['openDirectory'],
+    });
+    if (path && path.length) {
+      return path[0]
+    }
+    return null
+  }
+
   private handleToggleSync = (syncState: SyncState, system: ISystem) => async (application: IApplication, sync: boolean) => {
     const currentDevspace = await system.configService.readDevspaceConfig()
+    const service = await system.localDB.getService(currentDevspace.name, application.name)
+
+    let repoPath = service && service.repoPath
+    if (!repoPath) {
+      repoPath = await this.pickFolderPath()
+      if (!repoPath) {
+        return
+      }
+      if (repoPath) {
+        await system.localDB.registerServiceForDevspace(currentDevspace.name, {
+          name: application.name,
+          repoPath,
+          stingerUrl: '',
+        })
+      }
+    }
+
+    console.log(repoPath)
+
     if (sync) {
-      syncState.startSyncing(currentDevspace.name, application.name, '/tmp/test')
+      syncState.startSyncing(currentDevspace.name, application.name, repoPath)
     } else {
       syncState.stopSyncing(currentDevspace.name, application.name)
     }
