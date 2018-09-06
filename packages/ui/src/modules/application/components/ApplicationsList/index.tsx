@@ -38,10 +38,11 @@ export const ApplicationsList: React.SFC<IApplicationsListProps> = ({
   <Wrapper>
     {applications && applications.map((application) => (
       <StyledApplication
+        key={application.name}
+        devspace={application.devspace}
+        name={application.name}
         showLogs={applicationsShowingLogs[application.name]}
         isSyncing={applicationsSyncing[application.name] || false}
-        key={application.name}
-        name={application.name}
         links={application.links}
         onClickDelete={() => onClickDelete(application)}
         onClickRestart={() => onClickRestart(application)}

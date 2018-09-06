@@ -7,6 +7,7 @@ import { PromiseButton } from '~/modules/common/components/PromiseButton';
 import { ApplicationLogs } from '~/modules/application/containers/ApplicationLogs';
 
 export interface IApplicationProps {
+  devspace: string
   name: string
   links: IApplicationLinks
   className?: string
@@ -62,6 +63,7 @@ const ActionsWrapper = styled.div`
 const isSyncable = (links: IApplicationLinks): boolean => !!links.stinger
 
 export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
+  devspace,
   name,
   links,
   className,
@@ -105,7 +107,7 @@ export const Application: React.SFC<IApplicationProps & IActionsProps> = ({
 
     {(showLogs) && (
       <ApplicationLogs
-        namespace={'rafa'}
+        namespace={devspace}
         applicationName={name}
       />
     )}
