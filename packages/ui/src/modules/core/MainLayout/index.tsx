@@ -4,12 +4,24 @@ import { TopMenu } from '../TopMenu';
 import { Routes } from '../components/Routes';
 import { ToastContainer } from 'react-toastify';
 import { SyncState } from '~/modules/sync/state/SyncState';
+import styled from 'styled-components';
+import {HotKeys} from 'react-hotkeys';
+import { withRouter, RouteComponentProps } from 'react-router';
 
 interface IMainLayoutProps {
   syncState: SyncState
 }
-export class MainLayout extends React.Component<IMainLayoutProps> {
-  constructor(props: IMainLayoutProps) {
+const MenuWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+const RoutesWrapper = styled.div`
+  padding-top: 14px;
+`
+export type IProps = IMainLayoutProps & RouteComponentProps<{}>
+export class MainLayoutInner extends React.Component<IProps> {
+  constructor(props: IProps) {
     super(props)
     const hotModule = (module as any).hot
     if (hotModule) {
@@ -18,13 +30,43 @@ export class MainLayout extends React.Component<IMainLayoutProps> {
       });
     }
   }
+  private map = {
+    selectFirstItem: 'command+1',
+    selectSecondItem: 'command+2',
+    selectThirdItem: 'command+3',
+    selectFourthItem: 'command+4',
+    selectFifthItem: 'command+5',
+  };
+
+  private navigateToItem = (item: string) => () => {
+    this.props.history.push(item)
+  }
+
+  private handlers = {
+    selectFirstItem: this.navigateToItem('/'),
+    selectSecondItem: this.navigateToItem('/devspaces/create'),
+    selectThirdItem: this.navigateToItem('/my-devspace'),
+    selectFourthItem: this.navigateToItem('/tracing'),
+    selectFifthItem: this.navigateToItem('/sync'),
+  }
+
   public render() {
     return (
-      <Container>
-        <TopMenu />
-        <ToastContainer />
-        <Routes />
-      </Container>
+      <HotKeys keyMap={this.map}>
+        <HotKeys handlers={this.handlers}>
+          <Container style={{paddingTop: 14}}>
+            <ToastContainer />
+            <MenuWrapper>
+              <TopMenu />
+            </MenuWrapper>
+            <RoutesWrapper>
+              <Routes />
+            </RoutesWrapper>
+          </Container>
+        </HotKeys>
+      </HotKeys>
     )
   }
 }
+
+export const MainLayout = withRouter(MainLayoutInner)

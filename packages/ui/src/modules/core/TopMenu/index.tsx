@@ -6,6 +6,7 @@ import styled from 'styled-components';
 const StyledMenu = styled(Menu)`
   z-index: 9999;
   position: relative;
+  margin: 0px !important;
 `
 export const TopMenuInner: React.SFC<RouteComponentProps<{}>> = ({
   history,

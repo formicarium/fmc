@@ -28,6 +28,7 @@
     "react-final-form": "^3.6.5",
     "react-final-form-arrays": "^1.0.6",
     "react-graph-vis": "^1.0.2",
+    "react-hotkeys": "^1.1.4",
     "react-inspector": "^2.3.0",
     "react-key-handler": "^1.2.0-beta.2",
     "react-router": "^4.3.1",
