@@ -65,7 +65,7 @@ export class GitService {
   }
 
   public gitCommit = async (basePath: string): Promise<gitP.CommitSummary> => {
-    return this.getGit(basePath).commit(this.getCommitMessage())
+    return this.getGit(basePath).commit(this.getCommitMessage(), undefined, { '--allow-empty': true })
   }
 
   private hasAlreadyExcluded = (lines: string[]) => !!lines.find((line) => line === GitService.MIRROR_GIT_FOLDER)
