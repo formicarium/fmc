@@ -34,9 +34,9 @@ export const SyncedFilesList: React.SFC<ISyncedFilesListProps> = ({
 }) => (
   <StyleTable>
     <Table.Body>
-    {syncedFiles && syncedFiles.map(({ path, timestamp, status, error }) => (
+    {syncedFiles && syncedFiles.map(({ id, path, timestamp, status, error }) => (
       <Table.Row
-        key={timestamp}
+        key={id}
         positive={status === SyncedFileStatus.SYNCED}
         negative={status === SyncedFileStatus.ERROR}
         warning={status === SyncedFileStatus.WAITING}>

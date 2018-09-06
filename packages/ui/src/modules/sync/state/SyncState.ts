@@ -5,6 +5,7 @@ import { IHashMap, ISystem, getTanajuraRemoteName, isTanajuraAlreadyInRemotes, g
 import fs from 'fs'
 import R from 'ramda'
 import _ from 'lodash'
+import { v4 } from 'uuid'
 
 export enum SyncedFileStatus {
   WAITING = 0,
@@ -12,6 +13,7 @@ export enum SyncedFileStatus {
   ERROR = 2,
 }
 export interface ISyncedFile {
+  id: string
   path: string
   status: SyncedFileStatus
   timestamp: number
@@ -35,13 +37,14 @@ export interface ISyncState {
 
 const leftMerge = <T1, T2>(a: T1) => (b: T2): T2 & T1 => R.merge(b, a)
 
-const baseRegexTest = (x: string) => !/\.git|\.fmcgit/.test(x)
+const baseRegexTest = (x: string) => !/\.git|node_modules|\.fmcgit/.test(x)
 
 const getSyncId = (devspace: string, applicationName: string) => `${devspace}/${applicationName}`
 const syncMapLens = R.lensProp('syncMap')
 const getSyncedFilesLensForId = (id: string) => R.compose(syncMapLens, R.lensPath([id, 'syncedFiles'])) as R.Lens
 
 const buildSyncedFile = (path: string) => ({
+  id: v4(),
   path,
   status: SyncedFileStatus.WAITING,
   timestamp: new Date().getTime(),
@@ -81,7 +84,10 @@ export class SyncState extends Container<ISyncState> {
 
     // Create mirror .git
     if (!await gitService.alreadyHasMirrorRepo(folder)) {
+      console.log('creating mirror repo...')
       await gitService.createMirrorRepo(folder)
+    } else {
+      console.log('no need to create')
     }
 
     // Add in mirror .git
@@ -106,6 +112,8 @@ export class SyncState extends Container<ISyncState> {
     this.setState(updateSyncFilesState)
   }
 
+  private debouncedSyncFlow = _.debounce(this.syncFlow, 500)
+
   private setupWatcher = (id: string, folder: string): fs.FSWatcher => {
     return this.system.filesService.startWatching(folder, async (ev, filePath) => {
       const syncedFilesLens = getSyncedFilesLensForId(id)
@@ -115,7 +123,7 @@ export class SyncState extends Container<ISyncState> {
 
       if (this.state.syncMap[id]) {
         try {
-          await this.syncFlow(this.state.syncMap[id])
+          await this.debouncedSyncFlow(this.state.syncMap[id])
         } catch (error) {
           const updateSyncFilesState = R.over(syncedFilesLens, R.map(updateSyncedFileToErrorWith(error)))
           this.setState(updateSyncFilesState)
