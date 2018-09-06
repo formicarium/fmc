@@ -8,7 +8,7 @@ import { ApplicationListPlaceholder } from '~/modules/application/components/App
 import { Subscribe } from 'unstated';
 import { LogsState } from '~/modules/devspace/state/Logs';
 import { SyncState } from '~/modules/sync/state/SyncState';
-import electron, { OpenDialogOptions } from 'electron'
+import electron from 'electron'
 
 export class DevspaceServices extends React.Component {
   private fetchServices = (system: ISystem) => async () => {
