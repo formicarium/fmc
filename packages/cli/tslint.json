@@ -11,7 +11,7 @@
     "member-ordering": [false],
     "no-unused-variable": [true, {"ignore-pattern": "^React$"}],
     "no-implicit-dependencies": false,
-    "no-submodule-imports": [true, "src", "simple-git", "lowdb"],
+    "no-submodule-imports": [true, "src", "simple-git", "lowdb", "controllers"],
     "semicolon": [true, "never"],
     "no-object-literal-type-assertion": false,
     "no-console": false
