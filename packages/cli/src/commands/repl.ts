@@ -10,6 +10,7 @@ export default class Repl extends FMCCommand {
   ]
 
   public static flags = {
+    ...FMCCommand.flags,
     help: Flags.help({ char: 'h' }),
     host: Flags.string({ description: 'host to connect' }),
   }

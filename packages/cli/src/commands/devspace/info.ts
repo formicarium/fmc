@@ -12,6 +12,7 @@ export default class DevspaceUse extends FMCCommand {
   ]
 
   public static flags = {
+    ...FMCCommand.flags,
     help: Flags.help({ char: 'h' }),
   }
 

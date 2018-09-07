@@ -9,6 +9,7 @@ export default class DevspaceDelete extends FMCCommand {
   ]
 
   public static flags = {
+    ...FMCCommand.flags,
     help: Flags.help({ char: 'h' }),
   }
 

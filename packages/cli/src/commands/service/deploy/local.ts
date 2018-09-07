@@ -14,6 +14,7 @@ export default class ServiceDeployLocal extends FMCCommand {
   ]
 
   public static flags = {
+    ...FMCCommand.flags,
     help: Flags.help({ char: 'h' }),
     filePath: Flags.string({ char: 'f', description: 'absoluteFilePath' }),
     arg: Flags.string({

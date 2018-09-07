@@ -1,8 +1,8 @@
+import { IPod, IResponse } from './../../model/pod'
 import { exec, spawn as spawnPromise } from 'child-process-promise'
 import * as path from 'path'
-import { IResponse, IPod } from '../../typings/pod'
 import { spawn, ChildProcess } from 'child_process'
-import { Nullable } from '../../typings';
+import { Nullable } from '../../utils'
 
 const scriptsRoot = path.join(__dirname, 'scripts')
 

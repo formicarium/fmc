@@ -22,7 +22,7 @@ export interface ITanajuraService {
   deleteRepo(apiUrl: string, name: string): Promise<IDeleteRepoResponse>
   getRepo(apiUrl: string, name: string): Promise<IRepo>
   getVersion: (apiUrl: string) => Promise<string>
-  repoExists:(apiUrl: string, name: string) => Promise<boolean>
+  repoExists: (apiUrl: string, name: string) => Promise<boolean>
 }
 
 const getStatusCode = R.pathOr(0, ['response', 'data', 'statusCode'])

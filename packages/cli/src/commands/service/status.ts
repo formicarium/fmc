@@ -17,6 +17,7 @@ export default class ServiceStatus extends FMCCommand {
   ]
 
   public static flags = {
+    ...FMCCommand.flags,
     help: Flags.help({ char: 'h' }),
     shard: Flags.string({ char: 's', description: 'service shard' }),
   }

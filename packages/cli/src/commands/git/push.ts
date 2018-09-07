@@ -1,4 +1,3 @@
-
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
 import * as fs from 'fs-extra'
@@ -25,6 +24,7 @@ export default class GitPush extends FMCCommand {
   ]
 
   public static flags = {
+    ...FMCCommand.flags,
     help: Flags.help({ char: 'h' }),
     watch: Flags.boolean({ char: 'w' }),
   }

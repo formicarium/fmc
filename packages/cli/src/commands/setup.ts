@@ -9,6 +9,7 @@ export default class Setup extends FMCCommand {
   ]
 
   public static flags = {
+    ...FMCCommand.flags,
     help: Flags.help({ char: 'h' }),
   }
 
