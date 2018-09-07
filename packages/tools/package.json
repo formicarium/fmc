@@ -5,10 +5,13 @@
   "license": "MIT",
   "dependencies": {
     "@types/jest": "^23.3.1",
+    "chai": "^4.1.2",
     "electron": "^2.0.8",
     "express": "^4.16.3",
     "jest": "^23.5.0",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.4",
+    "nyc": "^13.0.1",
     "parcel-bundler": "^1.9.7",
     "ts-jest": "^23.1.4",
     "ts-node": "^7.0.1",
