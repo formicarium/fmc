@@ -62,7 +62,7 @@ export default class ServiceDeployLocal extends FMCCommand {
     const absoluteLocalRepoPath = localPath && path.resolve(process.cwd(), localPath)
     const absoluteFilePath = filePath && path.resolve(process.cwd(), filePath)
 
-    const applicationDefinition = absoluteFilePath ? await this.getFileContent<IApplicationDefinition>(absoluteFilePath) : null
+    const applicationDefinition: any = absoluteFilePath ? await this.getFileContent<IApplicationDefinition>(absoluteFilePath) : null
     const argMap = (arg && arg.length) ? this.parseArg(arg) : null
 
     uiService.jsonToTable({
@@ -79,7 +79,7 @@ export default class ServiceDeployLocal extends FMCCommand {
      * Deploy service on soil
      */
     uiService.spinner.start('Deploying service...')
-    const response = await this.system.soilService.deployService(devspace.name, serviceName, applicationDefinition as any, args)
+    const response = await this.system.soilService.deployService(devspace.name, serviceName, applicationDefinition, args, true)
 
     await localDB.registerServiceForDevspace(devspace.name, {
       name: serviceName,

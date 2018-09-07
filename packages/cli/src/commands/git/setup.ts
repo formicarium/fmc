@@ -1,8 +1,8 @@
 import * as path from 'path'
 import {flags as Flags} from '@oclif/command'
-import { getServiceIdentifier } from '../../logic/service'
 import { gitSetup } from '../../controllers/git'
 import FMCCommand from '../../FMCCommand'
+import { getServiceIdentifier } from 'common'
 
 export default class GitSetup extends FMCCommand {
   public static description = 'Deploys service'
@@ -28,8 +28,8 @@ export default class GitSetup extends FMCCommand {
     const { shard } = flags
     const { name, localFolder } = args
     const localFolderPath = path.resolve(process.cwd(), localFolder)
-    const { devspace, soilUrl } = await configService.readConfig()
-    const namespace = devspace.name
+    const { devspace } = await configService.readConfig()
+    const { name: devspaceName, tanajuraApiUrl} = devspace
     const service = getServiceIdentifier(name, shard)
 
     uiService.jsonToTable({
@@ -41,7 +41,7 @@ export default class GitSetup extends FMCCommand {
      * Creates remote repo on Tanajura
      */
     // uiService.spinner.start('Creating repo...')
-    await gitSetup(namespace, service, localFolderPath, tanajuraService, gitService, configService, uiService)
+    await gitSetup(devspaceName, service, localFolderPath, tanajuraApiUrl, tanajuraService, gitService, configService, uiService)
     // uiService.spinner.succeed()
   }
 }

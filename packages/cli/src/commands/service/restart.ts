@@ -1,5 +1,5 @@
+import { getServiceIdentifier } from 'common'
 import { flags as Flags } from '@oclif/command'
-import { getServiceIdentifier } from '../../logic/service'
 import FMCCommand from '../../FMCCommand'
 
 export default class ServiceDeploy extends FMCCommand {

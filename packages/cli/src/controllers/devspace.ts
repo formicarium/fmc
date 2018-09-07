@@ -4,7 +4,7 @@ import * as path from 'path'
 import { IApplicationDefinition, ISystem } from 'common'
 
 export const createDevspace = async (id: string, system: ISystem) => {
-  let setup
+  let setup: any
   try {
     setup = await getFileContent<IApplicationDefinition[]>(path.resolve(os.homedir(), '.fmc/setup.json'))
   } catch (err) {
