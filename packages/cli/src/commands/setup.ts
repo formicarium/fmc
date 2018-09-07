@@ -1,5 +1,4 @@
 import { flags as Flags } from '@oclif/command'
-import * as signale from 'signale'
 import FMCCommand from '../FMCCommand'
 
 export default class Setup extends FMCCommand {

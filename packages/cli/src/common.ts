@@ -1,4 +1,4 @@
-import {Maybe, Nullable} from './typings/common'
+import { Maybe, Nullable } from 'common'
 import * as fs from 'fs-extra'
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))

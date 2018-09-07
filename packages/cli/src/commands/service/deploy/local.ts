@@ -3,9 +3,8 @@ import { gitSetup } from './../../../controllers/git'
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../../FMCCommand'
 import * as fs from 'fs-extra'
-import { Nullable } from '../../../typings/common'
 import * as path from 'path'
-import { IApplicationDefinition, IArgs } from 'common'
+import { IApplicationDefinition, IArgs, Nullable } from 'common'
 
 export default class ServiceDeployLocal extends FMCCommand {
   public static description = 'Deploys service'
