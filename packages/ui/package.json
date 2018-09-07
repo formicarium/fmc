@@ -6,7 +6,6 @@
   "license": "MIT",
   "dependencies": {
     "ansi-to-react": "^3.3.1",
-    "apollo-boost": "^0.1.15",
     "apollo-cache": "^1.1.16",
     "apollo-cache-inmemory": "^1.2.9",
     "apollo-client": "^2.4.1",
@@ -33,10 +32,7 @@
     "react-key-handler": "^1.2.0-beta.2",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scroll-to": "^1.2.2",
-    "react-select": "^2.0.0",
     "react-toastify": "^4.3.0",
-    "react-transition-group": "^2.4.0",
     "semantic-ui-react": "^0.82.3",
     "styled-components": "^3.4.5",
     "unstated": "^2.1.1",
@@ -60,7 +56,6 @@
     "@types/react-dom": "^16.0.7",
     "@types/react-router": "^4.0.30",
     "@types/react-router-dom": "^4.3.0",
-    "@types/react-transition-group": "^2.0.13",
     "@types/uuid": "^3.4.4"
   }
 }
