@@ -32,7 +32,7 @@ export const spawnWithOutput = (command: string, args?: ReadonlyArray<string>, o
 export const isProcessRunning = (name: string): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     ps.lookup({
-      command: 'syncthing',
+      command: name,
     }, (err: any, resultList: IProcessDescription[]) => {
       if (err) {
         reject(err)
