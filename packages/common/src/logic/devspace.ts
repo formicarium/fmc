@@ -1,5 +1,5 @@
-import { IDevspaceConfig } from './../services/config';
-import { IDevspace } from "../model";
+import { IDevspaceConfig } from './../services/config'
+import { IDevspace } from '../model'
 
 export const devspaceToDevspaceConfig = (devspace: IDevspace): IDevspaceConfig => ({
   name: devspace.name,
