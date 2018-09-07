@@ -1,7 +1,8 @@
+import { EventKind } from './../model/event';
 import { Direction } from '~/modules/tracing/model/event';
 import { IEventMessage, MessageType, EventType, HttpDirection, KafkaDirection } from '../model/event';
 
-const createHttpMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId?: string): IEventMessage => {
+const createHttpMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId: string, kind: EventKind): IEventMessage => {
   return {
     id: `ev_${timestamp}`,
     identity: reporter,
@@ -12,6 +13,7 @@ const createHttpMessage = (timestamp: number, reporter: string, direction: Direc
       traceId,
       spanId,
       parentId,
+      kind,
     },
     payload: {
       type: EventType.HTTP,
@@ -25,7 +27,7 @@ const createHttpMessage = (timestamp: number, reporter: string, direction: Direc
     },
   }
 }
-const createKafkaMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId?: string): IEventMessage => {
+const createKafkaMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId: string, kind: EventKind): IEventMessage => {
   return {
     id: `ev_${timestamp}`,
     identity: reporter,
@@ -36,6 +38,7 @@ const createKafkaMessage = (timestamp: number, reporter: string, direction: Dire
       traceId,
       spanId,
       parentId,
+      kind,
     },
     payload: {
       type: EventType.KAFKA,
@@ -49,21 +52,27 @@ const createKafkaMessage = (timestamp: number, reporter: string, direction: Dire
   }
 }
 
-const http0 = createHttpMessage(0,	'X',	Direction.PRODUCER,	'O.A'	, 'O', 'O')
-const http1 = createHttpMessage(1,	'Y',	Direction.CONSUMER,	'O.A.B', 'O', 'O.A')
-const http2 = createHttpMessage(2,	'Y',	Direction.PRODUCER,	'O.A.B.C', 'O',	'O.A.B')
-const http3 = createHttpMessage(3,	'Y',	Direction.PRODUCER,	'O.A.B.Cx', 'O', 'O.A.B')
-const http4 = createHttpMessage(4,	'Z',	Direction.CONSUMER,	'O.A.B.C.D', 'O',	'O.A.B.C')
-const http5 = createHttpMessage(5,	'Z',	Direction.PRODUCER,	'O.A.B.C.D'	, 'O', 'O.A.B.C')
-const http6 = createHttpMessage(6,	'Y',	Direction.CONSUMER,	'O.A.B.C'	, 'O',	'O.A.B')
-const http7 = createHttpMessage(7,	'W',	Direction.CONSUMER,	'O.A.B.Cx.Dx'	, 'O',	'O.A.B.Cx')
-const http8 = createHttpMessage(8,	'W',	Direction.PRODUCER,	'O.A.B.Cx.Dx'	, 'O',	'O.A.B.Cx')
-const http9 = createHttpMessage(9,	'Y',	Direction.CONSUMER,	'O.A.B.Cx'	, 'O',	'O.A.B')
-const http10 = createHttpMessage(10, 'Y',	Direction.PRODUCER,	'O.A.B',	'O',	'O.A')
-const http11 = createHttpMessage(11, 'X',	Direction.CONSUMER,	'O.A',	'O',	'O')
-const kafka12 = createKafkaMessage(12,	'Z', Direction.PRODUCER, 'O.A.B.C.D.E',	'O',	'O.A.B.C.D')
-const kafka13 = createKafkaMessage(13,	'X', Direction.CONSUMER, 'O.A.B.C.D.E.F',	'O',	'O.A.B.C.D.E')
-const kafka14 = createKafkaMessage(14,	'K', Direction.CONSUMER, 'O.A.B.C.D.E.Fx',	'O',	'O.A.B.C.D.E')
+const http0 = createHttpMessage(0,	'X',	Direction.PRODUCER,	'O.A', 'O', 'O', EventKind.START)
+const http1 = createHttpMessage(1,	'Y',	Direction.CONSUMER,	'O.A.B', 'O', 'O.A', EventKind.START)
+const http2 = createHttpMessage(2,	'Y',	Direction.PRODUCER,	'O.A.B.C', 'O',	'O.A.B', EventKind.START)
+const http3 = createHttpMessage(3,	'Y',	Direction.PRODUCER,	'O.A.B.Cx', 'O', 'O.A.B',  EventKind.START)
+const http4 = createHttpMessage(4,	'Z',	Direction.CONSUMER,	'O.A.B.C.D', 'O',	'O.A.B.C', EventKind.START)
+const http5 = createHttpMessage(5,	'Z',	Direction.PRODUCER,	'O.A.B.C.D', 'O', 'O.A.B.C', EventKind.END)
+const http6 = createHttpMessage(6,	'Y',	Direction.CONSUMER,	'O.A.B.C', 'O',	'O.A.B', EventKind.END)
+const http7 = createHttpMessage(7,	'W',	Direction.CONSUMER,	'O.A.B.Cx.Dx', 'O', 'O.A.B.Cx',  EventKind.START)
+// const http8 = createHttpMessage(8,	'W',	Direction.PRODUCER,	'O.A.B.Cx.Dx', 'O', 'O.A.B.Cx',  EventKind.END)
+const http9 = createHttpMessage(9,	'Y',	Direction.CONSUMER,	'O.A.B.Cx', 'O', 'O.A.B',  EventKind.END)
+const http10 = createHttpMessage(10, 'Y',	Direction.PRODUCER,	'O.A.B', 'O', 'O.A', EventKind.END)
+const http11 = createHttpMessage(11, 'X',	Direction.CONSUMER,	'O.A', 'O', 'O',  EventKind.END)
+const kafka12 = createKafkaMessage(12,	'Z', Direction.PRODUCER, 'O.A.B.C.D.E',	'O',	'O.A.B.C.D', EventKind.START)
+const kafka12e = createKafkaMessage(12,	'Z', Direction.PRODUCER, 'O.A.B.C.D.E',	'O',	'O.A.B.C.D', EventKind.END)
+const kafka13 = createKafkaMessage(13,	'X', Direction.CONSUMER, 'O.A.B.C.D.E.F',	'O',	'O.A.B.C.D.E', EventKind.START)
+const kafka13e = createKafkaMessage(13,	'X', Direction.CONSUMER, 'O.A.B.C.D.E.F',	'O',	'O.A.B.C.D.E', EventKind.END)
+const kafka14 = createKafkaMessage(13,	'K', Direction.CONSUMER, 'O.A.B.C.D.E.Fx',	'O',	'O.A.B.C.D.E', EventKind.START)
+const kafka14e = createKafkaMessage(13,	'K', Direction.CONSUMER, 'O.A.B.C.D.E.Fx',	'O',	'O.A.B.C.D.E', EventKind.END)
+
+const http15 = createHttpMessage(14,	'Y',	Direction.CONSUMER,	'O.A.Bx', 'O', 'O.A', EventKind.START)
+const http15e = createHttpMessage(15,	'Y',	Direction.CONSUMER,	'O.A.Bx', 'O', 'O.A', EventKind.END)
 
 export const MESSAGES = [
   http0,
@@ -74,11 +83,16 @@ export const MESSAGES = [
   http5,
   http6,
   http7,
-  http8,
+  // http8,
   http9,
   http10,
   http11,
   kafka12,
+  kafka12e,
   kafka13,
+  kafka13e,
   kafka14,
+  kafka14e,
+  http15,
+  http15e,
 ]

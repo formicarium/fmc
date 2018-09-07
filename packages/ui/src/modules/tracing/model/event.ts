@@ -1,12 +1,18 @@
+import { Nullable } from 'common';
+
 // MESSAGE
 export enum MessageType {
   HEARTHBEAT = 'HEARTHBEAT',
   EVENT = 'EVENT',
 }
 
+export enum EventKind {
+  START = 'START',
+  END = 'END',
+}
 // MESSAGE-META
 export interface IBaseMessageMeta {
-  timestamp: number,
+  timestamp: number
   service: string
   traceId: string
   spanId: string
@@ -15,6 +21,7 @@ export interface IBaseMessageMeta {
 
 export interface IEventMessageMeta extends IBaseMessageMeta {
   type: MessageType.EVENT,
+  kind: Nullable<EventKind>
 }
 
 export interface IHeartbeatMessageMeta extends IBaseMessageMeta {
