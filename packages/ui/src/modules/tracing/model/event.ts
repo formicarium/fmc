@@ -1,4 +1,4 @@
-import { Nullable } from 'common';
+import { Nullable } from '@formicarium/common';
 
 // MESSAGE
 export enum MessageType {

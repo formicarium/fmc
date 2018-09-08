@@ -1,5 +1,5 @@
 import { Container } from 'unstated';
-import { IHashMap } from 'common';
+import { IHashMap } from '@formicarium/common';
 
 export interface ILogsState {
   applicationsShowingLogs: IHashMap<boolean>

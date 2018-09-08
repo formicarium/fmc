@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Button, Icon } from 'semantic-ui-react';
-import { IDevspace } from 'common';
+import { IDevspace } from '@formicarium/common';
 import { PromiseButton } from '~/modules/common/components/PromiseButton';
 
 export interface IDevspaceListProps {

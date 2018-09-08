@@ -1,7 +1,7 @@
 import React from 'react'
 import { DeployServiceForm, IDeployServiceFormValues } from '~/modules/devspace/components/DeployServiceForm';
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
-import { ISystem, IApplicationDefinition, Nullable, IArgs, getTanajuraRemoteName, getTanajuraGitUrl } from 'common';
+import { ISystem, IApplicationDefinition, Nullable, IArgs, getTanajuraRemoteName, getTanajuraGitUrl } from '@formicarium/common';
 import { ToastService } from '~/modules/common/services/ToastService';
 import _ from 'lodash'
 

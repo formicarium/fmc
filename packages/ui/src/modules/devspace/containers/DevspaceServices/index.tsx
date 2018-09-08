@@ -3,7 +3,7 @@ import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { ApplicationsList } from '~/modules/application/components/ApplicationsList';
 import { PromiseManager, PatchData } from '~/modules/common/render-props/PromiseManager';
 import { DisplayError } from '~/modules/common/components/DisplayError';
-import { ISystem, IApplication, Nullable } from 'common';
+import { ISystem, IApplication, Nullable } from '@formicarium/common';
 import { ApplicationListPlaceholder } from '~/modules/application/components/ApplicationsList/index.shimmer';
 import { Subscribe } from 'unstated';
 import { LogsState } from '~/modules/devspace/state/Logs';

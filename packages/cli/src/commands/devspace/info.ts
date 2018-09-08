@@ -23,13 +23,14 @@ export default class DevspaceUse extends FMCCommand {
     */
     const interactive = uiService.newInteractive()
     let counter = 0
-    interactive.await('Getting Versions... [0/4]')
+    const N_TASKS = 3
+    interactive.await(`Getting Versions... [0/${N_TASKS}]`)
     const increment = (v: any) => {
       counter++
       if (counter === 4) {
-        interactive.success(`Getting Versions... [${counter}/4]`)
+        interactive.success(`Getting Versions... [${counter}/${N_TASKS}]`)
       } else {
-        interactive.await(`Getting Versions... [${counter}/4]`)
+        interactive.await(`Getting Versions... [${counter}/${N_TASKS}]`)
       }
       return v
     }

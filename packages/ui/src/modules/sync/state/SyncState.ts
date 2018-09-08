@@ -1,7 +1,7 @@
 // Most of this code should be extracted to a SyncService
 
 import { Container } from 'unstated';
-import { IHashMap, ISystem, getTanajuraRemoteName, isTanajuraAlreadyInRemotes, getTanajuraGitUrl } from 'common';
+import { IHashMap, ISystem, getTanajuraRemoteName, isTanajuraAlreadyInRemotes, getTanajuraGitUrl } from '@formicarium/common';
 import fs from 'fs'
 import R from 'ramda'
 import _ from 'lodash'

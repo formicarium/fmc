@@ -1,7 +1,7 @@
 import React from 'react'
 import { CreateDevspaceForm, IValues } from '../../components/CreateDevspaceForm';
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
-import { ISystem, IApplicationDefinition } from 'common';
+import { ISystem, IApplicationDefinition } from '@formicarium/common';
 import * as path from 'path'
 import * as os from 'os'
 

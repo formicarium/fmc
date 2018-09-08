@@ -1,6 +1,6 @@
 import React from 'react'
 import electron, { OpenDialogOptions } from 'electron'
-import { Nullable } from 'common';
+import { Nullable } from '@formicarium/common';
 import { Button, Segment } from 'semantic-ui-react';
 import { FieldRenderProps } from 'react-final-form';
 

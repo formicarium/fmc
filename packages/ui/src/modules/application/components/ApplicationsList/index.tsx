@@ -1,7 +1,7 @@
 import React from 'react'
 import { Application } from '../Application';
 import styled from 'styled-components';
-import { IApplication, IHashMap } from 'common';
+import { IApplication, IHashMap } from '@formicarium/common';
 
 export interface IApplicationsListProps {
   applicationsShowingLogs: IHashMap<boolean>

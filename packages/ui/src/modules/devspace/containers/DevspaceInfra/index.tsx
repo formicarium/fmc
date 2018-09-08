@@ -3,7 +3,7 @@ import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { ApplicationsList } from '~/modules/application/components/ApplicationsList';
 import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
 import { DisplayError } from '~/modules/common/components/DisplayError';
-import { ISystem } from 'common';
+import { ISystem } from '@formicarium/common';
 import { ApplicationListPlaceholder } from '~/modules/application/components/ApplicationsList/index.shimmer';
 
 export class DevspaceInfra extends React.Component {

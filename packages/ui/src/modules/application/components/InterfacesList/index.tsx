@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react';
-import { IApplicationLinks } from 'common';
+import { IApplicationLinks } from '@formicarium/common';
 import R from 'ramda'
 import styled from 'styled-components';
 

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { SegmentHeader } from '../../../common/components/SegmentHeader';
 import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
-import { devspaceToDevspaceConfig } from 'common'
+import { devspaceToDevspaceConfig } from '@formicarium/common'
 import { toast, ToastType } from 'react-toastify';
 import { DisplayError } from '~/modules/common/components/DisplayError';
 import { DevspaceListPlaceholder } from '~/modules/devspace/components/DevspaceList/index.shimmer';

@@ -2,7 +2,7 @@ import React from 'react'
 import { InterfacesList } from '../InterfacesList';
 import styled from 'styled-components';
 import { Header, Image, Button, Segment, Checkbox } from 'semantic-ui-react';
-import { IApplicationLinks } from 'common';
+import { IApplicationLinks } from '@formicarium/common';
 import { PromiseButton } from '~/modules/common/components/PromiseButton';
 import { ApplicationLogs } from '~/modules/application/containers/ApplicationLogs';
 

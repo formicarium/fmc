@@ -4,7 +4,7 @@ import { ObjectInspector } from 'react-inspector';
 import * as path from 'path'
 import * as os from 'os'
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
-import { ISystem, IApplicationDefinition } from 'common';
+import { ISystem, IApplicationDefinition } from '@formicarium/common';
 // import { ApplicationsList } from '~/modules/application/components/ApplicationsList';
 
 export class DisplaySetupContainer extends React.Component {

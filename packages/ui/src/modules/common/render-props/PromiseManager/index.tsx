@@ -1,5 +1,5 @@
 import React from 'react'
-import { Maybe } from 'common';
+import { Maybe } from '@formicarium/common';
 
 export interface IPromiseState<T> {
   loading: boolean
