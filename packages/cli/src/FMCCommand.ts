@@ -1,7 +1,7 @@
 import Command, { flags as Flags } from '@oclif/command'
 import * as signale from 'signale'
 import chalk from 'chalk'
-import { ISystem, getSystem } from 'common'
+import { ISystem, getSystem } from '@formicarium/common'
 
 export default abstract class FMCCommand extends Command {
   public system!: ISystem

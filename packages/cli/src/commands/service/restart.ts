@@ -1,4 +1,4 @@
-import { getServiceIdentifier } from 'common'
+import { getServiceIdentifier } from '@formicarium/common'
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
 

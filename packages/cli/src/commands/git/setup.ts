@@ -2,7 +2,7 @@ import * as path from 'path'
 import {flags as Flags} from '@oclif/command'
 import { gitSetup } from '../../controllers/git'
 import FMCCommand from '../../FMCCommand'
-import { getServiceIdentifier } from 'common'
+import { getServiceIdentifier } from '@formicarium/common'
 
 export default class GitSetup extends FMCCommand {
   public static description = 'Deploys service'

@@ -3,7 +3,7 @@ import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
 import * as Table from 'tty-table'
 import * as moment from 'moment'
-import { IApp, AppStatus } from 'common'
+import { IApp, AppStatus } from '@formicarium/common'
 
 const CHECK = '🚀'
 const ERROR = '🔴'

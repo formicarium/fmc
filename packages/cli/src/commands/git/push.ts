@@ -6,7 +6,7 @@ import * as gitignoreParser from 'gitignore-parser'
 import * as R from 'ramda'
 import * as __ from 'lodash'
 import { gitPush } from '../../controllers/git'
-import { LocalDB, IGitService } from 'common'
+import { LocalDB, IGitService } from '@formicarium/common'
 
 const removeSubpathFromPath = (subpath: string, pathString: string) => pathString.replace(subpath, '')
 const clearSlash = (pathString: string) => {

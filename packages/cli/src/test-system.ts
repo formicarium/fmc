@@ -22,7 +22,7 @@ import {
   IKubectlService,
   KubectlService,
   httpClient,
-} from 'common'
+} from '@formicarium/common'
 
 export interface ITestSystem {
   configService: IConfigService
