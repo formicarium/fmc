@@ -1,5 +1,5 @@
 import { LowdbAsync } from 'lowdb'
-import { Maybe } from '../typings/common'
+import { Maybe } from '../utils/types'
 
 interface IService {
   name: string
@@ -27,7 +27,7 @@ export class LocalDB {
     this.db = db
 
     db.defaults({
-      devspaces: {}
+      devspaces: {},
     }).write()
   }
 

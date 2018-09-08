@@ -1,6 +1,7 @@
-import { IPod } from './../typings/pod'
+
 import * as R from 'ramda'
-import { Nullable } from '../typings/common'
+import { IPod } from '../model/pod'
+import { Nullable } from '../utils/types'
 
 export const getPodName = (pod: IPod) => pod.metadata.name
 

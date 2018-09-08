@@ -1,6 +1,6 @@
 import { IDevspace, IApplicationDefinition, IApplicationLinks } from '../model/devspace'
 import { IHttpClient } from '../components/http-client'
-import { Nullable } from '../typings/common'
+import { Nullable } from '../utils/types'
 import * as R from 'ramda'
 
 export interface IArgs {

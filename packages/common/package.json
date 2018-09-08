@@ -5,7 +5,7 @@
   "source": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "build": "tsc -p",
+    "build": "tsc -p .",
     "build:watch": "tsc -w"
   },
   "dependencies": {

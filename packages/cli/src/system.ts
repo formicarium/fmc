@@ -2,9 +2,26 @@ import * as low from 'lowdb'
 import * as FileAsync from 'lowdb/adapters/FileAsync'
 import * as path from 'path'
 import * as os from 'os'
-import { IConfigService, HiveService, SoilService, IGitService, ITanajuraService, ConfigServerService, IUIService, LocalDB, StingerService, IFilesService, ConfigService, GitService, TanajuraService, FilesService, UIService } from './services'
-import { IHttpClient, httpClient } from './components'
-import { KubectlService, IKubectlService } from './services/kubectl'
+import {
+  IConfigService,
+  HiveService,
+  SoilService,
+  IGitService,
+  ITanajuraService,
+  ConfigServerService,
+  LocalDB,
+  StingerService,
+  IFilesService,
+  ConfigService,
+  GitService,
+  TanajuraService,
+  FilesService,
+  IHttpClient,
+  httpClient,
+  KubectlService,
+  IKubectlService,
+} from '@formicarium/common'
+import { IUIService, UIService } from './services/ui'
 
 export interface ISystem {
   configService: IConfigService

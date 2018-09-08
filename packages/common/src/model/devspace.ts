@@ -1,4 +1,5 @@
-import { IHashMap } from './../typings/common';
+import { IHashMap } from '../utils/types'
+
 export interface IInterface {
   name: string
   container: string

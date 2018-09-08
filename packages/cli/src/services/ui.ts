@@ -1,9 +1,9 @@
-import { IHashMap, Maybe } from './../typings/common'
 import * as ora from 'ora'
-import { Ora } from '../typings/ora'
 import * as inquirer from 'inquirer'
 import * as signale from 'signale'
 import * as Table from 'tty-table'
+import { IHashMap, Maybe } from '@formicarium/common'
+import { Ora } from '../typings/ora'
 
 export interface IUIService {
   log: (what: any) => void
