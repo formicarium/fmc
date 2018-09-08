@@ -5,14 +5,14 @@
     "registry": "https://registry.npmjs.org/"
   },
   "description": "A CLI to operate on Formicarium",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Rafael Ribeiro @rafaelcorreiapoli",
   "bin": {
     "fmc": "./bin/run"
   },
   "bugs": "https://github.com/formicarium/formicarium-cli/issues",
   "dependencies": {
-    "@formicarium/common": "^0.0.1",
+    "@formicarium/common": "0.1.0",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^2",
