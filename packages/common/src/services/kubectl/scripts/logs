@@ -1,5 +1,0 @@
-#!/bin/bash
-
-NAMESPACE="$1"
-POD_NAME="$2"
-kubectl logs $POD_NAME -n "$NAMESPACE" -f

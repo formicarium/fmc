@@ -1,5 +1,6 @@
 import React from 'react'
-import { Nullable, Subtract, ISystem } from '@formicarium/common'
+import { Nullable, Subtract } from '@formicarium/common'
+import { ISystem } from '~/system';
 
 export const SystemContext = React.createContext<any>(null)
 

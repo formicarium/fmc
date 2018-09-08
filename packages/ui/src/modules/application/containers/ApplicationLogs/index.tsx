@@ -1,6 +1,6 @@
 import React from 'react'
 import { withSystem, ISystemProps } from '~/modules/core/components/SystemProvider';
-import { Segment, Dimmer, Loader } from 'semantic-ui-react';
+import { Segment, Loader } from 'semantic-ui-react';
 import { TerminalScreen } from '~/modules/application/components/TerminalScreen';
 import { ChildProcess } from 'child_process';
 import styled from 'styled-components';

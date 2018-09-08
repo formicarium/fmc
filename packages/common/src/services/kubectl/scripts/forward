@@ -1,7 +1,0 @@
-#!/bin/bash
-
-NAMESPACE="$1"
-POD_NAME="$2"
-LOCAL_PORT="$3"
-CONTAINER_PORT="$4"
-kubectl port-forward $POD_NAME "$LOCAL_PORT":"$CONTAINER_PORT" -n "$NAMESPACE"

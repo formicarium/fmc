@@ -1,6 +1,6 @@
 import React from 'react'
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
-import { ISystem } from '@formicarium/common';
+import { ISystem } from '~/system';
 import { DevspaceSettings } from '~/modules/devspace/components/DevspaceSettings';
 import { toast, ToastType } from 'react-toastify';
 

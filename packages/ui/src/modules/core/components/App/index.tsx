@@ -7,7 +7,8 @@ import { client } from '~/system/apollo';
 import { MainLayout } from '~/modules/core/MainLayout';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { SystemProvider } from '../SystemProvider';
-import { Nullable, ISystem, getSystem } from '@formicarium/common'
+import { Nullable } from '@formicarium/common'
+import { ISystem, getSystem } from '~/system';
 import { SyncState } from '~/modules/sync/state/SyncState';
 
 interface IState {
