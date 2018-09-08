@@ -6,3 +6,12 @@ build-electron/
 deprecate/
 packages/ui/build/
 packages/ui/build-electron/
+
+packages/cli/*-debug.log
+packages/cli/*-error.log
+packages/cli/.nyc_output
+packages/cli/dist/
+packages/cli/lib/
+packages/cli/package-lock.json
+packages/cli/tmp
+packages/cli/node_modules

@@ -1,6 +1,6 @@
 import { flags as Flags } from '@oclif/command'
-import FMCCommand from '../../FMCCommand'
-import { createDevspace } from '../../controllers/devspace'
+import FMCCommand from 'src/FMCCommand'
+import { createDevspace } from 'controllers/devspace'
 
 export default class DevspaceCreate extends FMCCommand {
   public static description = 'Creates a Devspace'

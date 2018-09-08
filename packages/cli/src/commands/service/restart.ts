@@ -1,6 +1,6 @@
 import { getServiceIdentifier } from 'common'
 import { flags as Flags } from '@oclif/command'
-import FMCCommand from '../../FMCCommand'
+import FMCCommand from 'src/FMCCommand'
 
 export default class ServiceDeploy extends FMCCommand {
   public static description = 'Restart a service deployed in dev mode'

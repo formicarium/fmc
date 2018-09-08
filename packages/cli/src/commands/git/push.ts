@@ -1,5 +1,5 @@
 import { flags as Flags } from '@oclif/command'
-import FMCCommand from '../../FMCCommand'
+import FMCCommand from 'src/FMCCommand'
 import * as fs from 'fs-extra'
 import * as path from 'path'
 import * as gitignoreParser from 'gitignore-parser'

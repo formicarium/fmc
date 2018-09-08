@@ -1,5 +1,5 @@
 import { flags as Flags } from '@oclif/command'
-import FMCCommand from '../../FMCCommand'
+import FMCCommand from 'src/FMCCommand'
 
 export default class DevspaceDelete extends FMCCommand {
   public static description = 'Deletes a Devspace'

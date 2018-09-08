@@ -4,10 +4,6 @@ import chalk from 'chalk'
 import { ISystem, getSystem } from 'common'
 
 export default abstract class FMCCommand extends Command {
-  public static bla = {
-    fn: () => 1,
-  }
-
   public system!: ISystem
 
   public static flags = {

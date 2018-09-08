@@ -18,11 +18,11 @@ A CLI to operate on Formicarium
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g fmc
+$ npm install -g @formicarium/cli
 $ fmc COMMAND
 running command...
 $ fmc (-v|--version|version)
-fmc/0.0.1 darwin-x64 node-v10.8.0
+@formicarium/cli/0.0.1 darwin-x64 node-v10.8.0
 $ fmc --help [COMMAND]
 USAGE
   $ fmc COMMAND
@@ -35,14 +35,13 @@ USAGE
 * [`fmc devspace:delete NAME`](#fmc-devspacedelete-name)
 * [`fmc devspace:info`](#fmc-devspaceinfo)
 * [`fmc devspace:list`](#fmc-devspacelist)
-* [`fmc devspace:services`](#fmc-devspaceservices)
+* [`fmc devspace:services [NAME]`](#fmc-devspaceservices-name)
 * [`fmc devspace:use NAME`](#fmc-devspaceuse-name)
 * [`fmc git:push [SERVICENAME]`](#fmc-gitpush-servicename)
 * [`fmc git:setup [NAME] [LOCALFOLDER]`](#fmc-gitsetup-name-localfolder)
 * [`fmc help [COMMAND]`](#fmc-help-command)
 * [`fmc repl`](#fmc-repl)
 * [`fmc service:delete NAME`](#fmc-servicedelete-name)
-* [`fmc service:deploy:image [SERVICENAME] [IMAGE] [VERSION]`](#fmc-servicedeployimage-servicename-image-version)
 * [`fmc service:deploy:local [SERVICENAME] [LOCALPATH]`](#fmc-servicedeploylocal-servicename-localpath)
 * [`fmc service:restart NAME`](#fmc-servicerestart-name)
 * [`fmc service:status`](#fmc-servicestatus)
@@ -50,7 +49,7 @@ USAGE
 
 ## `fmc devspace:create ID`
 
-Creates a Devspace...
+Creates a Devspace
 
 ```
 USAGE
@@ -58,6 +57,7 @@ USAGE
 
 OPTIONS
   -h, --help  show CLI help
+  --test
 
 EXAMPLE
   $ fmc devspace:create paps
@@ -75,6 +75,7 @@ USAGE
 
 OPTIONS
   -h, --help  show CLI help
+  --test
 
 EXAMPLE
   $ fmc devspace:delete paps
@@ -92,6 +93,7 @@ USAGE
 
 OPTIONS
   -h, --help  show CLI help
+  --test
 
 EXAMPLE
   $ fmc devspace:info
@@ -109,6 +111,7 @@ USAGE
 
 OPTIONS
   -h, --help  show CLI help
+  --test
 
 EXAMPLE
   $ fmc devspace:list
@@ -116,16 +119,17 @@ EXAMPLE
 
 _See code: [src/commands/devspace/list.ts](https://github.com/formicarium/formicarium-cli/blob/v0.0.1/src/commands/devspace/list.ts)_
 
-## `fmc devspace:services`
+## `fmc devspace:services [NAME]`
 
 Lists the services in your devspace
 
 ```
 USAGE
-  $ fmc devspace:services
+  $ fmc devspace:services [NAME]
 
 OPTIONS
   -h, --help  show CLI help
+  --test
 
 EXAMPLE
   $ fmc devspace:services
@@ -143,6 +147,7 @@ USAGE
 
 OPTIONS
   -h, --help  show CLI help
+  --test
 
 EXAMPLE
   $ fmc devspace:use paps
@@ -152,14 +157,16 @@ _See code: [src/commands/devspace/use.ts](https://github.com/formicarium/formica
 
 ## `fmc git:push [SERVICENAME]`
 
-Configures local syncthing and hive!!
+Configures local syncthing and hive
 
 ```
 USAGE
   $ fmc git:push [SERVICENAME]
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help   show CLI help
+  -w, --watch
+  --test
 
 EXAMPLE
   $ fmc sync:push
@@ -178,6 +185,7 @@ USAGE
 OPTIONS
   -h, --help         show CLI help
   -s, --shard=shard  service shard
+  --test
 
 EXAMPLE
   $ fmc service:setup .
@@ -200,7 +208,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.0.5/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.1/src/commands/help.ts)_
 
 ## `fmc repl`
 
@@ -213,6 +221,7 @@ USAGE
 OPTIONS
   -h, --help   show CLI help
   --host=host  host to connect
+  --test
 
 EXAMPLE
   $ fmc repl
@@ -231,31 +240,13 @@ USAGE
 OPTIONS
   -h, --help         show CLI help
   -s, --shard=shard  service shard
+  --test
 
 EXAMPLE
   $ fmc service:delete mancini
 ```
 
 _See code: [src/commands/service/delete.ts](https://github.com/formicarium/formicarium-cli/blob/v0.0.1/src/commands/service/delete.ts)_
-
-## `fmc service:deploy:image [SERVICENAME] [IMAGE] [VERSION]`
-
-Deploys service
-
-```
-USAGE
-  $ fmc service:deploy:image [SERVICENAME] [IMAGE] [VERSION]
-
-OPTIONS
-  -a, --arg=arg            an arg to be sent to config server
-  -f, --filePath=filePath  absoluteFilePath
-  -h, --help               show CLI help
-
-EXAMPLE
-  $ fmc service:deploy:image -f my-args.json my-service my-image 1.0.0 --arg version=1 --arg xablau=xpto
-```
-
-_See code: [src/commands/service/deploy/image.ts](https://github.com/formicarium/formicarium-cli/blob/v0.0.1/src/commands/service/deploy/image.ts)_
 
 ## `fmc service:deploy:local [SERVICENAME] [LOCALPATH]`
 
@@ -269,6 +260,7 @@ OPTIONS
   -a, --arg=arg            an arg to be sent to config server
   -f, --filePath=filePath  absoluteFilePath
   -h, --help               show CLI help
+  --test
 
 EXAMPLE
   $ fmc service:deploy:local -l . -f my-args.json my-service --arg version=1 --arg xablau=xpto
@@ -287,6 +279,7 @@ USAGE
 OPTIONS
   -h, --help         show CLI help
   -s, --shard=shard  service shard
+  --test
 
 EXAMPLE
   $ fmc service:restart mancini
@@ -305,6 +298,7 @@ USAGE
 OPTIONS
   -h, --help         show CLI help
   -s, --shard=shard  service shard
+  --test
 
 EXAMPLE
   $ fmc service:restart mancini
@@ -322,6 +316,7 @@ USAGE
 
 OPTIONS
   -h, --help  show CLI help
+  --test
 
 EXAMPLE
   $ fmc setup https://soil.your.host.here

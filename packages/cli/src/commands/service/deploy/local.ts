@@ -1,7 +1,7 @@
 
-import { gitSetup } from './../../../controllers/git'
+import { gitSetup } from 'controllers/git'
 import { flags as Flags } from '@oclif/command'
-import FMCCommand from '../../../FMCCommand'
+import FMCCommand from 'src/FMCCommand'
 import * as fs from 'fs-extra'
 import * as path from 'path'
 import { IApplicationDefinition, IArgs, Nullable } from 'common'

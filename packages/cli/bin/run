@@ -1,4 +1,5 @@
-#!/usr/bin/env node
+#!/usr/bin/env node -r tsconfig-paths/register
+// tslint:disable no-var-requires
 
 require('@oclif/command').run()
 .then(require('@oclif/command/flush'))
