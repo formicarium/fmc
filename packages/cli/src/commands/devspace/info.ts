@@ -17,7 +17,7 @@ export default class DevspaceUse extends FMCCommand {
   }
 
   public async run() {
-    const { soilService, hiveService, tanajuraService, configService, configServerService, uiService } = this.system
+    const { soilService, hiveService, tanajuraService, configService, uiService } = this.system
     /*
     * Logging Proggress
     */
