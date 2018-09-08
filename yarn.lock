@@ -638,6 +638,22 @@
     debug "^3.1.0"
     tslib "^1.9.3"
 
+"@oclif/dev-cli@^1.18.0":
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/@oclif/dev-cli/-/dev-cli-1.18.0.tgz#729f8530dd183b2cbb9f92d6caee5ec5b490b5b5"
+  dependencies:
+    "@oclif/command" "^1.5.0"
+    "@oclif/config" "^1.7.4"
+    "@oclif/errors" "^1.2.0"
+    "@oclif/plugin-help" "^2.1.1"
+    cli-ux "^4.8.1"
+    debug "^3.1.0"
+    fs-extra "^7.0.0"
+    lodash "^4.17.10"
+    normalize-package-data "^2.4.0"
+    qqjs "^0.3.10"
+    tslib "^1.9.3"
+
 "@oclif/errors@^1.1.2", "@oclif/errors@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@oclif/errors/-/errors-1.2.0.tgz#4166952699724c25af2ab4528fe223e930655e72"
@@ -3309,22 +3325,6 @@ detect-libc@^1.0.2:
 detect-newline@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-2.1.0.tgz#f41f1c10be4b00e87b5f13da680759f2c5bfd3e2"
-
-dev-cli-tsconfig-paths@^1.19.0:
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/dev-cli-tsconfig-paths/-/dev-cli-tsconfig-paths-1.19.0.tgz#6f1e3e5642fbcf9cb5ae58c2200c94d82f77cc52"
-  dependencies:
-    "@oclif/command" "^1.5.0"
-    "@oclif/config" "^1.7.4"
-    "@oclif/errors" "^1.2.0"
-    "@oclif/plugin-help" "^2.1.1"
-    cli-ux "^4.8.1"
-    debug "^3.1.0"
-    fs-extra "^7.0.0"
-    lodash "^4.17.10"
-    normalize-package-data "^2.4.0"
-    qqjs "^0.3.10"
-    tslib "^1.9.3"
 
 dezalgo@^1.0.0:
   version "1.0.3"
