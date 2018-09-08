@@ -1,6 +1,7 @@
 import { NodeType, IGraphDescription, INode, IEdge } from '~/modules/tracing/model/graph';
 import { IEventMessage, Direction } from '~/modules/tracing/model/event';
 import * as R from 'ramda'
+import { v4 } from 'uuid'
 
 export const sortEdgesAlphabetically = (a: IEdge, b: IEdge) => {
   if (a.id < b.id) { return -1; }
@@ -43,7 +44,7 @@ export const getEdges = (events: IEventMessage[]) => {
       const to = outgoing ?  parentNodeReporterId : currentReporterId
       return [
         ...edges, {
-          id: `${from}_${to}`,
+          id: `${from}_${to}_${v4()}`,
           from,
           to,
           label: getLabel(event),

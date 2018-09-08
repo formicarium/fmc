@@ -1,10 +1,11 @@
 import { EventKind } from './../model/event';
 import { Direction } from '~/modules/tracing/model/event';
 import { IEventMessage, MessageType, EventType, HttpDirection, KafkaDirection } from '../model/event';
+import { v4 } from 'uuid'
 
 const createHttpMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId: string, kind: EventKind): IEventMessage => {
   return {
-    id: `ev_${timestamp}`,
+    id: `ev_${timestamp}_${v4()}`,
     identity: reporter,
     meta: {
       type: MessageType.EVENT,
@@ -29,7 +30,7 @@ const createHttpMessage = (timestamp: number, reporter: string, direction: Direc
 }
 const createKafkaMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId: string, kind: EventKind): IEventMessage => {
   return {
-    id: `ev_${timestamp}`,
+    id: `ev_${timestamp}_${v4()}`,
     identity: reporter,
     meta: {
       type: MessageType.EVENT,
