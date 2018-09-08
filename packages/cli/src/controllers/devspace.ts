@@ -1,7 +1,8 @@
 import { getFileContent } from '../common'
 import * as os from 'os'
 import * as path from 'path'
-import { IApplicationDefinition, ISystem } from '@formicarium/common'
+import { IApplicationDefinition } from '@formicarium/common'
+import { ISystem } from '../system'
 
 export const createDevspace = async (id: string, system: ISystem) => {
   let setup: any
