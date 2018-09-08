@@ -11,17 +11,15 @@
     "rootDirs": [
       "./src"
     ],
-    "baseUrl": ".",
     "paths": {
       "*": ["./*"],
-      "controllers/*": ["./src/controllers/*"]
+      "commands/*": ["./src/commands/*"],
+      "controllers/*": ["./src/controllers/*"],
+      "src/*": ["./src/*"],
     },
+    "baseUrl": ".",
     "strict": true,
     "target": "es2017",
-    "jsx": "react",
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
     "lib": [
       "esnext",
       "dom"

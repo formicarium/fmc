@@ -40,7 +40,23 @@ export interface IApp {
 export interface IGetStatusResponse {
   apps: IApp[]
 }
-export class SoilService {
+
+export interface ISoilService {
+  createDevspace: (devspaceName: string, setup: Nullable<IApplicationDefinition[]>) => Promise<IDevspace>
+  getDevspaces: () => Promise<IDevspace[]>
+  getDevspace: (name: string) => Promise<IDevspace>
+  deployService: (
+    devspace: string, name: string,
+    applicationDefinition: Nullable<IApplicationDefinition>,
+    args: Nullable<IArgs>,
+    syncable: boolean,
+  ) => Promise<IApplicationLinks>
+  getStatus: () => Promise<IGetStatusResponse>
+  deleteService: (devspace: string, serviceName: string) => Promise<any>
+  deleteDevspace: (devspace: string) => Promise<any>
+  getVersion: () => Promise<string>
+}
+export class SoilService implements ISoilService {
 
   public url: string
   public httpClient: IHttpClient

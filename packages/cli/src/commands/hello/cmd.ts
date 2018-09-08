@@ -1,7 +1,8 @@
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
+import { ISystem } from 'common'
 
-export default class HelloCommand extends FMCCommand {
+export class HelloCommand extends FMCCommand {
   public static description = "Connects to remote Hive's repl"
 
   public static examples = [
@@ -16,7 +17,9 @@ export default class HelloCommand extends FMCCommand {
 
   public async run() {
     console.log('hi')
-    // const { configService } = this.system
+    const { configService } = this.system
+    console.log(FMCCommand.bla.fn())
+    // await configService.setSoilURL('asdasd')
     // const { devspace: { hiveReplUrl } } = await configService.readConfig()
     // const { flags: { host } } = this.parse(Repl)
     // const hiveREPL = host || hiveReplUrl
@@ -25,3 +28,5 @@ export default class HelloCommand extends FMCCommand {
     // })
   }
 }
+
+export default HelloCommand
