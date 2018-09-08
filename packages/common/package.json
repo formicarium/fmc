@@ -1,6 +1,10 @@
 {
   "name": "@formicarium/common",
-  "version": "1.0.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "version": "0.0.1",
   "main": "dist/index.js",
   "source": "src/index.ts",
   "license": "MIT",

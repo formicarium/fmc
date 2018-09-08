@@ -34,7 +34,7 @@ export default class ServiceDeploy extends FMCCommand {
     })
 
     uiService.spinner.start('Restarting service...')
-    const response = await stingerService.restartService(devspace.name, serviceName)
+    await stingerService.restartService(devspace.name, serviceName)
     uiService.spinner.succeed()
   }
 }

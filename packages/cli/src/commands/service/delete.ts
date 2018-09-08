@@ -20,7 +20,7 @@ export default class ServiceDelete extends FMCCommand {
 
   public async run() {
     const { configService, soilService, uiService } = this.system
-    const { args, flags } = this.parse(ServiceDelete)
+    const { args } = this.parse(ServiceDelete)
     const { name } = args
 
     const config = await configService.readConfig()

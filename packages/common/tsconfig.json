@@ -5,6 +5,7 @@
     "module": "commonjs",
     "noUnusedLocals": true,
     "noImplicitAny": true,
+    "skipLibCheck": true,
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,

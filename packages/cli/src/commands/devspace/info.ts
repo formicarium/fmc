@@ -41,7 +41,6 @@ export default class DevspaceUse extends FMCCommand {
     const soilVersion = soilService.getVersion().catch(() => NoVersion).then(increment)
     const hiveVersion = hiveService.getVersion().catch(() => NoVersion).then(increment)
     const tanajuraVersion = tanajuraService.getVersion(tanajuraApiUrl).catch(() => NoVersion).then(increment)
-    const configServerVersion = configServerService.getVersion().catch(() => NoVersion).then(increment)
 
     /**
      * Render table

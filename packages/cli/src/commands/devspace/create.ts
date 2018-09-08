@@ -24,7 +24,7 @@ export default class DevspaceCreate extends FMCCommand {
     const { id } = args
 
     uiService.spinner.start(`Creating namespace ${id}`)
-    const respose = await createDevspace(id, this.system)
+    await createDevspace(id, this.system)
     await localDB.registerDevspace(id)
     uiService.spinner.succeed()
   }
