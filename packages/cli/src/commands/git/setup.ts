@@ -1,7 +1,7 @@
 import * as path from 'path'
 import {flags as Flags} from '@oclif/command'
-import { gitSetup } from 'controllers/git'
-import FMCCommand from 'src/FMCCommand'
+import { gitSetup } from '../../controllers/git'
+import FMCCommand from '../../FMCCommand'
 import { getServiceIdentifier } from 'common'
 
 export default class GitSetup extends FMCCommand {

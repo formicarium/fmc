@@ -1,4 +1,4 @@
-#!/usr/bin/env node -r tsconfig-paths/register
+#!/usr/bin/env node
 // tslint:disable no-var-requires
 // tslint:disable no-implict-dependencies
 

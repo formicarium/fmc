@@ -1,4 +1,4 @@
-import FMCCommand from 'src/FMCCommand'
+import FMCCommand from '../FMCCommand'
 import { flags as Flags } from '@oclif/command'
 import { spawn } from 'child_process'
 
