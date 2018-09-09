@@ -1,5 +1,5 @@
+import { Nullable } from '@formicarium/common/src/utils/types';
 import { Container } from 'unstated';
-import { Nullable } from '../../common/typings';
 
 export interface IFilterState {
   traceId: Nullable<string>;

@@ -11,6 +11,8 @@ import { DynamicGraph } from '../../containers/DynamicGraph';
 import _ from 'lodash'
 import { FilterForm } from '../FilterForm';
 import { FilterContainer } from '../../containers/Filter';
+import { SpanTree } from '~/modules/tracing/components/SpanTree';
+import { WithMessages } from '~/modules/tracing/render-props/MessageList';
 
 const StyledSearchBar = styled(SearchBar)`
   margin-bottom: 20px;
@@ -28,7 +30,7 @@ const LateralMenuWrapper = styled.div`
   left: 0px;
   top: 0px;
   bottom: 0px;
-  width: 300px;
+  width: 600px;
   display: flex;
   flex-direction: column;
   background-color: #FFF;
@@ -91,7 +93,20 @@ class DashboardInner extends React.Component<{dashboard: DashboardState}> {
         </div>
 
         <LateralMenuWrapper>
-          <EventListContainer />
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+            <div style={{width: 300, padding: 20}}>
+              <WithMessages>
+                {({ messages}) => (
+                  <SpanTree messages={messages} />
+                )}
+              </WithMessages>
+            </div>
+            <div style={{width: 300}}>
+            <EventListContainer />
+            </div>
+
+          </div>
+
           <LateralMenuBottomAreaWrapper>
             <Subscribe to={[EventListState]}>
               {(eventListState: EventListState) => (

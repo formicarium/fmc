@@ -7,6 +7,8 @@ import { SyncState } from '~/modules/sync/state/SyncState';
 import styled from 'styled-components';
 import {HotKeys} from 'react-hotkeys';
 import { withRouter, RouteComponentProps } from 'react-router';
+import { SpanTree } from '~/modules/tracing/components/SpanTree';
+import { Dashboard } from '~/modules/tracing/components/Dashboard';
 
 interface IMainLayoutProps {
   syncState: SyncState
@@ -51,6 +53,10 @@ export class MainLayoutInner extends React.Component<IProps> {
   }
 
   public render() {
+
+    return (
+      <Dashboard />
+    )
     return (
       <HotKeys keyMap={this.map}>
         <HotKeys handlers={this.handlers}>
