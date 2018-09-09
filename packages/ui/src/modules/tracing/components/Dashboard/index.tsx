@@ -13,6 +13,7 @@ import { FilterForm } from '../FilterForm';
 import { FilterContainer } from '../../containers/Filter';
 import { SpanTree } from '~/modules/tracing/components/SpanTree';
 import { WithMessages } from '~/modules/tracing/render-props/MessageList';
+import { ExplorerState } from '~/modules/tracing/state/ExplorerState';
 
 const StyledSearchBar = styled(SearchBar)`
   margin-bottom: 20px;
@@ -93,16 +94,26 @@ class DashboardInner extends React.Component<{dashboard: DashboardState}> {
         </div>
 
         <LateralMenuWrapper>
-          <div style={{display: 'flex', flexDirection: 'row'}}>
-            <div style={{width: 300, padding: 20}}>
-              <WithMessages>
-                {({ messages}) => (
-                  <SpanTree messages={messages} />
-                )}
-              </WithMessages>
+          <div style={{display: 'flex', flexDirection: 'column'}}>
+            <div style={{padding: 20}}>
+            <WithMessages>
+            {({ messages}) => (
+              <Subscribe to={[ExplorerState]}>
+              {(explorer: ExplorerState) => (
+                <SpanTree
+                  onOpenNode={explorer.setNodeOpenState}
+                  onSelectNode={explorer.selectNode}
+                  messages={messages}
+                  openMap={explorer.state.openNodesMap}
+                  selectedMap={explorer.state.selectedNodesMap}
+                />
+              )}
+              </Subscribe>
+            )}
+            </WithMessages>
             </div>
-            <div style={{width: 300}}>
-            <EventListContainer />
+            <div style={{minHeight: 400}}>
+              <EventListContainer />
             </div>
 
           </div>

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": ".",
     "rootDir": "src",
     "outDir": "dist",
     "module": "commonjs",
@@ -19,7 +19,7 @@
       "esnext.asynciterable"
     ],
     "paths": {
-      "~*": ["./*"]
+      "~/*": ["./src/*"]
     }
   },
   "include": [

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import TreeView from 'react-treeview'
 import { IHashMap } from '@formicarium/common';
 import { getTreeNodeForSpan } from '~/modules/tracing/components/SpanTree/logic';
@@ -21,23 +21,25 @@ const NodeLabelView: React.SFC<INodeLabelProps> = ({
   onClick,
   selected,
 }) => (
-  <span onClick={onClick} style={{backgroundColor: selected ? '#d3d3d3' : 'inherit', cursor: 'pointer', fontFamily: 'Open Sans', fontSize: 20}}>
+  <div onClick={onClick} style={{fontWeight: selected ? 'bold' : 'normal', cursor: 'pointer', fontFamily: 'Open Sans', fontSize: 20, marginBottom: 10, display: 'inline'}}>
   {label}
-  </span>
+  </div>
 )
 
 export interface ILeafViewProps {
   node: ITreeNode,
   selected: boolean
   onClick: () => void
+  style?: CSSProperties
 }
 
 const LeafLabelView: React.SFC<ILeafViewProps> = ({
   node,
   selected,
   onClick,
+  style,
 }) => (
-  <span onClick={onClick} style={{backgroundColor: selected ? '#d3d3d3' : 'inherit', cursor: 'pointer', display: 'block', fontFamily: 'Open Sans', fontSize: 20}}>
+  <span onClick={onClick} style={{ ...style, fontWeight: selected ? 'bold' : 'normal', cursor: 'pointer', display: 'block', fontFamily: 'Open Sans', fontSize: 20}}>
     {node.label}
   </span>
 )
@@ -46,23 +48,24 @@ export interface INodeViewProps {
   node: ITreeNode
   openMap: IHashMap<boolean>
   selectedMap: IHashMap<boolean>
-  onToggleNode: (node: ITreeNode, open: boolean) => void
-  onClick: (node: ITreeNode, selected: boolean) => void;
+  onOpenNode: (node: ITreeNode, open: boolean) => void
+  onSelectNode: (node: ITreeNode, selected: boolean) => void;
 }
 
 const TreeNode: React.SFC<INodeViewProps> = ({
   node,
-  onClick,
-  onToggleNode,
+  onSelectNode,
+  onOpenNode,
   openMap,
   selectedMap,
 }) => (
   <TreeView
     key={node.id}
-    nodeLabel={<NodeLabelView label={node.label} selected={selectedMap[node.id]} onClick={() => onClick(node, !selectedMap[node.id])} /> }
+    nodeLabel={<NodeLabelView label={node.label} selected={selectedMap[node.id]} onClick={() => onSelectNode(node, !selectedMap[node.id])} /> }
     collapsed={!openMap[node.id]}
+    // style={{padding: 4}}
     onClick={() => {
-      onToggleNode(node, !openMap[node.id])
+      onOpenNode(node, !openMap[node.id])
     }}>
     {node.children && node.children.map((child) => {
       if (child.children && child.children.length > 0) {
@@ -70,8 +73,8 @@ const TreeNode: React.SFC<INodeViewProps> = ({
           <TreeNode
             key={child.id}
             node={child}
-            onClick={onClick}
-            onToggleNode={onToggleNode}
+            onSelectNode={onSelectNode}
+            onOpenNode={onOpenNode}
             openMap={openMap}
             selectedMap={selectedMap}
           />
@@ -81,7 +84,7 @@ const TreeNode: React.SFC<INodeViewProps> = ({
       return (
         <LeafLabelView
           key={child.id}
-          onClick={() => onClick(child, !selectedMap[child.id])}
+          onClick={() => onSelectNode(child, !selectedMap[child.id])}
           node={child}
           selected={selectedMap[child.id]}
         />
@@ -90,55 +93,26 @@ const TreeNode: React.SFC<INodeViewProps> = ({
   </TreeView>
 )
 
-export interface ISpanTreeState {
+export interface ISpanTreeProps {
+  messages: IEventMessage[]
+  onOpenNode: (node: ITreeNode, open: boolean) => void
+  onSelectNode: (node: ITreeNode, selected: boolean) => void;
   openMap: IHashMap<boolean>
   selectedMap: IHashMap<boolean>
 }
-
-export interface ISpanTreeProps {
-  messages: IEventMessage[]
-}
-export class SpanTree extends React.Component<ISpanTreeProps, ISpanTreeState> {
-  public state = {
-    openMap: {
-      root: true,
-    },
-    selectedMap: {
-      root: true,
-    },
-  }
-  private handleClick = (node: ITreeNode, selected: boolean) => {
-    this.setState((state) => ({
-      selectedMap: {
-        ...state.selectedMap,
-        [node.id]: selected,
-      },
-    }))
-  }
-
+export class SpanTree extends React.Component<ISpanTreeProps> {
   private calculateTree = memoize(
     (messages: IEventMessage[]) => getTreeNodeForSpan(messages, 'O'),
   )
 
-  private handleToggleNode = (node: ITreeNode, open: boolean) => {
-    console.log(node)
-    console.log(open)
-    this.setState((state) => ({
-      openMap: {
-        ...state.openMap,
-        [node.id]: open,
-      },
-    }))
-  }
-
   public render() {
     return (
       <TreeNode
-        openMap={this.state.openMap}
-        selectedMap={this.state.selectedMap}
         node={this.calculateTree(this.props.messages)}
-        onClick={this.handleClick}
-        onToggleNode={this.handleToggleNode}
+        openMap={this.props.openMap}
+        selectedMap={this.props.selectedMap}
+        onSelectNode={this.props.onSelectNode}
+        onOpenNode={this.props.onOpenNode}
       />
     )
   }

@@ -5,6 +5,7 @@ import { ITreeNode } from './index';
 export const getTreeNodeForSpan = (messages: IEventMessage[], spanId: string): ITreeNode => {
   const childrenSpans = Array.from(new Set(messages
     .filter((message) => message.meta.parentId === spanId)
+    .filter((message) => messages.find((m) => m.meta.parentId === message.meta.spanId))
     .map((x) => x.meta.spanId)))
 
   return ({

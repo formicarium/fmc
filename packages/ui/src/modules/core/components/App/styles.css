@@ -414,6 +414,7 @@ div[tabindex="-1"]:focus {
 
 .tree-view {
   overflow-y: hidden;
+  
 }
 
 .tree-view_item {
@@ -422,7 +423,9 @@ div[tabindex="-1"]:focus {
 
 /* style for the children nodes container */
 .tree-view_children {
-  margin-left: 16px;
+  margin-left: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px
 }
 
 .tree-view_children-collapsed {
@@ -431,12 +434,13 @@ div[tabindex="-1"]:focus {
 
 .tree-view_arrow {
   cursor: pointer;
-  margin-right: 6px;
+  margin-right: 2px;
   display: inline-block;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  padding: 4px;
 }
 
 .tree-view_arrow:after {
@@ -449,4 +453,5 @@ div[tabindex="-1"]:focus {
   -moz-transform: rotate(-90deg);
   -ms-transform: rotate(-90deg);
   transform: rotate(-90deg);
+  transition: .3s
 }
