@@ -18,7 +18,6 @@ const getScrollTop = (index: number, height: number) => HEADER_HEIGHT + (ROW_HEI
 
 const Wrapper = styled.div`
   background-color: #FFF;
-  flex-grow: 1;
   overflow: hidden;
   overflow-y: auto;
 `

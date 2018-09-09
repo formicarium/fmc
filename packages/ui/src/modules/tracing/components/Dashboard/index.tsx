@@ -11,9 +11,7 @@ import { DynamicGraph } from '../../containers/DynamicGraph';
 import _ from 'lodash'
 import { FilterForm } from '../FilterForm';
 import { FilterContainer } from '../../containers/Filter';
-import { SpanTree } from '~/modules/tracing/components/SpanTree';
-import { WithMessages } from '~/modules/tracing/render-props/MessageList';
-import { ExplorerState } from '~/modules/tracing/state/ExplorerState';
+import { FilterPalette } from '~/modules/tracing/components/FilterPalette';
 
 const StyledSearchBar = styled(SearchBar)`
   margin-bottom: 20px;
@@ -94,31 +92,18 @@ class DashboardInner extends React.Component<{dashboard: DashboardState}> {
         </div>
 
         <LateralMenuWrapper>
-          <div style={{display: 'flex', flexDirection: 'column'}}>
+          <FilterPalette activeIndex={0} />
+          {/* <div style={{display: 'flex', flexDirection: 'column'}}>
             <div style={{padding: 20}}>
-            <WithMessages>
-            {({ messages}) => (
-              <Subscribe to={[ExplorerState]}>
-              {(explorer: ExplorerState) => (
-                <SpanTree
-                  onOpenNode={explorer.setNodeOpenState}
-                  onSelectNode={explorer.selectNode}
-                  messages={messages}
-                  openMap={explorer.state.openNodesMap}
-                  selectedMap={explorer.state.selectedNodesMap}
-                />
-              )}
-              </Subscribe>
-            )}
-            </WithMessages>
+            <SpanExplorer />
             </div>
             <div style={{minHeight: 400}}>
               <EventListContainer />
             </div>
 
-          </div>
+          </div> */}
 
-          <LateralMenuBottomAreaWrapper>
+          {/* <LateralMenuBottomAreaWrapper>
             <Subscribe to={[EventListState]}>
               {(eventListState: EventListState) => (
                 <Fragment>
@@ -139,11 +124,11 @@ class DashboardInner extends React.Component<{dashboard: DashboardState}> {
                       eventListState.setShowAll(checked)
                     }}
                   />
-                  <FilterContainer />
+
                 </Fragment>
               )}
             </Subscribe>
-          </LateralMenuBottomAreaWrapper>
+          </LateralMenuBottomAreaWrapper> */}
         </LateralMenuWrapper>
       </Wrapper>
     )

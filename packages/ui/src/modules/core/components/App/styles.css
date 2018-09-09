@@ -419,17 +419,20 @@ div[tabindex="-1"]:focus {
 
 .tree-view_item {
   /* immediate child of .tree-view, for styling convenience */
-}
-
-/* style for the children nodes container */
-.tree-view_children {
-  margin-left: 20px;
   padding-top: 8px;
   padding-bottom: 8px
 }
 
+/* style for the children nodes container */
+.tree-view_children {
+  margin-left: 10px;
+
+}
+
 .tree-view_children-collapsed {
   height: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px
 }
 
 .tree-view_arrow {

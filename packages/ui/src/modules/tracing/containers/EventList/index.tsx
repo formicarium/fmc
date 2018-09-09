@@ -26,7 +26,7 @@ export const EventListContainer = () => (
     {({ messages }) => (
       <Subscribe to={[EventListState, FilterState, ExplorerState]}>
         {(eventListState: EventListState, filterState: FilterState, explorerState: ExplorerState) => {
-          const filteredMessages = messages.filter((message) => message.meta.parentId === explorerState.state.spanFilter)
+          const filteredMessages = messages.filter((message) => message.meta.parentId.indexOf(explorerState.state.spanFilter) !== -1)
 
           return (
           <EventList

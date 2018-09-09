@@ -68,7 +68,7 @@ export const FilterForm: React.SFC<IFilterFormProps> = ({
 }) => (
   <Wrapper>
     <Dropdown
-      placeholder='Node type'
+      placeholder='Services'
       multiple
       search
       selection
@@ -93,7 +93,7 @@ export const FilterForm: React.SFC<IFilterFormProps> = ({
         setFilterEdgeTypes(data.value as string[])
       }}
     />
-    <Dropdown
+    {/* <Dropdown
       placeholder='Trace ID'
       search
       fluid
@@ -127,6 +127,6 @@ export const FilterForm: React.SFC<IFilterFormProps> = ({
       onChange={(_, data) => {
         setParentId(data.value as string)
       }}
-    />
+    /> */}
   </Wrapper>
 )

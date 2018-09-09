@@ -62,34 +62,21 @@ const TreeNode: React.SFC<INodeViewProps> = ({
   <TreeView
     key={node.id}
     nodeLabel={<NodeLabelView label={node.label} selected={selectedMap[node.id]} onClick={() => onSelectNode(node, !selectedMap[node.id])} /> }
-    collapsed={!openMap[node.id]}
+    collapsed={!openMap[node.id] && node.children.length > 0}
     // style={{padding: 4}}
     onClick={() => {
       onOpenNode(node, !openMap[node.id])
     }}>
-    {node.children && node.children.map((child) => {
-      if (child.children && child.children.length > 0) {
-        return (
-          <TreeNode
-            key={child.id}
-            node={child}
-            onSelectNode={onSelectNode}
-            onOpenNode={onOpenNode}
-            openMap={openMap}
-            selectedMap={selectedMap}
-          />
-        )
-      }
-
-      return (
-        <LeafLabelView
-          key={child.id}
-          onClick={() => onSelectNode(child, !selectedMap[child.id])}
-          node={child}
-          selected={selectedMap[child.id]}
-        />
-      )
-    })}
+    {node.children && node.children.map((child) => (
+      <TreeNode
+        key={child.id}
+        node={child}
+        onSelectNode={onSelectNode}
+        onOpenNode={onOpenNode}
+        openMap={openMap}
+        selectedMap={selectedMap}
+      />
+    ))}
   </TreeView>
 )
 
