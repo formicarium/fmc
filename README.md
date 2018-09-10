@@ -38,6 +38,54 @@ yarn dev:browser
 ```
 This will automatically open your browser
 
+## Publishing
+On the monorepo root:
+```
+yarn publish-all
+```
+This command uses lerna to publish all the packages in the monorepo
+For each package, it will look to the commits since the last publish and determine how to bump (major, minor, patch) based on the commit messages, following `conventional commits`.
+Then, it will automatically bump and publish the necessary packages.
+
+## Building
+To build all packages, run this on the monorepo root:
+```
+yarn run build
+```
+To build a specific package, cd into the package folder and run:
+```
+yarn run build
+```
+or
+```
+yarn run build:watcch
+```
+
+## Cleaning
+To clean all packages, run this on the monorepo root:
+```
+yarn run clean
+```
+To clean a specific package, cd into the package folder and run:
+```
+yarn run clean
+```
+
+## Testing
+To run tests for all packages, run this on the monorepo root:
+```
+yarn run test
+```
+
+To run test for a specific package, cd into the package folder and run:
+```
+yarn run test
+```
+or
+```
+yarn run test:watch
+```
+
 ## Common
 Just add code there and import it on any other package/app.
 If this package/app lives inside the monorepo (just like `UI` and `CLI`), you will always get the latest code version on your imports.
