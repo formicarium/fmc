@@ -53,10 +53,6 @@ export class MainLayoutInner extends React.Component<IProps> {
   }
 
   public render() {
-
-    return (
-      <Dashboard />
-    )
     return (
       <HotKeys keyMap={this.map}>
         <HotKeys handlers={this.handlers}>
