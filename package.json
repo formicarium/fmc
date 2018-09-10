@@ -11,7 +11,14 @@
     "lerna": "^3.2.1"
   },
   "scripts": {
-    "build:watch": "lerna run build:watch"
+    "build:watch": "lerna run build:watch",
+    "build": "lerna run build",
+    "clean": "lerna run clean",
+    "lint": "lerna run lint",
+    "test": "lerna run test",
+    "update-version": "lerna publish --skip-git --skip-npm --force-publish '*'",
+    "check-packages": "yarn clean && yarn compile && yarn test && yarn lint",
+    "publish-packages": "./scripts/publish"
   },
   "devDependencies": {}
 }
