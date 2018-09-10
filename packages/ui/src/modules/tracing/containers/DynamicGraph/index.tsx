@@ -1,18 +1,23 @@
 import React from 'react'
 import { Subscribe } from 'unstated';
 import _ from 'lodash'
-import { getFilteredMessages, memoizedGraphFromEvents } from '~/modules/tracing/selectors/messages';
+import { graphFromEventsReselect } from '~/modules/tracing/selectors/messages';
 import {ExplorerState} from '~/modules/tracing/state/ExplorerState';
 import {WithMessages} from '~/modules/tracing/render-props/MessageList';
 import {Graph} from '~/modules/tracing/components/Graph';
+import { FilterState } from '~/modules/tracing/state/FilterState';
 
 export const DynamicGraph: React.SFC = () => (
   <WithMessages>
     {({ messages }) => (
-      <Subscribe to={[ExplorerState]}>
-        {(explorerState: ExplorerState) => (
+      <Subscribe to={[ExplorerState, FilterState]}>
+        {(explorerState: ExplorerState, filterState: FilterState) => (
           <Graph
-            graph={memoizedGraphFromEvents(getFilteredMessages(messages, explorerState.state.spanFilter))}
+            graph={graphFromEventsReselect({
+              messages,
+              explorerState,
+              filterState,
+            })}
             onSelectEdge={_.noop}
             onDeselectEdge={_.noop}
             onSelectNode={_.noop}

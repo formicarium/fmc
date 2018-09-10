@@ -47,14 +47,14 @@ export interface IFilterPaletteProps {
 export const FilterPalette: React.SFC<IFilterPaletteProps> = ({
   activeIndex,
 }) => (
-  <div style={{height: '100%', overflowX: 'hidden', overflowY: 'auto'}}>
-    <Header as='h2'>Spans</Header>
-    <SpanExplorerContainer />
-    <Divider />
-    <Header as='h2'>Events</Header>
-    <EventListContainer />
-    <Divider />
+  <div style={{height: '100%', overflowX: 'hidden', overflowY: 'auto', padding: 10}}>
     <Header as='h2'>Filters</Header>
     <FilterContainer />
+    <Divider />
+    <Header as='h2'>Span Explorer</Header>
+    <SpanExplorerContainer />
+    <Divider />
+    <Header as='h2'>Event List</Header>
+    <EventListContainer />
   </div>
 )

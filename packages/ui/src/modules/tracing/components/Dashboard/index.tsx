@@ -26,9 +26,7 @@ const LateralMenuWrapper = styled.div`
   flex-direction: column;
   background-color: #FFF;
 `
-const LateralMenuBottomAreaWrapper = styled.div`
-  padding: 20px;
-`
+
 class DashboardInner extends React.Component<{dashboard: DashboardState}> {
   public componentDidMount() {
     this.props.dashboard.fetchGraph()
@@ -78,42 +76,6 @@ class DashboardInner extends React.Component<{dashboard: DashboardState}> {
 
         <LateralMenuWrapper>
           <FilterPalette activeIndex={0} />
-          {/* <div style={{display: 'flex', flexDirection: 'column'}}>
-            <div style={{padding: 20}}>
-            <SpanExplorer />
-            </div>
-            <div style={{minHeight: 400}}>
-              <EventListContainer />
-            </div>
-
-          </div> */}
-
-          {/* <LateralMenuBottomAreaWrapper>
-            <Subscribe to={[EventListState]}>
-              {(eventListState: EventListState) => (
-                <Fragment>
-                  <Checkbox
-                    label='Cumulative'
-                    style={{width: '100%', marginBottom: 20}}
-                    checked={eventListState.state.cumulative || eventListState.state.showAll}
-                    disabled={eventListState.state.showAll}
-                    onChange={(__, { checked }) => {
-                      eventListState.setCumulative(checked)
-                    }}
-                  />
-                  <Checkbox
-                    label='Show all'
-                    style={{width: '100%'}}
-                    checked={eventListState.state.showAll}
-                    onChange={(__, { checked }) => {
-                      eventListState.setShowAll(checked)
-                    }}
-                  />
-
-                </Fragment>
-              )}
-            </Subscribe>
-          </LateralMenuBottomAreaWrapper> */}
         </LateralMenuWrapper>
       </Wrapper>
     )

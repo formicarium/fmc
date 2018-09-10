@@ -1,7 +1,7 @@
 import { Container } from 'unstated';
 import { IGraphDescription, INode, IEdge, IEdgeWithNodes } from '../../model/graph';
 import { showNode, showEdge, hideEdge, hideNode } from '../../logic/graph';
-import { Nullable } from '../../common/typings';
+import { Nullable } from '@formicarium/common';
 
 export interface IFilter {
   edge: {
