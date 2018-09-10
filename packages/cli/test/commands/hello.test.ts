@@ -1,12 +1,7 @@
 import {expect, test} from '@oclif/test'
 
-describe('hello??', () => {
-  test
-  .stdout({
-    print: true,
-  })
-  .command(['hello:cmd'])
-  .it('runs hello', (ctx) => {
+describe('My test', () => {
+  it('works', () => {
     expect(1).to.equal(1)
   })
 })

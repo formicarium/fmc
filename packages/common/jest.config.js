@@ -14,7 +14,4 @@ module.exports = {
     "json",
     "node"
   ],
-  "moduleNameMapper": {
-    "~/(.*)$": "<rootDir>/src/$1",
-  }
 }
