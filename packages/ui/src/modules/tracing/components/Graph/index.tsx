@@ -90,18 +90,7 @@ interface ISelectNodeEvent {
 }
 
 const buildVisGraph = (graph: IGraphDescription) => {
-  return {
-    edges: graph.edges.map((edge) => ({
-      ...edge,
-      color: {
-        ...edge.color && { color: edge.color },
-      },
-    })),
-    nodes: graph.nodes.map((node) => ({
-      ...node,
-      group: node.type,
-    })),
-  }
+  return graph
 }
 export class Graph extends React.Component<IGraph> {
   public shouldComponentUpdate(nextProps: IGraph) {
