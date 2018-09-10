@@ -3,7 +3,7 @@ import { Direction } from '~/modules/tracing/model/event';
 import { IEventMessage, MessageType, EventType, HttpDirection, KafkaDirection } from '../model/event';
 import { v4 } from 'uuid'
 
-const createHttpInMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId: string, kind: EventKind): IEventMessage => {
+export const createHttpInMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId: string, kind: EventKind): IEventMessage => {
   return {
     id: `ev_${timestamp}_${v4()}`,
     identity: reporter,
@@ -28,7 +28,7 @@ const createHttpInMessage = (timestamp: number, reporter: string, direction: Dir
     },
   }
 }
-const createHttpOutMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId: string, kind: EventKind): IEventMessage => {
+export const createHttpOutMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId: string, kind: EventKind): IEventMessage => {
   return {
     id: `ev_${timestamp}_${v4()}`,
     identity: reporter,
@@ -53,7 +53,7 @@ const createHttpOutMessage = (timestamp: number, reporter: string, direction: Di
     },
   }
 }
-const createKafkaMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId: string, kind: EventKind): IEventMessage => {
+export const createKafkaMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId: string, kind: EventKind): IEventMessage => {
   return {
     id: `ev_${timestamp}_${v4()}`,
     identity: reporter,
@@ -78,7 +78,7 @@ const createKafkaMessage = (timestamp: number, reporter: string, direction: Dire
   }
 }
 
-const nowPlusSeconds = (seconds: number): number => {
+export const nowPlusSeconds = (seconds: number): number => {
   const t = new Date()
   t.setSeconds(t.getSeconds() + seconds)
   return t.getTime()
@@ -99,12 +99,12 @@ const http7 = createHttpInMessage(nowPlusSeconds(7),	'W',	Direction.CONSUMER,	'O
 const http8 = createHttpInMessage(nowPlusSeconds(8),	'W',	Direction.PRODUCER,	'O.A.B.Cx.Dx', 'O', 'O.A.B.Cx',  EventKind.END)
 const http9 = createHttpOutMessage(nowPlusSeconds(9),	'Y',	Direction.CONSUMER,	'O.A.B.Cx', 'O', 'O.A.B',  EventKind.END)
 
-// const kafka12 = createKafkaMessage(12,	'Z', Direction.PRODUCER, 'O.A.B.C.D.E',	'O',	'O.A.B.C.D', EventKind.START)
-// const kafka12e = createKafkaMessage(12,	'Z', Direction.PRODUCER, 'O.A.B.C.D.E',	'O',	'O.A.B.C.D', EventKind.END)
-// const kafka13 = createKafkaMessage(13,	'X', Direction.CONSUMER, 'O.A.B.C.D.E.F',	'O',	'O.A.B.C.D.E', EventKind.START)
-// const kafka13e = createKafkaMessage(13,	'X', Direction.CONSUMER, 'O.A.B.C.D.E.F',	'O',	'O.A.B.C.D.E', EventKind.END)
-// const kafka14 = createKafkaMessage(13,	'K', Direction.CONSUMER, 'O.A.B.C.D.E.Fx',	'O',	'O.A.B.C.D.E', EventKind.START)
-// const kafka14e = createKafkaMessage(13,	'K', Direction.CONSUMER, 'O.A.B.C.D.E.Fx',	'O',	'O.A.B.C.D.E', EventKind.END)
+const kafka12 = createKafkaMessage(nowPlusSeconds(12),	'Z', Direction.PRODUCER, 'O.A.B.C.D.E',	'O',	'O.A.B.C.D', EventKind.START)
+const kafka12e = createKafkaMessage(nowPlusSeconds(13),	'Z', Direction.PRODUCER, 'O.A.B.C.D.E',	'O',	'O.A.B.C.D', EventKind.END)
+const kafka13 = createKafkaMessage(nowPlusSeconds(13),	'X', Direction.CONSUMER, 'O.A.B.C.D.E.F',	'O',	'O.A.B.C.D.E', EventKind.START)
+const kafka13e = createKafkaMessage(nowPlusSeconds(13),	'X', Direction.CONSUMER, 'O.A.B.C.D.E.F',	'O',	'O.A.B.C.D.E', EventKind.END)
+const kafka14 = createKafkaMessage(nowPlusSeconds(13),	'K', Direction.CONSUMER, 'O.A.B.C.D.E.Fx',	'O',	'O.A.B.C.D.E', EventKind.START)
+const kafka14e = createKafkaMessage(nowPlusSeconds(13),	'K', Direction.CONSUMER, 'O.A.B.C.D.E.Fx',	'O',	'O.A.B.C.D.E', EventKind.END)
 
 // const http15 = createHttpMessage(14,	'Y',	Direction.CONSUMER,	'O.A.Bx', 'O', 'O.A', EventKind.START)
 // const http15e = createHttpMessage(15,	'Y',	Direction.CONSUMER,	'O.A.Bx', 'O', 'O.A', EventKind.END)
@@ -122,12 +122,12 @@ export const MESSAGES = [
   http9,
   http10,
   http11,
-  // kafka12,
-  // kafka12e,
-  // kafka13,
-  // kafka13e,
-  // kafka14,
-  // kafka14e,
+  kafka12,
+  kafka12e,
+  kafka13,
+  kafka13e,
+  kafka14,
+  kafka14e,
   // http15,
   // http15e,
 ]
