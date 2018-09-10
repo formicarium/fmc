@@ -13,7 +13,6 @@ export default abstract class FMCCommand extends Command {
   protected async init(): Promise<any> {
     this.system = await getSystem()
     const { name } = await this.system.configService.readDevspaceConfig()
-    console.log('---')
     signale.info(`Currently using devspace: ${chalk.underline(name)}`)
   }
 
