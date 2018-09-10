@@ -28,10 +28,6 @@ const eventTypesFilterSelector = createSelector(
   (filterState) => filterState.eventTypes,
 )
 
-export const getFilteredMessages = memoizeOne((messages: IEventMessage[], spanFilter: string) => {
-  return messages.filter((message) => new RegExp(`${spanFilter}(\\.(.*))?$`).test(message.meta.spanId))
-})
-
 export const getFilteredMessagesReselect = createSelector(
   messagesSelector,
   spanFilterSelector,
@@ -48,8 +44,6 @@ export const getFilteredMessagesReselect = createSelector(
 
 const getTimestamp = (message: IEventMessage) => message.meta.timestamp
 export const getSortedMessages = memoizeOne((messages: IEventMessage[]) => R.sortBy(getTimestamp, messages))
-
-export const memoizedGraphFromEvents = memoizeOne((events: IEventMessage[]) => getGraphFromEvents(events))
 
 export const graphFromEventsReselect = createSelector(
   getFilteredMessagesReselect,
