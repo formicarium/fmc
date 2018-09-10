@@ -24,8 +24,8 @@ const CollapsableItem: React.SFC<{
   children,
   onToggle,
 }) => (
-  <div onClick={() => onToggle(id, !open)}>
-    <Segment secondary padded={true} style={{margin: 0, display: 'flex', flexDirection: 'row', alignItems: 'center', cursor: 'pointer'}}>
+  <div>
+    <Segment secondary padded={true} style={{margin: 0, display: 'flex', flexDirection: 'row', alignItems: 'center', cursor: 'pointer'}} onClick={() => onToggle(id, !open)}>
       <div style={{flexGrow: 1, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
         <Icon name={iconName} />
         <Header as='h2' style={{margin: 0, marginLeft: 10}}>{text}</Header>
