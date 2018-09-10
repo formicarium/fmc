@@ -1,70 +1,31 @@
-import { getEdges, getGraphFromEvents, sortEdgesAlphabetically } from './../modules/tracing/logic/event-graph';
+import { createHttpOutMessage, createHttpInMessage, nowPlusSeconds, createKafkaMessage } from '~/modules/tracing/mock/events';
+import { IEdge } from '~/modules/tracing/model/graph';
+import { getEdges, getGraphFromEvents } from './../modules/tracing/logic/event-graph';
 import { NodeType, IGraphDescription } from './../modules/tracing/model/graph';
-import { IEventMessage, MessageType, EventType, Direction } from './../modules/tracing/model/event';
+import { Direction, EventKind } from './../modules/tracing/model/event';
 
-const createHttpMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId?: string): IEventMessage => {
-  return {
-    id: `ev_${timestamp}`,
-    identity: reporter,
-    meta: {
-      type: MessageType.EVENT,
-      timestamp,
-      service: reporter,
-      traceId,
-      spanId,
-      parentId,
-    },
-    payload: {
-      type: EventType.HTTP,
-      direction,
-      data: {
-        endpoint: {
-          uri: '/blabla',
-          service: 'xxx',
-        },
-      },
-    },
-  }
+export const sortEdgesAlphabetically = (a: IEdge, b: IEdge) => {
+  if (a.id < b.id) { return -1; }
+  if (a.id > b.id) { return 1; }
+  return 0;
 }
-const createKafkaMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId?: string): IEventMessage => {
-  return {
-    id: `ev_${timestamp}`,
-    identity: reporter,
-    meta: {
-      type: MessageType.EVENT,
-      timestamp,
-      service: reporter,
-      traceId,
-      spanId,
-      parentId,
-    },
-    payload: {
-      type: EventType.KAFKA,
-      direction,
-      data: {
-        endpoint: {
-          topic: 'xablau',
-        },
-      },
-    },
-  }
-}
+const http0 = createHttpOutMessage(nowPlusSeconds(0),	'X',	Direction.PRODUCER,	'O.A', 'O', 'O', EventKind.START)
+const http1 = createHttpInMessage(nowPlusSeconds(1),	'Y',	Direction.CONSUMER,	'O.A.B', 'O', 'O.A', EventKind.START)
+const http10 = createHttpInMessage(nowPlusSeconds(10), 'Y',	Direction.PRODUCER,	'O.A.B', 'O', 'O.A', EventKind.END)
+const http11 = createHttpOutMessage(nowPlusSeconds(11), 'X',	Direction.CONSUMER,	'O.A', 'O', 'O',  EventKind.END)
 
-const http0 = createHttpMessage(0,	'X',	Direction.PRODUCER,	'O.A'	, 'O', 'O')
-const http1 = createHttpMessage(1,	'Y',	Direction.CONSUMER,	'O.A.B', 'O', 'O.A')
-const http2 = createHttpMessage(2,	'Y',	Direction.PRODUCER,	'O.A.B.C', 'O',	'O.A.B')
-const http3 = createHttpMessage(3,	'Y',	Direction.PRODUCER,	'O.A.B.Cx', 'O', 'O.A.B')
-const http4 = createHttpMessage(4,	'Z',	Direction.CONSUMER,	'O.A.B.C.D', 'O',	'O.A.B.C')
-const http5 = createHttpMessage(5,	'Z',	Direction.PRODUCER,	'O.A.B.C.D'	, 'O', 'O.A.B.C')
-const http6 = createHttpMessage(6,	'Y',	Direction.CONSUMER,	'O.A.B.C'	, 'O',	'O.A.B')
-const http7 = createHttpMessage(7,	'W',	Direction.CONSUMER,	'O.A.B.Cx.Dx'	, 'O',	'O.A.B.Cx')
-const http8 = createHttpMessage(8,	'W',	Direction.PRODUCER,	'O.A.B.Cx.Dx'	, 'O',	'O.A.B.Cx')
-const http9 = createHttpMessage(9,	'Y',	Direction.CONSUMER,	'O.A.B.Cx'	, 'O',	'O.A.B')
-const http10 = createHttpMessage(10, 'Y',	Direction.PRODUCER,	'O.A.B',	'O',	'O.A')
-const http11 = createHttpMessage(11, 'X',	Direction.CONSUMER,	'O.A',	'O',	'O')
-const kafka12 = createKafkaMessage(12,	'Z', Direction.PRODUCER, 'O.A.B.C.D.E',	'O',	'O.A.B.C.D')
-const kafka13 = createKafkaMessage(13,	'X', Direction.CONSUMER, 'O.A.B.C.D.E.F',	'O',	'O.A.B.C.D.E')
-const kafka14 = createKafkaMessage(14,	'K', Direction.CONSUMER, 'O.A.B.C.D.E.Fx',	'O',	'O.A.B.C.D.E')
+const http2 = createHttpOutMessage(nowPlusSeconds(2),	'Y',	Direction.PRODUCER,	'O.A.B.C', 'O',	'O.A.B', EventKind.START)
+const http4 = createHttpInMessage(nowPlusSeconds(4),	'Z',	Direction.CONSUMER,	'O.A.B.C.D', 'O',	'O.A.B.C', EventKind.START)
+const http5 = createHttpInMessage(nowPlusSeconds(5),	'Z',	Direction.PRODUCER,	'O.A.B.C.D', 'O', 'O.A.B.C', EventKind.END)
+const http6 = createHttpOutMessage(nowPlusSeconds(6),	'Y',	Direction.CONSUMER,	'O.A.B.C', 'O',	'O.A.B', EventKind.END)
+
+const http3 = createHttpOutMessage(nowPlusSeconds(3),	'Y',	Direction.PRODUCER,	'O.A.B.Cx', 'O', 'O.A.B',  EventKind.START)
+const http7 = createHttpInMessage(nowPlusSeconds(7),	'W',	Direction.CONSUMER,	'O.A.B.Cx.Dx', 'O', 'O.A.B.Cx',  EventKind.START)
+const http8 = createHttpInMessage(nowPlusSeconds(8),	'W',	Direction.PRODUCER,	'O.A.B.Cx.Dx', 'O', 'O.A.B.Cx',  EventKind.END)
+const http9 = createHttpOutMessage(nowPlusSeconds(9),	'Y',	Direction.CONSUMER,	'O.A.B.Cx', 'O', 'O.A.B',  EventKind.END)
+const kafka12 = createKafkaMessage(nowPlusSeconds(12),	'Z', Direction.PRODUCER, 'O.A.B.C.D.E',	'O',	'O.A.B.C.D', EventKind.START)
+const kafka13 = createKafkaMessage(nowPlusSeconds(13),	'X', Direction.CONSUMER, 'O.A.B.C.D.E.F',	'O',	'O.A.B.C.D.E', EventKind.START)
+const kafka14 = createKafkaMessage(nowPlusSeconds(13),	'K', Direction.CONSUMER, 'O.A.B.C.D.E.Fx',	'O',	'O.A.B.C.D.E', EventKind.START)
 
 const myEvents = [
   http0,
