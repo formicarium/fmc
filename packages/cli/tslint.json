@@ -9,7 +9,6 @@
     "max-line-length": [false],
     "eofline": true,
     "member-ordering": [false],
-    "no-unused-variable": [true, {"ignore-pattern": "^React$"}],
     "no-implicit-dependencies": false,
     "no-submodule-imports": [true, "src", "simple-git", "lowdb", "controllers", "commands", "@oclif/command", "@oclif/errors"],
     "semicolon": [true, "never"],

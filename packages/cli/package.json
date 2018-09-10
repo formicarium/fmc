@@ -58,7 +58,7 @@
   },
   "repository": "formicarium/formicarium-cli",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf lib",
     "build": "tsc -p .",
     "build:watch": "tsc -w",
     "test": "nyc mocha --forbid-only \"test/**/*.test.ts\"",

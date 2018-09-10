@@ -5,11 +5,11 @@
     "registry": "https://registry.npmjs.org/"
   },
   "version": "0.1.2",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "source": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf lib",
     "build": "tsc -p .",
     "build:watch": "tsc -w",
     "test": "jest",

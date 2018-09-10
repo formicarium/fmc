@@ -11,7 +11,7 @@ const file = Path.join(__dirname, '../src/index.html')
 
 // Bundler options
 const options = {
-  outDir: './build-electron', // The out directory to put the build files in, defaults to dist
+  outDir: './build', // The out directory to put the build files in, defaults to dist
   outFile: 'index.html', // The name of the outputFile
   // publicUrl: './ui', // The url to server on, defaults to dist
   watch: true, // whether to watch the files and rebuild them on change, defaults to process.env.NODE_ENV !== 'production'

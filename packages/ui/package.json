@@ -43,7 +43,7 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf lib && rimraf build",
     "build": "tsc -p .",
     "build:watch": "tsc -w",
     "test": "jest",
