@@ -1,6 +1,7 @@
 import React from 'react'
 import { IEventMessage } from '../model/event';
 import { MESSAGES } from '../mock/events';
+import { getSortedMessages } from '~/modules/tracing/selectors/messages';
 
 export interface IChildrenProps {
   messages: IEventMessage[]
@@ -12,5 +13,5 @@ export interface IWithMessagesProps {
 export const WithMessages: React.SFC<IWithMessagesProps> = ({
   children,
 }) => (
-  children({ messages: MESSAGES})
+  children({ messages: getSortedMessages(MESSAGES)})
 )
