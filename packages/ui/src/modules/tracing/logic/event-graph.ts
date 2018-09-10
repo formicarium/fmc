@@ -43,7 +43,8 @@ const isProducer = (event: IEventMessage) => event.payload.direction === Directi
 const getDashes = (event: IEventMessage): boolean => event.payload.type === EventType.KAFKA
 
 export const getEdges = (events: IEventMessage[]) => {
-  return events.reduce((edges, event) => {
+  const uniqEvents = R.uniqBy((event) => `${event.meta.spanId}_${event.payload.direction}`, events)
+  return uniqEvents.reduce((edges, event) => {
     let from: string
     let to: string
     let label: string
@@ -51,7 +52,7 @@ export const getEdges = (events: IEventMessage[]) => {
     let newEdges = []
 
     if (isConsumer(event)) {
-      const childProducers = events.filter((ev) => !isConsumer(ev) && ev.meta.parentId === event.meta.spanId)
+      const childProducers = uniqEvents.filter((ev) => !isConsumer(ev) && ev.meta.parentId === event.meta.spanId)
       if (!childProducers.length) { return edges }
       to = getReporterId(event)
       label = getLabel(event)
@@ -73,7 +74,7 @@ export const getEdges = (events: IEventMessage[]) => {
     }
 
     if (isProducer(event)) {
-      const childConsumer = events.filter((ev) => !isProducer(ev) && ev.meta.parentId === event.meta.spanId)
+      const childConsumer = uniqEvents.filter((ev) => !isProducer(ev) && ev.meta.parentId === event.meta.spanId)
       if (!childConsumer.length) { return edges }
       from = getReporterId(event)
       label = getLabel(event)
