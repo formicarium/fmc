@@ -17,7 +17,6 @@ export default class DevspaceList extends FMCCommand {
     const { uiService, configService, soilService } = this.system
     const { devspace: selectedDevspace } = await configService.readConfig()
     const devspaces = await soilService.getDevspaces()
-    console.log(devspaces)
     const header = [{ value: 'Name' }, { value: 'Hive' }, { value: 'Git' }]
     const columns = devspaces.map((devspace) => {
       const check = selectedDevspace && selectedDevspace.name === devspace.name ? ' ☑️ ' : ''

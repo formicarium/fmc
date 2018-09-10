@@ -5,7 +5,7 @@
   "source": true,
   "license": "MIT",
   "dependencies": {
-    "@formicarium/common": "^0.1.0",
+    "@formicarium/common": "0.1.2",
     "ansi-to-react": "^3.3.1",
     "apollo-cache": "^1.1.16",
     "apollo-cache-inmemory": "^1.2.9",
