@@ -5,11 +5,10 @@ import { EventListState } from '../../state/EventList';
 import { Graph } from '../../components/Graph';
 import { IEventMessage } from '../../model/event';
 import _ from 'lodash'
-import { IGraphDescription, IEdge } from '../../model/graph';
-import * as R from 'ramda'
+import { IGraphDescription, IEdge } from '../../model/graph'
 import { DashboardState } from '../../state/DashboardState';
-import { FilterState } from '../../state/FilterState';
-import { getGraphFromEvents } from '~/modules/tracing/logic/event-graph';
+import { ExplorerState } from '~/modules/tracing/state/ExplorerState';
+import { getFilteredMessages, memoizedGraphFromEvents } from '~/modules/tracing/selectors/messages';
 
 const selectMessages = (messages: IEventMessage[], eventListState: EventListState, dashboardState: DashboardState): IEventMessage[] => {
   const {
@@ -59,13 +58,10 @@ const highlightGraph = (traceId: string, spanId?: string, parentId?: string) => 
 export const DynamicGraph: React.SFC = () => (
   <WithMessages>
     {({ messages }) => (
-      <Subscribe to={[EventListState, DashboardState, FilterState]}>
-        {(eventListState: EventListState, dashboardState: DashboardState, filterState: FilterState) => (
+      <Subscribe to={[ExplorerState]}>
+        {(explorerState: ExplorerState) => (
           <Graph
-            graph={R.pipe(
-              getGraphFromEvents,
-              // highlightGraph(filterState.state.traceId),
-            )(selectMessages(messages, eventListState, dashboardState))}
+            graph={memoizedGraphFromEvents(getFilteredMessages(messages, explorerState.state))}
             onSelectEdge={_.noop}
             onDeselectEdge={_.noop}
             onSelectNode={_.noop}
