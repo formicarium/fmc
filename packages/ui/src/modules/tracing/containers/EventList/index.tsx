@@ -6,7 +6,7 @@ import { EventListState } from '../../state/EventList';
 import { IMessage } from '../../model/event';
 import { FilterState } from '../../state/FilterState';
 import { ExplorerState } from '~/modules/tracing/state/ExplorerState';
-import { getFilteredMessages, getFilteredMessagesReselect } from '~/modules/tracing/selectors/messages';
+import { getFilteredMessagesReselect } from '~/modules/tracing/selectors/messages';
 
 const getActiveStartIndex = ({ state }: EventListState, messages: IMessage[]) => {
   if (state.cumulative || state.showAll) {
@@ -26,11 +26,11 @@ export const EventListContainer = () => (
   <WithMessages>
     {({ messages }) => (
       <Subscribe to={[EventListState, FilterState, ExplorerState]}>
-        {(eventListState: EventListState, filterState: FilterState, explorerState: ExplorerState) => {
+        {(eventListState: EventListState, filter: FilterState, explorer: ExplorerState) => {
           const filteredMessages = getFilteredMessagesReselect({
             messages,
-            filterState,
-            explorerState,
+            filterState: filter.state,
+            explorerState: explorer.state,
           })
           return (
             <EventList

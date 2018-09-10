@@ -11,12 +11,12 @@ export const DynamicGraph: React.SFC = () => (
   <WithMessages>
     {({ messages }) => (
       <Subscribe to={[ExplorerState, FilterState]}>
-        {(explorerState: ExplorerState, filterState: FilterState) => (
+        {(explorer: ExplorerState, filter: FilterState) => (
           <Graph
             graph={graphFromEventsReselect({
               messages,
-              explorerState,
-              filterState,
+              explorerState: explorer.state,
+              filterState: filter.state,
             })}
             onSelectEdge={_.noop}
             onDeselectEdge={_.noop}
