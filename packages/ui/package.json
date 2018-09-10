@@ -43,12 +43,16 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "node electron/bundler.js",
-    "dev:browser": "parcel src/index.html -d build/ --target browser --open",
-    "dev:electron": "node electron/bundler.js",
-    "start:electron": "ELECTRON_START_URL=http://localhost:1235 electron .",
+    "clean": "rimraf dist",
+    "build": "tsc -p .",
+    "build:watch": "tsc -w",
+    "test": "jest",
     "test:watch": "jest --watch",
-    "test": "jest"
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+
+    "dev:electron": "ELECTRON_START_URL=http://localhost:1235 electron .",
+    "serve:browser": "parcel src/index.html -d build/ --target browser --open",
+    "serve:electron": "node electron/bundler.js"
   },
   "devDependencies": {
     "@types/history": "^4.7.0",
