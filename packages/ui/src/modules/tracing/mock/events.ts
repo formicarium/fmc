@@ -1,6 +1,6 @@
 import { EventKind } from './../model/event';
 import { Direction } from '~/modules/tracing/model/event';
-import { IEventMessage, MessageType, EventType, HttpDirection, KafkaDirection } from '../model/event';
+import { IEventMessage, MessageType, EventType } from '../model/event';
 import { v4 } from 'uuid'
 
 export const createHttpInMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId: string, kind: EventKind): IEventMessage => {
