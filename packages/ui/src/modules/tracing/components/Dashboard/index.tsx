@@ -4,13 +4,9 @@ import { SearchBar } from '../SearchBar';
 import styled from 'styled-components';
 import KeyHandler, {KEYPRESS, KEYDOWN} from 'react-key-handler';
 import { DashboardState } from '../../state/DashboardState';
-import { Container, Checkbox } from 'semantic-ui-react';
-import { EventListContainer } from '../../containers/EventList';
 import { EventListState } from '../../state/EventList';
 import { DynamicGraph } from '../../containers/DynamicGraph';
 import _ from 'lodash'
-import { FilterForm } from '../FilterForm';
-import { FilterContainer } from '../../containers/Filter';
 import { FilterPalette } from '~/modules/tracing/components/FilterPalette';
 
 const StyledSearchBar = styled(SearchBar)`

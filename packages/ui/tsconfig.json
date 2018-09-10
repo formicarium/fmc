@@ -19,7 +19,8 @@
       "esnext.asynciterable"
     ],
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@formicarium/ui/src/*": ["~/*"]
     }
   },
   "include": [

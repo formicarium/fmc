@@ -1,4 +1,4 @@
-import { NodeType, IGraphDescription, INode, IEdge } from '~/modules/tracing/model/graph';
+import { NodeType, IGraphDescription, INode } from '~/modules/tracing/model/graph';
 import { IEventMessage, Direction, EventType } from '~/modules/tracing/model/event';
 import * as R from 'ramda'
 import { v4 } from 'uuid'

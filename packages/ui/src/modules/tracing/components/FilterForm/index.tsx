@@ -14,7 +14,7 @@ const NODE_TYPE_OPTIONS = [{
   text: 'Topic',
 }]
 
-const EDGE_TYPE_OPTIONS = [{
+const EVENT_TYPE_OPTIONS = [{
   key: EventType.KAFKA,
   value: EventType.KAFKA,
   text: 'Kafka',
@@ -34,15 +34,7 @@ export interface IFilterFormProps {
   setFilterNodeTypes: (types: string[]) => void,
   setFilterEdgeTypes: (types: string[]) => void,
   filter: IFilter
-  traceId: string
-  spanId: string
-  parentId: string
-  traceIdList: string[]
-  spanIdList: string[]
-  parentIdList: string[]
-  setTraceId: (traceId: string) => void;
-  setParentId: (traceId: string) => void;
-  setSpanId: (traceId: string) => void;
+  servicesId: string[]
 }
 
 const Wrapper = styled.div`
@@ -56,15 +48,7 @@ export const FilterForm: React.SFC<IFilterFormProps> = ({
   setFilterNodeTypes,
   setFilterEdgeTypes,
   filter,
-  traceIdList,
-  spanIdList,
-  parentIdList,
-  traceId,
-  spanId,
-  parentId,
-  setTraceId,
-  setParentId,
-  setSpanId,
+  servicesId,
 }) => (
   <Wrapper>
     <Dropdown
@@ -74,7 +58,7 @@ export const FilterForm: React.SFC<IFilterFormProps> = ({
       selection
       fluid
       style={distance}
-      options={NODE_TYPE_OPTIONS}
+      options={buildOptionsFromStringArray(servicesId)}
       value={filter.node.types}
       onChange={(_, data) => {
         setFilterNodeTypes(data.value as string[])
@@ -87,46 +71,11 @@ export const FilterForm: React.SFC<IFilterFormProps> = ({
       fluid
       style={distance}
       selection
-      options={EDGE_TYPE_OPTIONS}
+      options={EVENT_TYPE_OPTIONS}
       value={filter.edge.types}
       onChange={(_, data) => {
         setFilterEdgeTypes(data.value as string[])
       }}
     />
-    {/* <Dropdown
-      placeholder='Trace ID'
-      search
-      fluid
-      style={distance}
-      selection
-      options={buildOptionsFromStringArray(traceIdList)}
-      value={traceId}
-      onChange={(_, data) => {
-        setTraceId(data.value as string)
-      }}
-    />
-    <Dropdown
-      placeholder='Span ID'
-      search
-      fluid
-      style={distance}
-      selection
-      options={buildOptionsFromStringArray(spanIdList)}
-      value={spanId}
-      onChange={(_, data) => {
-        setSpanId(data.value as string)
-      }}
-    />
-    <Dropdown
-      placeholder='Parent ID'
-      search
-      fluid
-      selection
-      options={buildOptionsFromStringArray(parentIdList)}
-      value={parentId}
-      onChange={(_, data) => {
-        setParentId(data.value as string)
-      }}
-    /> */}
   </Wrapper>
 )
