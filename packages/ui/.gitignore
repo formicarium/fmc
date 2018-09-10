@@ -1,5 +1,3 @@
-node_modules/
 .cache/
-packages/ui/build/
-packages/ui/build-electron/
 lib/
+build/
