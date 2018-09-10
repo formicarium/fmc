@@ -6,6 +6,7 @@ import { DashboardState } from '../../state/DashboardState';
 import { DynamicGraph } from '../../containers/DynamicGraph';
 import _ from 'lodash'
 import { FilterPalette } from '~/modules/tracing/components/FilterPalette';
+import { Transition } from 'semantic-ui-react';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -37,12 +38,11 @@ export class Dashboard extends React.Component {
           <div style={{flexGrow: 1}}>
             <DynamicGraph />
           </div>
-
-          {dashboard.state.showFilter && (
+          <Transition visible={dashboard.state.showFilter} animation='fade right' duration={500}>
             <LateralMenuWrapper>
               <FilterPalette activeIndex={0} />
             </LateralMenuWrapper>
-          )}
+          </Transition>
         </Wrapper>
       )}
       </Subscribe>
