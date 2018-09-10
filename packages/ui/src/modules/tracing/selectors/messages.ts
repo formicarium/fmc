@@ -6,9 +6,14 @@ import { createSelector } from 'reselect'
 import { IExplorerState } from '@formicarium/ui/src/modules/tracing/state/ExplorerState';
 import { IFilterState } from '@formicarium/ui/src/modules/tracing/state/FilterState';
 
-const explorerStateSelector = (root: any): IExplorerState => root.explorerState.state
-const filterStateSelector = (root: any): IFilterState => root.filterState.state
-const messagesSelector = (root: any): IEventMessage[] => root.messages
+export interface IStateGroup {
+  explorerState: IExplorerState
+  filterState: IFilterState
+  messages: IEventMessage[]
+}
+const explorerStateSelector = (root: IStateGroup): IExplorerState => root.explorerState
+const filterStateSelector = (root: IStateGroup): IFilterState => root.filterState
+const messagesSelector = (root: IStateGroup): IEventMessage[] => root.messages
 
 const spanFilterSelector = createSelector(
   explorerStateSelector,
@@ -33,7 +38,6 @@ export const getFilteredMessagesReselect = createSelector(
   servicesFilterSelector,
   eventTypesFilterSelector,
   (messages, spanFilter, services, eventTypes) => {
-    console.log('Heavy!')
     return R.filter(R.allPass([
       (message: IEventMessage) => new RegExp(`${spanFilter}(\\.(.*))?$`).test(message.meta.spanId),
       (message: IEventMessage) => R.or(R.isEmpty(services), R.contains(message.meta.service, services)),
