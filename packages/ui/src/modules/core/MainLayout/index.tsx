@@ -7,8 +7,8 @@ import { SyncState } from '~/modules/sync/state/SyncState';
 import styled from 'styled-components';
 import {HotKeys} from 'react-hotkeys';
 import { withRouter, RouteComponentProps } from 'react-router';
-import { SpanTree } from '~/modules/tracing/components/SpanTree';
-import { Dashboard } from '~/modules/tracing/components/Dashboard';
+import { Subscribe } from 'unstated';
+import { DashboardState } from '~/modules/tracing/state/DashboardState';
 
 interface IMainLayoutProps {
   syncState: SyncState
@@ -58,9 +58,13 @@ export class MainLayoutInner extends React.Component<IProps> {
         <HotKeys handlers={this.handlers}>
           <Container style={{paddingTop: 14}}>
             <ToastContainer />
-            <MenuWrapper>
-              <TopMenu />
-            </MenuWrapper>
+            <Subscribe to={[DashboardState]}>
+              {(dashboard: DashboardState) => !dashboard.state.showFilter && (
+                <MenuWrapper>
+                  <TopMenu />
+                </MenuWrapper>
+              )}
+            </Subscribe>
             <RoutesWrapper>
               <Routes />
             </RoutesWrapper>
