@@ -24,7 +24,6 @@ export class ExplorerState extends Container<IExplorerState> {
   }
 
   public setNodeOpenState = (node: ITreeNode, open: boolean) => {
-    console.log(node, open)
     this.setState((state) => ({
       openNodesMap: {
         ...state.openNodesMap,
