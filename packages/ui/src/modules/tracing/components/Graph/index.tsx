@@ -99,6 +99,9 @@ const buildVisGraph = (graph: IGraphDescription) => {
   }
 }
 export class Graph extends React.Component<IGraph> {
+  public shouldComponentUpdate(nextProps: IGraph) {
+    return nextProps.graph !== this.props.graph
+  }
   public render() {
     const {
       graph,
