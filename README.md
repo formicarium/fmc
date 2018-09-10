@@ -47,6 +47,10 @@ This command uses lerna to publish all the packages in the monorepo
 For each package, it will look to the commits since the last publish and determine how to bump (major, minor, patch) based on the commit messages, following `conventional commits`.
 Then, it will automatically bump and publish the necessary packages.
 
+Lerna will also figure out how to bump package dependencies inside the monorepo
+For example, if the `common` version has been bumped, it will bump it on all packages that depend on it (and bump the packages themselves as well).
+
+
 ## Building
 To build all packages, run this on the monorepo root:
 ```
