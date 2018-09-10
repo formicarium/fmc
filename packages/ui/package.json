@@ -48,7 +48,6 @@
   "scripts": {
     "clean": "rimraf lib && rimraf build",
     "build": "tsc -p .",
-    "build:watch": "tsc -w",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "tslint -p tsconfig.json -c tslint.json",

@@ -14,7 +14,7 @@
     "lerna": "^3.3.0"
   },
   "scripts": {
-    "build:watch": "lerna run build:watch",
+    "build:watch": "lerna run build:watch --parallel",
     "build": "lerna run build",
     "clean": "lerna run clean --parallel",
     "lint": "lerna run lint --parallel",

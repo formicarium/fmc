@@ -59,7 +59,6 @@
   "scripts": {
     "clean": "rimraf lib",
     "build": "tsc -p .",
-    "build:watch": "tsc -w",
     "test": "nyc mocha --forbid-only \"test/**/*.test.ts\"",
     "test:watch": "nyc mocha --forbid-only \"test/**/*.test.ts\" --watch",
     "lint": "tslint -p tsconfig.json -c tslint.json",
