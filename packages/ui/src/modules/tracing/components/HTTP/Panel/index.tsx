@@ -57,3 +57,35 @@ export const HTTPPanel: React.SFC<IHTTPPanelProps> = ({
 
   </Segment>
 )
+
+/*
+<HTTPPanel
+  request={{
+    verb: HTTPVerb.POST,
+    service: 'griswold',
+    targetService: 'warriv',
+    endpoint: '/api/people',
+    headers: {
+      Authorization: 'Bearer 123',
+    },
+    body: {
+      name: 'Rafael',
+      age: 25,
+      friends: [{
+        name: 'Lucas',
+      }],
+    },
+    timestamp: new Date().getTime(),
+  }}
+  response={{
+    status: 201,
+    service: 'warriv',
+    headers: {
+      header1: 'ok',
+    },
+    body: {
+      ok: true,
+    },
+  }}
+/>
+*/
