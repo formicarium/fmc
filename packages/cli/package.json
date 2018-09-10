@@ -5,7 +5,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "description": "A CLI to operate on Formicarium",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Rafael Ribeiro @rafaelcorreiapoli",
   "bin": {
     "fmc": "./bin/run"
