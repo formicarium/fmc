@@ -38,5 +38,6 @@
     "@types/graphql": "^0.13.4",
     "@types/lowdb": "^1.0.5",
     "@types/ramda": "^0.25.34"
-  }
+  },
+  "gitHead": "9febd1b58fefc04f042b39279d8a137915b04427"
 }
