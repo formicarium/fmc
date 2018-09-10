@@ -44,11 +44,6 @@ export enum Direction {
   PRODUCER = 'PRODUCER',
   CONSUMER = 'CONSUMER',
 }
-// HTTP
-export enum HttpDirection {
-  OUT_REQUEST = 'OUT_REQUEST',
-  IN_REQUEST = 'IN_REQUEST',
-}
 
 export interface IHttpPayload {
   type: EventType.HTTP | EventType.HTTP_OUT
@@ -59,12 +54,6 @@ export interface IHttpPayload {
       service: string,
     },
   }
-}
-
-// KAFKA
-export enum KafkaDirection {
-  CONSUMER = 'CONSUMER',
-  PRODUCER = 'PRODUCER',
 }
 
 export interface IKafkaPayload {
