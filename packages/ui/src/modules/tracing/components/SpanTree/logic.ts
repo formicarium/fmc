@@ -1,4 +1,3 @@
-import { v4 } from 'uuid';
 import { IEventMessage } from './../../model/event';
 import { ITreeNode } from './index';
 
@@ -9,7 +8,7 @@ export const getTreeNodeForSpan = (messages: IEventMessage[], spanId: string): I
     .map((x) => x.meta.spanId)))
 
   return ({
-    id: v4(),
+    id: spanId,
     label: spanId,
     children: childrenSpans.map((child) => getTreeNodeForSpan(messages, child)),
   })
