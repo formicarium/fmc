@@ -15,3 +15,6 @@ packages/cli/lib/
 packages/cli/package-lock.json
 packages/cli/tmp
 packages/cli/node_modules
+
+.vscode/
+.idea/
