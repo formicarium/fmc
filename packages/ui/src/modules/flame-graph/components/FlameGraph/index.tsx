@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react'
-import { FlameGraph } from 'react-flame-graph'
+import React from 'react'
 import { IEventMessage, EventKind } from '~/modules/tracing/model/event';
 import { MESSAGES } from '~/modules/tracing/mock/events';
 import * as R from 'ramda'
@@ -204,9 +203,9 @@ const depth = (x: string) => {
 export class FMCFlameGraph extends React.Component {
   public render() {
     const maxTimestamp = getMaxTimestamp(data)
-
     const sortedArray = R.sortBy((x) => depth(x.label), spanBarsToLayout(data, WIDTH))
     console.log(sortedArray)
+    return null
     return (
       <div style={{position: 'relative', width: WIDTH + (WIDTH / maxTimestamp), height: 300, backgroundColor: '#d3d3d3'}}>
         {R.range(1, maxTimestamp + 1).map((i) => (
