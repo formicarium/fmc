@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container } from 'semantic-ui-react';
+import { Container, Transition } from 'semantic-ui-react';
 import { TopMenu } from '../TopMenu';
 import { Routes } from '../components/Routes';
 import { ToastContainer } from 'react-toastify';
@@ -59,10 +59,13 @@ export class MainLayoutInner extends React.Component<IProps> {
           <Container style={{paddingTop: 14}}>
             <ToastContainer />
             <Subscribe to={[DashboardState]}>
-              {(dashboard: DashboardState) => !dashboard.state.showFilter && (
-                <MenuWrapper>
-                  <TopMenu />
-                </MenuWrapper>
+              {(dashboard: DashboardState) => (
+                <Transition visible={!dashboard.state.showFilter} animation='fade down' duration={500}>
+                  <MenuWrapper>
+                    <TopMenu />
+                  </MenuWrapper>
+                </Transition>
+
               )}
             </Subscribe>
             <RoutesWrapper>
