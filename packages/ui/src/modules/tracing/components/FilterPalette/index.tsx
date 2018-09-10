@@ -1,60 +1,75 @@
 import React from 'react'
-import { Accordion, Menu, Header, Divider } from 'semantic-ui-react';
+import { Header, Segment, Icon, SemanticICONS } from 'semantic-ui-react';
 import { SpanExplorerContainer } from '~/modules/tracing/containers/SpanExplorer';
 import { FilterContainer } from '~/modules/tracing/containers/Filter';
 import { EventListContainer } from '~/modules/tracing/containers/EventList';
+import { Subscribe } from 'unstated';
+import { DashboardState } from '~/modules/tracing/state/DashboardState';
 
 export interface IFilterPaletteProps {
   activeIndex: number
 }
 
-// export const FilterPalette: React.SFC<IFilterPaletteProps> = ({
-//   activeIndex,
-// }) => (
-//   <Accordion as={Menu} vertical fluid>
-//       <Menu.Item>
-//       <Accordion.Title
-//         active={true}
-//         content='Events'
-//         index={1}
-//         onClick={this.handleClick}
-//       />
-//       <Accordion.Content active={true} content={<EventListContainer />} style={{padding: 0}} />
-//     </Menu.Item>
+const CollapsableItem: React.SFC<{
+  id: string,
+  text: string,
+  iconName: SemanticICONS,
+  open: boolean,
+  onToggle: (id: string, open: boolean) => void,
+}> = ({
+  id,
+  text,
+  open,
+  iconName,
+  children,
+  onToggle,
+}) => (
+  <div onClick={() => onToggle(id, !open)}>
+    <Segment secondary padded={true} style={{margin: 0, display: 'flex', flexDirection: 'row', alignItems: 'center', cursor: 'pointer'}}>
+      <div style={{flexGrow: 1, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+        <Icon name={iconName} />
+        <Header as='h2' style={{margin: 0, marginLeft: 10}}>{text}</Header>
+      </div>
 
-//     <Menu.Item>
-//       <Accordion.Title
-//         active={true}
-//         content='Spans'
-//         index={0}
-//         onClick={this.handleClick}
-//       />
-//       <Accordion.Content active={true} content={<SpanExplorerContainer />} />
-//     </Menu.Item>
+      <Icon name={open ? 'chevron up' : 'chevron down'} />
+    </Segment>
 
-//     <Menu.Item>
-//       <Accordion.Title
-//         active={true}
-//         content='Filters'
-//         index={1}
-//         onClick={this.handleClick}
-//       />
-//       <Accordion.Content active={true} content={<FilterContainer />} />
-//     </Menu.Item>
-//   </Accordion>
-// )
+    {open ? children : null}
+  </div>
 
+)
 export const FilterPalette: React.SFC<IFilterPaletteProps> = ({
   activeIndex,
 }) => (
-  <div style={{height: '100%', overflowX: 'hidden', overflowY: 'auto', padding: 10}}>
-    <Header as='h2'>Filters</Header>
-    <FilterContainer />
-    <Divider />
-    <Header as='h2'>Span Explorer</Header>
-    <SpanExplorerContainer />
-    <Divider />
-    <Header as='h2'>Event List</Header>
-    <EventListContainer />
-  </div>
+  <Subscribe to={[DashboardState]}>
+    {(dashboard: DashboardState) => (
+      <div style={{height: '100%', overflowX: 'hidden', overflowY: 'auto'}}>
+        <CollapsableItem
+          id='filter'
+          text='Filter'
+          iconName='filter'
+          open={dashboard.state.expandedSections.filter}
+          onToggle={dashboard.setExpandedSection}>
+          <FilterContainer />
+        </CollapsableItem>
+        <CollapsableItem
+          id='spanExplorer'
+          text='Span Explorer'
+          iconName='search'
+          open={dashboard.state.expandedSections.spanExplorer}
+          onToggle={dashboard.setExpandedSection}>
+          <SpanExplorerContainer />
+        </CollapsableItem>
+        <CollapsableItem
+          id='eventList'
+          text='Event List'
+          iconName='list'
+          open={dashboard.state.expandedSections.eventList}
+          onToggle={dashboard.setExpandedSection}>
+          <EventListContainer />
+        </CollapsableItem>
+      </div>
+    )}
+  </Subscribe>
+
 )
