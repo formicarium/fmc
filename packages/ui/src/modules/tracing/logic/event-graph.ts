@@ -1,4 +1,4 @@
-import { NodeType, IGraphDescription, INode } from '~/modules/tracing/model/graph';
+import { IGraphDescription, INode } from '~/modules/tracing/model/graph';
 import { IEventMessage, Direction, EventType } from '~/modules/tracing/model/event';
 import * as R from 'ramda'
 import { v4 } from 'uuid'
@@ -30,7 +30,6 @@ const getLabel = (event: IEventMessage) => {
 const extractNodeFromEvent = (event: IEventMessage): INode => ({
   id: event.meta.service,
   label: event.meta.service,
-  type: NodeType.SERVICE,
 })
 
 export const getNodes = (events: IEventMessage[]) => {

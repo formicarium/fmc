@@ -12,6 +12,7 @@ const options = {
   width: '100%',
   height: '100%',
   nodes: {
+    chosen: false,
     shape: 'dot',
     size: 30,
     font: {
@@ -19,7 +20,11 @@ const options = {
       color: '#000',
       face: 'Open Sans',
     },
-    borderWidth: 4,
+    color: {
+      background: '#612F74',
+      // border: '#bf40bf',
+    },
+    borderWidth: 0,
   },
   interaction: {
     selectConnectedEdges: false,

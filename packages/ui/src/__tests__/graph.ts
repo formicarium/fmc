@@ -1,7 +1,7 @@
 import { createHttpOutMessage, createHttpInMessage, nowPlusSeconds, createKafkaMessage } from '~/modules/tracing/mock/events';
 import { IEdge } from '~/modules/tracing/model/graph';
 import { getEdges, getGraphFromEvents } from './../modules/tracing/logic/event-graph';
-import { NodeType, IGraphDescription } from './../modules/tracing/model/graph';
+import { IGraphDescription } from './../modules/tracing/model/graph';
 import { Direction, EventKind } from './../modules/tracing/model/event';
 
 export const sortEdgesAlphabetically = (a: IEdge, b: IEdge) => {
@@ -48,23 +48,18 @@ const expectGraph: IGraphDescription = {
   nodes: [{
     id: 'X',
     label: 'X',
-    type: NodeType.SERVICE,
   }, {
     id: 'Y',
     label: 'Y',
-    type: NodeType.SERVICE,
   }, {
     id: 'Z',
     label: 'Z',
-    type: NodeType.SERVICE,
   }, {
     id: 'W',
     label: 'W',
-    type: NodeType.SERVICE,
   }, {
     id: 'K',
     label: 'K',
-    type: NodeType.SERVICE,
   }],
   edges: [
     {
