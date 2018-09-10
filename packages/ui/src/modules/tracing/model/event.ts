@@ -36,7 +36,8 @@ export interface IHeartbeatPayload {
 // EVENT
 export enum EventType {
   KAFKA = 'KAFKA',
-  HTTP = 'HTTP',
+  HTTP = 'HTTP_IN',
+  HTTP_OUT = 'HTTP_OUT',
 }
 
 export enum Direction {
@@ -50,7 +51,7 @@ export enum HttpDirection {
 }
 
 export interface IHttpPayload {
-  type: EventType.HTTP
+  type: EventType.HTTP | EventType.HTTP_OUT
   direction: Direction
   data: {
     endpoint: {
