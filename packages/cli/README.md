@@ -22,7 +22,7 @@ $ npm install -g @formicarium/cli
 $ fmc COMMAND
 running command...
 $ fmc (-v|--version|version)
-@formicarium/cli/0.0.6 darwin-x64 node-v9.11.1
+@formicarium/cli/0.0.6 darwin-x64 node-v10.2.1
 $ fmc --help [COMMAND]
 USAGE
   $ fmc COMMAND
