@@ -2,7 +2,7 @@ import { Maybe, Nullable } from '@formicarium/common'
 import * as fs from 'fs-extra'
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
+export const sum = (a: number, b: number) => a + b
 export async function getFileContent<A>(filePath: Maybe<string>): Promise<Nullable<A>> {
     if (!filePath) {
         return null
