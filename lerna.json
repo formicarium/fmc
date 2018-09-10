@@ -3,5 +3,18 @@
   "packages": [
     "packages/*"
   ],
-  "version": "1.0.1"
+  "version": "independent",
+  "command": {
+    "publish": {
+      "conventionalCommits": true,
+      "message": "chore(release): publish packages [skip ci]",
+      "ignoreChanges": [
+        "*.md",
+        "*.test.js",
+        "__tests__/*"
+      ]
+    }
+  },
+  "npmClient": "yarn",
+  "useWorkspaces": true
 }
