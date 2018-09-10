@@ -50,7 +50,8 @@ export class EventList extends React.Component<IEventListProps> {
             <Table.Row>
               <Table.HeaderCell width='1'>Identity</Table.HeaderCell>
               <Table.HeaderCell width='2'>Type</Table.HeaderCell>
-              <Table.HeaderCell width='3'>Timestamp</Table.HeaderCell>
+              <Table.HeaderCell width='2'>Direction</Table.HeaderCell>
+              <Table.HeaderCell width='2'>Timestamp</Table.HeaderCell>
               <Table.HeaderCell width='3'>CID</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -59,11 +60,12 @@ export class EventList extends React.Component<IEventListProps> {
             {events && events.map((event, i) => (
               <StyledTableRow
                 key={event.id}
-                active={i <= activeEndIndex && i >= activeStartIndex}
+                // active={i <= activeEndIndex && i >= activeStartIndex}
                 onClick={() => onClickRow(event, i)}
                 >
                 <Table.Cell>{event.meta.service}</Table.Cell>
                 <Table.Cell>{(event.payload as IHttpPayload | IKafkaPayload).type}</Table.Cell>
+                <Table.Cell>{(event.payload as IHttpPayload | IKafkaPayload).direction}</Table.Cell>
                 <Table.Cell>{moment(event.meta.timestamp).format('HH:mm:ss')}</Table.Cell>
                 <Table.Cell>{`${event.meta.spanId}`}</Table.Cell>
               </StyledTableRow>
