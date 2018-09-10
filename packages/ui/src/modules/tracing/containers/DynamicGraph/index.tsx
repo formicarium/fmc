@@ -61,7 +61,7 @@ export const DynamicGraph: React.SFC = () => (
       <Subscribe to={[ExplorerState]}>
         {(explorerState: ExplorerState) => (
           <Graph
-            graph={memoizedGraphFromEvents(getFilteredMessages(messages, explorerState.state))}
+            graph={memoizedGraphFromEvents(getFilteredMessages(messages, explorerState.state.spanFilter))}
             onSelectEdge={_.noop}
             onDeselectEdge={_.noop}
             onSelectNode={_.noop}
