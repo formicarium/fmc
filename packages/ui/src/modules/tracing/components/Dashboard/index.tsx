@@ -1,9 +1,8 @@
-import React, { Fragment, SyntheticEvent } from 'react'
+import React from 'react'
 import { Subscribe } from 'unstated';
 import styled from 'styled-components';
-import KeyHandler, {KEYPRESS, KEYDOWN} from 'react-key-handler';
+import KeyHandler, { KEYPRESS } from 'react-key-handler';
 import { DashboardState } from '../../state/DashboardState';
-import { EventListState } from '../../state/EventList';
 import { DynamicGraph } from '../../containers/DynamicGraph';
 import _ from 'lodash'
 import { FilterPalette } from '~/modules/tracing/components/FilterPalette';
@@ -27,65 +26,26 @@ const LateralMenuWrapper = styled.div`
   background-color: #FFF;
 `
 
-class DashboardInner extends React.Component<{dashboard: DashboardState}> {
-  public componentDidMount() {
-    this.props.dashboard.fetchGraph()
-  }
-
-  private handlePressArrowDown = (eventListState: EventListState) => (e: SyntheticEvent) => {
-    if (!eventListState.state.showAll) {
-      eventListState.increaseIndex()
-      e.stopPropagation()
-    }
-  }
-
-  private handlePressArrowUp = (eventListState: EventListState) => (e: SyntheticEvent) => {
-    if (!eventListState.state.showAll) {
-      eventListState.decreaseIndex()
-      e.stopPropagation()
-    }
-  }
-
-  private handlePressC = (eventListState: EventListState) => (e: SyntheticEvent) => {
-    eventListState.toggleCumulative()
-  }
-
-  private handlePressA = (eventListState: EventListState) => (e: SyntheticEvent) => {
-    eventListState.toggleShowAll()
-  }
-
+export class Dashboard extends React.Component {
   public render() {
-    const { dashboard } = this.props
     return (
-      <Wrapper>
-        <KeyHandler keyEventName={KEYPRESS} keyValue='f' onKeyHandle={dashboard.toggleShowFilter} />
-        <Subscribe to={[EventListState]}>
-          {(eventListState: EventListState) => (
-            <Fragment>
-              <KeyHandler keyEventName={KEYDOWN} keyValue='ArrowDown' onKeyHandle={this.handlePressArrowDown(eventListState)} />
-              <KeyHandler keyEventName={KEYDOWN} keyValue='ArrowUp' onKeyHandle={this.handlePressArrowUp(eventListState)} />
-              <KeyHandler keyEventName={KEYDOWN} keyValue='c' onKeyHandle={this.handlePressC(eventListState)} />
-              <KeyHandler keyEventName={KEYDOWN} keyValue='a' onKeyHandle={this.handlePressA(eventListState)} />
-            </Fragment>
+      <Subscribe to={[DashboardState]}>
+      {(dashboard: DashboardState) => (
+        <Wrapper>
+          <KeyHandler keyEventName={KEYPRESS} keyValue='f' onKeyHandle={dashboard.toggleShowFilter} />
+
+          <div style={{flexGrow: 1}}>
+            <DynamicGraph />
+          </div>
+
+          {dashboard.state.showFilter && (
+            <LateralMenuWrapper>
+              <FilterPalette activeIndex={0} />
+            </LateralMenuWrapper>
           )}
-        </Subscribe>
-
-        <div style={{flexGrow: 1}}>
-          <DynamicGraph />
-        </div>
-
-        <LateralMenuWrapper>
-          <FilterPalette activeIndex={0} />
-        </LateralMenuWrapper>
-      </Wrapper>
+        </Wrapper>
+      )}
+      </Subscribe>
     )
   }
 }
-
-export const Dashboard: React.SFC = () => (
-  <Subscribe to={[DashboardState]}>
-  {(dashboard: DashboardState) => (
-    <DashboardInner dashboard={dashboard} />
-  )}
-  </Subscribe>
-)
