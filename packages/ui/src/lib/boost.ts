@@ -15,7 +15,7 @@ import ApolloClient from 'apollo-client';
 
 export { gql, InMemoryCache, HttpLink };
 
-export interface PresetConfig {
+export interface IPresetConfig {
   request?: (operation: Operation) => Promise<void>;
   uri?: string;
   credentials?: string;
@@ -28,15 +28,15 @@ export interface PresetConfig {
   cache?: ApolloCache<any>;
 }
 
-// Yes, these are the exact same as the `PresetConfig` interface. We're
+// Yes, these are the exact same as the `IPresetConfig` interface. We're
 // defining these again so they can be used to verify that valid config
 // options are being used in the `DefaultClient` constructor, for clients
 // that aren't using Typescript. This duplication is unfortunate, and at
 // some point can likely be adjusted so these items are inferred from
-// the `PresetConfig` interface using a Typescript transform at compilation
+// the `IPresetConfig` interface using a Typescript transform at compilation
 // time. Unfortunately, TS transforms with rollup don't appear to be quite
 // working properly, so this will have to be re-visited at some point.
-// For now, when updating the properties of the `PresetConfig` interface,
+// For now, when updating the properties of the `IPresetConfig` interface,
 // please also update this constant.
 const PRESET_CONFIG_KEYS = [
   'request',
@@ -52,7 +52,7 @@ const PRESET_CONFIG_KEYS = [
 ];
 
 export default class DefaultClient<TCache> extends ApolloClient<TCache> {
-  constructor(config: PresetConfig = {}) {
+  constructor(config: IPresetConfig = {}) {
     if (config) {
       const diff = Object.keys(config).filter(
         (key) => PRESET_CONFIG_KEYS.indexOf(key) === -1,
