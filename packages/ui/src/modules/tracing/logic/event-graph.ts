@@ -2,16 +2,7 @@ import { NodeType, IGraphDescription, INode, IEdge } from '~/modules/tracing/mod
 import { IEventMessage, Direction, EventType } from '~/modules/tracing/model/event';
 import * as R from 'ramda'
 import { v4 } from 'uuid'
-
-export const sortEdgesAlphabetically = (a: IEdge, b: IEdge) => {
-  if (a.id < b.id) { return -1; }
-  if (a.id > b.id) { return 1; }
-  return 0;
-}
-
 const getReporterId = (event: IEventMessage) => event.meta.service
-const getDepth = (event: IEventMessage) => event.meta.spanId.length
-const isOutgoing = (event: IEventMessage) => event.payload.direction === Direction.PRODUCER
 const getLabel = (event: IEventMessage) => {
   const { type, direction } = event.payload
   if (type === EventType.HTTP && direction === Direction.CONSUMER) {
@@ -49,43 +40,67 @@ export const getNodes = (events: IEventMessage[]) => {
 
 const isConsumer = (event: IEventMessage) => event.payload.direction === Direction.CONSUMER
 const isProducer = (event: IEventMessage) => event.payload.direction === Direction.PRODUCER
+const getDashes = (event: IEventMessage): boolean => event.payload.type === EventType.KAFKA
 
 export const getEdges = (events: IEventMessage[]) => {
   return events.reduce((edges, event) => {
-    let from
-    let to
-    let label
+    let from: string
+    let to: string
+    let label: string
+    let dashes: boolean
+    let newEdges = []
+
     if (isConsumer(event)) {
-      const childProducer = events.find((ev) => !isConsumer(ev) && ev.meta.parentId === event.meta.spanId)
-      if (!childProducer) { return edges }
-      from = getReporterId(childProducer)
+      const childProducers = events.filter((ev) => !isConsumer(ev) && ev.meta.parentId === event.meta.spanId)
+      if (!childProducers.length) { return edges }
       to = getReporterId(event)
       label = getLabel(event)
+      dashes = getDashes(event)
+
+      newEdges = childProducers.reduce((accNewEdges, prod) => {
+        from = getReporterId(prod)
+        if (from === to) {
+          return accNewEdges
+        }
+        return [...accNewEdges, {
+          dashes,
+          id: `${from}_${to}_${v4()}`,
+          from,
+          to,
+          label,
+        }]
+      }, [])
     }
 
     if (isProducer(event)) {
-      const childConsumer = events.find((ev) => !isProducer(ev) && ev.meta.parentId === event.meta.spanId)
-      if (!childConsumer) { return edges }
+      const childConsumer = events.filter((ev) => !isProducer(ev) && ev.meta.parentId === event.meta.spanId)
+      if (!childConsumer.length) { return edges }
       from = getReporterId(event)
-      to = getReporterId(childConsumer)
       label = getLabel(event)
-    }
+      dashes = getDashes(event)
 
-    if (from === to) {
-      return edges
+      newEdges = childConsumer.reduce((accNewEdges, cons) => {
+        to = getReporterId(cons)
+        if (from === to) {
+          return accNewEdges
+        }
+        return [...accNewEdges, {
+          dashes,
+          id: `${from}_${to}_${v4()}`,
+          from,
+          to,
+          label,
+        }]
+      }, [])
     }
     return [
-      ...edges, {
-        id: `${from}_${to}_${v4()}`,
-        from,
-        to,
-        label,
-      },
+      ...edges,
+      ...newEdges,
     ]
   }, [])
 }
 
 export const getGraphFromEvents = (events: IEventMessage[]): IGraphDescription => ({
   nodes: getNodes(events),
-  edges: getEdges(events).sort(sortEdgesAlphabetically),
+  edges: getEdges(events),
 })
