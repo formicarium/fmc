@@ -1,28 +1,28 @@
-import { Nullable } from '@formicarium/common/src/utils/types';
 import { Container } from 'unstated';
+import { EventType } from '~/modules/tracing/model/event';
 
 export interface IFilterState {
-  traceId: Nullable<string>;
-  spanId: Nullable<string>;
-  parentId: Nullable<string>;
+  services: string[]
+  eventTypes: EventType[]
+  searchRegex: string
 }
 export class FilterState extends Container<IFilterState> {
   constructor() {
     super()
     this.state = {
-      traceId: null,
-      spanId: null,
-      parentId: null,
+      services: [],
+      eventTypes: [],
+      searchRegex: '',
     }
   }
 
-  public setTraceId = (traceId: string) => this.setState({
-    traceId,
+  public setServices = (services: string[]) => this.setState({
+    services,
   })
-  public setSpanId = (spanId: string) => this.setState({
-    spanId,
+  public setEventTypes = (eventTypes: EventType[]) => this.setState({
+    eventTypes,
   })
-  public setParentId = (parentId: string) => this.setState({
-    parentId,
+  public setSearchRegex = (searchRegex: string) => this.setState({
+    searchRegex,
   })
 }

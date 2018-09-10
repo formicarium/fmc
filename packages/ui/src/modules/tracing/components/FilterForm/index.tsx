@@ -1,27 +1,21 @@
 import React from 'react'
 import { Dropdown } from 'semantic-ui-react';
-import { IFilter } from '../Dashboard';
-import { EventType, NodeType } from '../../model/graph';
 import styled from 'styled-components';
-
-const NODE_TYPE_OPTIONS = [{
-  key: NodeType.SERVICE,
-  value: NodeType.SERVICE,
-  text: 'Service',
-}, {
-  key: NodeType.TOPIC,
-  value: NodeType.TOPIC,
-  text: 'Topic',
-}]
+import { EventType } from '~/modules/tracing/model/event';
+import { SearchBar } from '~/modules/tracing/components/SearchBar';
 
 const EVENT_TYPE_OPTIONS = [{
   key: EventType.KAFKA,
   value: EventType.KAFKA,
   text: 'Kafka',
 }, {
-  key: EventType.HTTP_IN,
-  value: EventType.HTTP_IN,
-  text: 'HTTP',
+  key: EventType.HTTP,
+  value: EventType.HTTP,
+  text: 'HTTP_IN',
+}, {
+  key: EventType.HTTP_OUT,
+  value: EventType.HTTP_OUT,
+  text: 'HTTP_OUT',
 }]
 
 const buildOptionsFromStringArray = (stringArray: string[]) => stringArray.map((str) => ({
@@ -31,10 +25,15 @@ const buildOptionsFromStringArray = (stringArray: string[]) => stringArray.map((
 }))
 
 export interface IFilterFormProps {
-  setFilterNodeTypes: (types: string[]) => void,
-  setFilterEdgeTypes: (types: string[]) => void,
-  filter: IFilter
-  servicesId: string[]
+  setServices: (services: string[]) => void,
+  setEventTypes: (eventTypes: EventType[]) => void,
+  services: string[],
+  eventTypes: EventType[]
+  searchRegex: string,
+  servicesList: string[]
+  submitSearch: () => void
+  setSearchRegex: (searchRegex: string) => void
+  loading: boolean
 }
 
 const Wrapper = styled.div`
@@ -44,13 +43,29 @@ const Wrapper = styled.div`
 const distance = {
   marginBottom: 20,
 }
+
+const StyledSearchBar = styled(SearchBar)`
+  margin-bottom: 20px;
+`
+
 export const FilterForm: React.SFC<IFilterFormProps> = ({
-  setFilterNodeTypes,
-  setFilterEdgeTypes,
-  filter,
-  servicesId,
+  setServices,
+  setEventTypes,
+  setSearchRegex,
+  submitSearch,
+  services,
+  eventTypes,
+  searchRegex,
+  servicesList,
+  loading,
 }) => (
   <Wrapper>
+    <StyledSearchBar
+      searchText={searchRegex}
+      onChangeSearchText={setSearchRegex}
+      loading={loading}
+      onSubmit={submitSearch}
+    />
     <Dropdown
       placeholder='Services'
       multiple
@@ -58,10 +73,10 @@ export const FilterForm: React.SFC<IFilterFormProps> = ({
       selection
       fluid
       style={distance}
-      options={buildOptionsFromStringArray(servicesId)}
-      value={filter.node.types}
+      options={buildOptionsFromStringArray(servicesList)}
+      value={services}
       onChange={(_, data) => {
-        setFilterNodeTypes(data.value as string[])
+        setServices(data.value as string[])
       }}
     />
     <Dropdown
@@ -72,9 +87,9 @@ export const FilterForm: React.SFC<IFilterFormProps> = ({
       style={distance}
       selection
       options={EVENT_TYPE_OPTIONS}
-      value={filter.edge.types}
+      value={eventTypes}
       onChange={(_, data) => {
-        setFilterEdgeTypes(data.value as string[])
+        setEventTypes(data.value as EventType[])
       }}
     />
   </Wrapper>

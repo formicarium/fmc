@@ -1,6 +1,5 @@
 import React, { Fragment, SyntheticEvent } from 'react'
 import { Subscribe } from 'unstated';
-import { SearchBar } from '../SearchBar';
 import styled from 'styled-components';
 import KeyHandler, {KEYPRESS, KEYDOWN} from 'react-key-handler';
 import { DashboardState } from '../../state/DashboardState';
@@ -9,9 +8,6 @@ import { DynamicGraph } from '../../containers/DynamicGraph';
 import _ from 'lodash'
 import { FilterPalette } from '~/modules/tracing/components/FilterPalette';
 
-const StyledSearchBar = styled(SearchBar)`
-  margin-bottom: 20px;
-`
 const Wrapper = styled.div`
   position: absolute;
   left: 0px;
@@ -75,13 +71,6 @@ class DashboardInner extends React.Component<{dashboard: DashboardState}> {
             </Fragment>
           )}
         </Subscribe>
-
-        {/* <SearchBar
-          searchText={dashboard.state.searchText}
-          onChangeSearchText={dashboard.setSearchText}
-          loading={dashboard.state.loading}
-          onSubmit={dashboard.toggleCardVisibility}
-        /> */}
 
         <div style={{flexGrow: 1}}>
           <DynamicGraph />

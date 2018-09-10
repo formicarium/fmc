@@ -14,10 +14,17 @@ export class FilterContainer extends React.Component {
           <Subscribe to={[DashboardState, FilterState]}>
           {(dashboardState: DashboardState, filterState: FilterState) => (
             <FilterForm
-              setFilterEdgeTypes={dashboardState.setFilterEdgeTypes}
-              setFilterNodeTypes={dashboardState.setFilterNodeTypes}
-              servicesId={getUniqServicesFromEvents(messages)}
-              filter={dashboardState.state.filter}
+              setServices={filterState.setServices}
+              setEventTypes={filterState.setEventTypes}
+              servicesList={getUniqServicesFromEvents(messages)}
+              services={filterState.state.services}
+              eventTypes={filterState.state.eventTypes}
+              loading={false}
+              setSearchRegex={filterState.setSearchRegex}
+              searchRegex={filterState.state.searchRegex}
+              submitSearch={() => {
+                console.log('submti')
+              }}
             />
           )}
           </Subscribe>
