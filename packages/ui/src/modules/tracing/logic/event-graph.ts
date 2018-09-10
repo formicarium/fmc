@@ -1,5 +1,5 @@
 import { NodeType, IGraphDescription, INode, IEdge } from '~/modules/tracing/model/graph';
-import { IEventMessage, Direction } from '~/modules/tracing/model/event';
+import { IEventMessage, Direction, EventType } from '~/modules/tracing/model/event';
 import * as R from 'ramda'
 import { v4 } from 'uuid'
 
@@ -12,7 +12,29 @@ export const sortEdgesAlphabetically = (a: IEdge, b: IEdge) => {
 const getReporterId = (event: IEventMessage) => event.meta.service
 const getDepth = (event: IEventMessage) => event.meta.spanId.length
 const isOutgoing = (event: IEventMessage) => event.payload.direction === Direction.PRODUCER
-const getLabel = (event: IEventMessage) => event.payload.type
+const getLabel = (event: IEventMessage) => {
+  const { type, direction } = event.payload
+  if (type === EventType.HTTP && direction === Direction.CONSUMER) {
+    return 'HTTP-REQ'
+  }
+  if (type === EventType.HTTP && direction === Direction.PRODUCER) {
+    return 'HTTP-RES'
+  }
+
+  if (type === EventType.HTTP_OUT && direction === Direction.PRODUCER) {
+    return 'HTTP-REQ'
+  }
+
+  if (type === EventType.HTTP_OUT && direction === Direction.CONSUMER) {
+    return 'HTTP-RES'
+  }
+
+  if (type === EventType.KAFKA) {
+    return 'KAFKA'
+  }
+
+  return '?'
+}
 
 const extractNodeFromEvent = (event: IEventMessage): INode => ({
   id: event.meta.service,
@@ -25,32 +47,42 @@ export const getNodes = (events: IEventMessage[]) => {
     .map(extractNodeFromEvent)
 }
 
-export const getEdges = (events: IEventMessage[]) => {
-  return events
-    .sort(getDepth)
-    .reduce((edges, event, i) => {
-      const parentNode = events.find((ev) => ev.meta.spanId === event.meta.parentId)
-      if (!parentNode) {
-        return edges
-      }
-      const parentNodeReporterId = getReporterId(parentNode)
-      const currentReporterId = getReporterId(event)
+const isConsumer = (event: IEventMessage) => event.payload.direction === Direction.CONSUMER
+const isProducer = (event: IEventMessage) => event.payload.direction === Direction.PRODUCER
 
-      if (parentNodeReporterId === currentReporterId) {
-        return edges
-      }
-      const outgoing = isOutgoing(event)
-      const from = outgoing ? currentReporterId : parentNodeReporterId
-      const to = outgoing ?  parentNodeReporterId : currentReporterId
-      return [
-        ...edges, {
-          id: `${from}_${to}_${v4()}`,
-          from,
-          to,
-          label: getLabel(event),
-        },
-      ]
-    }, [])
+export const getEdges = (events: IEventMessage[]) => {
+  return events.reduce((edges, event) => {
+    let from
+    let to
+    let label
+    if (isConsumer(event)) {
+      const childProducer = events.find((ev) => !isConsumer(ev) && ev.meta.parentId === event.meta.spanId)
+      if (!childProducer) { return edges }
+      from = getReporterId(childProducer)
+      to = getReporterId(event)
+      label = getLabel(event)
+    }
+
+    if (isProducer(event)) {
+      const childConsumer = events.find((ev) => !isProducer(ev) && ev.meta.parentId === event.meta.spanId)
+      if (!childConsumer) { return edges }
+      from = getReporterId(event)
+      to = getReporterId(childConsumer)
+      label = getLabel(event)
+    }
+
+    if (from === to) {
+      return edges
+    }
+    return [
+      ...edges, {
+        id: `${from}_${to}_${v4()}`,
+        from,
+        to,
+        label,
+      },
+    ]
+  }, [])
 }
 
 export const getGraphFromEvents = (events: IEventMessage[]): IGraphDescription => ({
