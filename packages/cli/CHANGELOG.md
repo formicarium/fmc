@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/formicarium/formicarium-cli/compare/@formicarium/cli@1.0.3...@formicarium/cli@1.1.0) (2018-09-10)
+
+
+### Features
+
+* **cmd:** Removed stupid message ([2c18e70](https://github.com/formicarium/formicarium-cli/commit/2c18e70))
+
+
+
+
+
 <a name="1.0.3"></a>
 ## 1.0.3 (2018-09-10)
 
