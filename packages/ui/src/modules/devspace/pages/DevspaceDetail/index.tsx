@@ -7,9 +7,6 @@ import { DevspaceServicesPage } from './subpages/Services';
 import { DevspaceSettingsPage } from './subpages/Settings';
 import { DeployServicePage } from './subpages/DeployService';
 
-const Wrapper = styled.div`
-
-`
 const Row = styled.div`
   display: flex;
   flex-direction: row;

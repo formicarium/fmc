@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Sticky } from 'semantic-ui-react'
+import { Table } from 'semantic-ui-react'
 import { IMessage, IHttpPayload, IKafkaPayload } from '../../model/event';
 import moment from 'moment'
 import styled from 'styled-components';
@@ -39,8 +39,6 @@ export class EventList extends React.Component<IEventListProps> {
   public render() {
     const {
       events,
-      activeStartIndex,
-      activeEndIndex,
       onClickRow,
     } = this.props
     return (

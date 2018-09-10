@@ -1,4 +1,4 @@
-import { IHttpClient } from '../components/http-client';
+import { IHttpClient } from '../components/http-client'
 interface IConfigServerVersion {
   version: string
 }
@@ -20,5 +20,4 @@ export class ConfigServerService {
       baseURL: this.url,
     }).then((d) => d.data.version)
   }
-
 }

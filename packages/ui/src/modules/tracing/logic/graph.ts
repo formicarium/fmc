@@ -1,4 +1,4 @@
-import { IEdge, INode, NodeType, IGraphDescription, EventType } from '../model/graph';
+import { IEdge, INode, IGraphDescription } from '../model/graph';
 import { IExternalGraph } from '../graphql/queries/get-graph';
 
 export const hideEdge = (edge: IEdge): IEdge => ({
@@ -24,7 +24,7 @@ export const externalGraphToInternalGraph = (externalGraph: IExternalGraph): IGr
     nodes: externalGraph.nodes.map((node) => ({
       id: node.id,
       label: node.name,
-      type: node.type.toUpperCase() as NodeType,
+      type: node.type.toUpperCase(),
       group: node.type.toUpperCase(),
       hidden: false,
     })),
@@ -33,7 +33,7 @@ export const externalGraphToInternalGraph = (externalGraph: IExternalGraph): IGr
       from: edge.source.id,
       to: edge.target.id,
       label: edge.event.type,
-      type: edge.event.type.toUpperCase() as EventType,
+      type: edge.event.type.toUpperCase(),
       hidden: false,
     })),
   }

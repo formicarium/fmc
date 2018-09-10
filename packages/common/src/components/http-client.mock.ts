@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosPromise } from 'axios'
-import { IHttpClient } from './http-client';
+import { IHttpClient } from './http-client'
 
 type Handler = (config: AxiosRequestConfig) => AxiosPromise<any>
 

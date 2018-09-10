@@ -14,7 +14,7 @@ export class FilesService implements IFilesService {
       cb(evt, name)
     }) as fs.FSWatcher
   }
-  
+
   public safelyReadJSON = async <T>(filePath: string): Promise<T> => {
     const fileExists = await fs.pathExists(filePath)
     if (!fileExists) {

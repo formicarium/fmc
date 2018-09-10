@@ -110,15 +110,13 @@ export class Graph extends React.Component<IGraph> {
         graph={buildVisGraph(graph)}
         events={{
           selectEdge: (ev: ISelectEdgeEvent) => {
-            const [first, ...rest] = ev.edges
-            onSelectEdge(first)
+            onSelectEdge(ev.edges[0])
           },
           deselectEdge: () => {
             onDeselectEdge()
           },
           selectNode: (ev: ISelectNodeEvent) => {
-            const [first, ...rest] = ev.nodes
-            onSelectNode(first)
+            onSelectNode(ev.nodes[0])
           },
           deselectNode: (e: ISelectNodeEvent) => {
             onDeselectNode()

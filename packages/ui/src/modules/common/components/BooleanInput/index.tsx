@@ -4,7 +4,7 @@ import { Checkbox } from 'semantic-ui-react';
 
 export const BooleanInput: React.SFC<FieldRenderProps> = ({
   input,
-  ...rest,
+  ...rest
 }) => (
   <Checkbox
     {...rest}

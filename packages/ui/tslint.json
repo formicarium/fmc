@@ -6,6 +6,7 @@
     "ordered-imports": [true, {"import-sources-order": "any", "named-imports-order": "any"}],
     "quotemark": [true, "single", "avoid-escape"],
     "max-classes-per-file": [false],
+    "trailing-comma": false,
     "max-line-length": [false],
     "eofline": true,
     "member-ordering": [false],

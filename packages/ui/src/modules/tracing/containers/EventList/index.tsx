@@ -3,24 +3,23 @@ import { WithMessages } from '../../render-props/MessageList';
 import { EventList } from '../../components/EventList';
 import { Subscribe } from 'unstated';
 import { EventListState } from '../../state/EventList';
-import { IMessage } from '../../model/event';
 import { FilterState } from '../../state/FilterState';
 import { ExplorerState } from '~/modules/tracing/state/ExplorerState';
 import { getFilteredMessagesReselect } from '~/modules/tracing/selectors/messages';
 
-const getActiveStartIndex = ({ state }: EventListState, messages: IMessage[]) => {
-  if (state.cumulative || state.showAll) {
-    return 0
-  }
-  return state.selectedIndex
-}
+// const getActiveStartIndex = ({ state }: EventListState, messages: IMessage[]) => {
+//   if (state.cumulative || state.showAll) {
+//     return 0
+//   }
+//   return state.selectedIndex
+// }
 
-const getActiveEndIndex = ({ state }: EventListState, messages: IMessage[]) => {
-  if (state.showAll) {
-    return messages.length
-  }
-  return state.selectedIndex
-}
+// const getActiveEndIndex = ({ state }: EventListState, messages: IMessage[]) => {
+//   if (state.showAll) {
+//     return messages.length
+//   }
+//   return state.selectedIndex
+// }
 
 export const EventListContainer = () => (
   <WithMessages>

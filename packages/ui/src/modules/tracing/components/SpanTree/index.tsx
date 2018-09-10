@@ -33,16 +33,16 @@ export interface ILeafViewProps {
   style?: CSSProperties
 }
 
-const LeafLabelView: React.SFC<ILeafViewProps> = ({
-  node,
-  selected,
-  onClick,
-  style,
-}) => (
-  <span onClick={onClick} style={{ ...style, fontWeight: selected ? 'bold' : 'normal', cursor: 'pointer', display: 'block', fontFamily: 'Open Sans', fontSize: 20}}>
-    {node.label}
-  </span>
-)
+// const LeafLabelView: React.SFC<ILeafViewProps> = ({
+//   node,
+//   selected,
+//   onClick,
+//   style,
+// }) => (
+//   <span onClick={onClick} style={{ ...style, fontWeight: selected ? 'bold' : 'normal', cursor: 'pointer', display: 'block', fontFamily: 'Open Sans', fontSize: 20}}>
+//     {node.label}
+//   </span>
+// )
 
 export interface INodeViewProps {
   node: ITreeNode
