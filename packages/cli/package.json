@@ -5,14 +5,14 @@
     "registry": "https://registry.npmjs.org/"
   },
   "description": "A CLI to operate on Formicarium",
-  "version": "0.0.6",
+  "version": "1.0.1",
   "author": "Rafael Ribeiro @rafaelcorreiapoli",
   "bin": {
     "fmc": "./bin/run"
   },
   "bugs": "https://github.com/formicarium/formicarium-cli/issues",
   "dependencies": {
-    "@formicarium/common": "0.1.2",
+    "@formicarium/common": "^1.0.1",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^2",
@@ -64,7 +64,6 @@
     "test": "nyc mocha --forbid-only \"test/**/*.test.ts\"",
     "test:watch": "nyc mocha --forbid-only \"test/**/*.test.ts\" --watch",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-
     "readme": "oclif-dev readme",
     "manifest": "oclif-dev manifest",
     "postpack": "rm -f oclif.manifest.json npm-shrinkwrap.json",
