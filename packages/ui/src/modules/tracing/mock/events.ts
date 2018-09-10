@@ -78,20 +78,26 @@ const createKafkaMessage = (timestamp: number, reporter: string, direction: Dire
   }
 }
 
-const http0 = createHttpOutMessage(0,	'X',	Direction.PRODUCER,	'O.A', 'O', 'O', EventKind.START)
-const http1 = createHttpInMessage(1,	'Y',	Direction.CONSUMER,	'O.A.B', 'O', 'O.A', EventKind.START)
-const http10 = createHttpInMessage(10, 'Y',	Direction.PRODUCER,	'O.A.B', 'O', 'O.A', EventKind.END)
-const http11 = createHttpOutMessage(11, 'X',	Direction.CONSUMER,	'O.A', 'O', 'O',  EventKind.END)
+const nowPlusSeconds = (seconds: number): number => {
+  const t = new Date()
+  t.setSeconds(t.getSeconds() + seconds)
+  return t.getTime()
+}
 
-const http2 = createHttpOutMessage(2,	'Y',	Direction.PRODUCER,	'O.A.B.C', 'O',	'O.A.B', EventKind.START)
-const http4 = createHttpInMessage(4,	'Z',	Direction.CONSUMER,	'O.A.B.C.D', 'O',	'O.A.B.C', EventKind.START)
-const http5 = createHttpInMessage(5,	'Z',	Direction.PRODUCER,	'O.A.B.C.D', 'O', 'O.A.B.C', EventKind.END)
-const http6 = createHttpOutMessage(6,	'Y',	Direction.CONSUMER,	'O.A.B.C', 'O',	'O.A.B', EventKind.END)
+const http0 = createHttpOutMessage(nowPlusSeconds(0),	'X',	Direction.PRODUCER,	'O.A', 'O', 'O', EventKind.START)
+const http1 = createHttpInMessage(nowPlusSeconds(1),	'Y',	Direction.CONSUMER,	'O.A.B', 'O', 'O.A', EventKind.START)
+const http10 = createHttpInMessage(nowPlusSeconds(10), 'Y',	Direction.PRODUCER,	'O.A.B', 'O', 'O.A', EventKind.END)
+const http11 = createHttpOutMessage(nowPlusSeconds(11), 'X',	Direction.CONSUMER,	'O.A', 'O', 'O',  EventKind.END)
 
-const http3 = createHttpOutMessage(3,	'Y',	Direction.PRODUCER,	'O.A.B.Cx', 'O', 'O.A.B',  EventKind.START)
-const http7 = createHttpInMessage(7,	'W',	Direction.CONSUMER,	'O.A.B.Cx.Dx', 'O', 'O.A.B.Cx',  EventKind.START)
-const http8 = createHttpInMessage(8,	'W',	Direction.PRODUCER,	'O.A.B.Cx.Dx', 'O', 'O.A.B.Cx',  EventKind.END)
-const http9 = createHttpOutMessage(9,	'Y',	Direction.CONSUMER,	'O.A.B.Cx', 'O', 'O.A.B',  EventKind.END)
+const http2 = createHttpOutMessage(nowPlusSeconds(2),	'Y',	Direction.PRODUCER,	'O.A.B.C', 'O',	'O.A.B', EventKind.START)
+const http4 = createHttpInMessage(nowPlusSeconds(4),	'Z',	Direction.CONSUMER,	'O.A.B.C.D', 'O',	'O.A.B.C', EventKind.START)
+const http5 = createHttpInMessage(nowPlusSeconds(5),	'Z',	Direction.PRODUCER,	'O.A.B.C.D', 'O', 'O.A.B.C', EventKind.END)
+const http6 = createHttpOutMessage(nowPlusSeconds(6),	'Y',	Direction.CONSUMER,	'O.A.B.C', 'O',	'O.A.B', EventKind.END)
+
+const http3 = createHttpOutMessage(nowPlusSeconds(3),	'Y',	Direction.PRODUCER,	'O.A.B.Cx', 'O', 'O.A.B',  EventKind.START)
+const http7 = createHttpInMessage(nowPlusSeconds(7),	'W',	Direction.CONSUMER,	'O.A.B.Cx.Dx', 'O', 'O.A.B.Cx',  EventKind.START)
+const http8 = createHttpInMessage(nowPlusSeconds(8),	'W',	Direction.PRODUCER,	'O.A.B.Cx.Dx', 'O', 'O.A.B.Cx',  EventKind.END)
+const http9 = createHttpOutMessage(nowPlusSeconds(9),	'Y',	Direction.CONSUMER,	'O.A.B.Cx', 'O', 'O.A.B',  EventKind.END)
 
 // const kafka12 = createKafkaMessage(12,	'Z', Direction.PRODUCER, 'O.A.B.C.D.E',	'O',	'O.A.B.C.D', EventKind.START)
 // const kafka12e = createKafkaMessage(12,	'Z', Direction.PRODUCER, 'O.A.B.C.D.E',	'O',	'O.A.B.C.D', EventKind.END)
