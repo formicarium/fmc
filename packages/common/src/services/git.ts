@@ -6,6 +6,9 @@ import * as path from 'path'
 
 type SimpleGitGetter = (basePath?: string) => gitP.SimpleGit
 
+const FMC_GIT_AUTHOR = 'formigao'
+const FMC_GIT_EMAIL = 'fmc@example.com'
+
 export interface IGitService {
   addRemote: (basePath: string, name: string, url: string) => Promise<any>
   push: (basePath: string, remote: string, branch: string) => Promise<void>
@@ -65,7 +68,9 @@ export class GitService {
   }
 
   public gitCommit = async (basePath: string): Promise<gitP.CommitSummary> => {
-    return this.getGit(basePath).commit(this.getCommitMessage(), undefined, { '--allow-empty': true })
+    return this.getGit(basePath).commit(this.getCommitMessage(), undefined, { '--allow-empty': true,
+                                                                              '--author': `${FMC_GIT_AUTHOR} <${FMC_GIT_EMAIL}>`})
+
   }
 
   private hasAlreadyExcluded = (lines: string[]) => !!lines.find((line) => line === GitService.MIRROR_GIT_FOLDER)
