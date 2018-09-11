@@ -103,6 +103,11 @@ export const createKafkaMessage = (timestamp: number, reporter: string, directio
         endpoint: {
           topic: 'xablau',
         },
+        message: {
+          data: {
+            hello: 'world'
+          }
+        }
       },
     },
   }

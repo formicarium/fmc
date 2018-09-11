@@ -10,6 +10,10 @@ import { Transition, Button } from 'semantic-ui-react';
 import { HTTPGrid } from '~/modules/tracing/components/HTTP/HTTPGrid';
 import { getHttpPanelRequestsAndResponses } from '~/modules/tracing/selectors/http';
 import { WithMessages } from '~/modules/tracing/render-props/MessageList';
+import { KafkaGrid } from '~/modules/tracing/components/Kafka/KafkaGrid';
+import { IEdge } from '~/modules/tracing/model/graph';
+import { EventType } from '~/modules/tracing/model/event';
+import { getKafkaGrid } from '~/modules/tracing/selectors/kafka';
 // import { inProducer, outProducer, inConsumer, outConsumer } from '~/modules/tracing/mock/http';
 
 const Wrapper = styled.div`
@@ -47,6 +51,9 @@ const CloseButton = styled(Button)`
   z-index: 999;
   margin: 0px;
 `
+
+const isHttpEdge = (edge: IEdge | null) => edge && (edge.metadata.type === EventType.HTTP || edge.metadata.type === EventType.HTTP_OUT)
+const isKafkaEdge = (edge: IEdge | null) => edge && (edge.metadata.type === EventType.KAFKA)
 export class Dashboard extends React.Component {
   public render() {
     return (
@@ -62,12 +69,22 @@ export class Dashboard extends React.Component {
               <Transition visible={!!dashboard.state.selectedEdge} animation='fade' duration={500}>
                 <DetailModal>
                   <CloseButton icon='close' onClick={dashboard.deselectEdge} />
-                  <HTTPGrid
+                  {isHttpEdge(dashboard.state.selectedEdge) && (
+                    <HTTPGrid
                     {...getHttpPanelRequestsAndResponses({
                       dashboardState: dashboard.state,
                       messages,
                     })}
                   />
+                  )}
+                  {isKafkaEdge(dashboard.state.selectedEdge) && (
+                    <KafkaGrid
+                      {...getKafkaGrid({
+                        dashboardState: dashboard.state,
+                        messages,
+                      })}
+                    />
+                  )}
                 </DetailModal>
               </Transition>
 

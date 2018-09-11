@@ -1,5 +1,5 @@
 import { Nullable } from '@formicarium/common';
-import { HTTPVerb } from '~/modules/tracing/components/HTTP/Request';
+import { HTTPVerb } from '~/modules/tracing/components/HTTP/HTTPVerb';
 
 // MESSAGE
 export enum MessageType {
@@ -70,6 +70,9 @@ export interface IKafkaPayload {
     endpoint: {
       topic: string,
     },
+    message: {
+      data: object,
+    }
   }
 }
 export type IEventPayload = IHttpPayload | IKafkaPayload

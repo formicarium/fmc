@@ -1,20 +1,7 @@
 import { createSelector } from 'reselect';
-import { IDashboardState } from '~/modules/tracing/state/DashboardState';
-import { IEventMessage } from '~/modules/tracing/model/event';
 import { httpEventToRequest } from '~/modules/tracing/logic/event-http';
 import { isRequest } from '~/modules/tracing/components/HTTP/logic';
-
-export interface IStateGroup {
-  dashboardState: IDashboardState
-  messages: IEventMessage[]
-}
-const messagesSelector = (root: IStateGroup): IEventMessage[] => root.messages
-const dashboardStateSelector = (root: IStateGroup): IDashboardState => root.dashboardState
-
-const selectedEdgeSelector = createSelector(
-  dashboardStateSelector,
-  (dashboard) => dashboard.selectedEdge,
-)
+import { messagesSelector, selectedEdgeSelector } from '~/modules/tracing/selectors/dashboard';
 
 export const getHttpPanelRequestsAndResponses = createSelector(
   messagesSelector,

@@ -1,3 +1,5 @@
+import { EventType } from '~/modules/tracing/model/event';
+
 export interface INode {
   id: string,
   label: string,
@@ -16,6 +18,7 @@ export interface IEdge {
   metadata: {
     fromEvent: string
     toEvent: string
+    type: EventType
   }
 }
 export interface IGraphDescription {

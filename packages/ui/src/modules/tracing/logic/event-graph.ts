@@ -71,6 +71,7 @@ export const getEdges = (events: IEventMessage[]): IEdge[] => {
           metadata: {
             fromEvent: prod.id,
             toEvent: event.id,
+            type: event.payload.type
           }
         } as IEdge]
       }, [])
@@ -97,6 +98,7 @@ export const getEdges = (events: IEventMessage[]): IEdge[] => {
           metadata: {
             fromEvent: event.id,
             toEvent: cons.id,
+            type: event.payload.type,
           }
         } as IEdge]
       }, [])
