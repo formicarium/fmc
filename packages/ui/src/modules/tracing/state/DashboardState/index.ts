@@ -41,4 +41,13 @@ export class DashboardState extends Container<IDashboardState> {
   public deselectEdge = () => this.setState({
     selectedEdge: null,
   })
+
+  public showDashboard = () => {
+    if (this.state.showFilter) {
+      this.toggleShowFilter()
+    }
+    if (this.state.selectedEdge) {
+      this.deselectEdge()
+    }
+  }
 }

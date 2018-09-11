@@ -56,14 +56,7 @@ export class Dashboard extends React.Component {
           {(dashboard: DashboardState) => (
             <Wrapper>
               <KeyHandler keyEventName={KEYPRESS} keyValue='f' onKeyHandle={dashboard.toggleShowFilter} />
-              <KeyHandler keyEventName={KEYPRESS} keyValue='d' onKeyHandle={() => {
-                if (dashboard.state.showFilter) {
-                  dashboard.toggleShowFilter()
-                }
-                if (dashboard.state.selectedEdge) {
-                  dashboard.deselectEdge()
-                }
-              }} />
+              <KeyHandler keyEventName={KEYPRESS} keyValue='d' onKeyHandle={dashboard.showDashboard} />
 
               <DynamicGraph/>
               <Transition visible={!!dashboard.state.selectedEdge} animation='fade' duration={500}>
