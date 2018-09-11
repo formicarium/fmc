@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Icon, Segment } from 'semantic-ui-react';
 import { DevspaceList } from '../../components/DevspaceList';
 import styled from 'styled-components';
-import { SegmentHeader } from '../../../common/components/SegmentHeader';
+import { SegmentHeader } from '~/modules/common/components/SegmentHeader';
 import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { devspaceToDevspaceConfig } from '@formicarium/common'

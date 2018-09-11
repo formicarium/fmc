@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { Segment } from 'semantic-ui-react';
-import { SegmentHeader } from '../../../common/components/SegmentHeader';
+import { SegmentHeader } from '~/modules/common/components/SegmentHeader';
 import { CreateDevspaceContainer } from '~/modules/devspace/containers/CreateDevspace';
 import { DisplaySetupContainer } from '~/modules/devspace/containers/DisplaySetup';
 

@@ -1,7 +1,7 @@
 import React from 'react'
-import { DevspacesPage } from '../../../devspace/pages/Devspaces';
-import { DevspaceDetailPage } from '../../../devspace/pages/DevspaceDetail';
-import { NewDevspacePage } from '../../../devspace/pages/NewDevspace';
+import { DevspacesPage } from '~/modules/devspace/pages/Devspaces';
+import { DevspaceDetailPage } from '~/modules/devspace/pages/DevspaceDetail';
+import { NewDevspacePage } from '~/modules/devspace/pages/NewDevspace';
 import { Switch, Route } from 'react-router';
 import { Dashboard } from '~/modules/tracing/components/Dashboard';
 import { SyncDashboard } from '~/modules/sync/components/SyncDashboard';
