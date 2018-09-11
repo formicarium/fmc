@@ -4,11 +4,14 @@ import { Checkbox } from 'semantic-ui-react';
 
 export const BooleanInput: React.SFC<FieldRenderProps> = ({
   input,
+  meta,
   ...rest
-}) => (
-  <Checkbox
-    {...rest}
-    value={input.value}
-    onChange={(_, { checked }) => input.onChange(checked)}
-  />
-)
+}) => {
+  return (
+    <Checkbox
+      {...rest}
+      checked={input.value}
+      onChange={(_, { checked }) => input.onChange(checked)}
+    />
+  )
+}

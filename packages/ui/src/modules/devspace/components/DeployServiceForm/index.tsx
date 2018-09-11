@@ -34,15 +34,18 @@ const applicationDefinitionPathDialogOptions = {
   }],
 } as OpenDialogOptions
 
+const INITIAL_VALUES: Partial<IDeployServiceFormValues> = {
+  applicationName: 'blabla',
+  syncable: true
+}
 export const DeployServiceForm: React.SFC<IDeployServiceFormProps> = ({
   onSubmit,
 }) => (
   <WithFMCSystem>
     {(system) => (
       <Form
-        mutators={{
-          ...arrayMutators,
-        }}
+        initialValues={INITIAL_VALUES}
+        mutators={arrayMutators as any}
         onSubmit={onSubmit}
         validate={validateDeployServiceForm}
         render={({handleSubmit, submitting, invalid, form: {reset, mutators: { push, pop } }, values }) => (
