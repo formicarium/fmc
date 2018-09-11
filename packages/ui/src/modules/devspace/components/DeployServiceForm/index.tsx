@@ -37,14 +37,13 @@ const applicationDefinitionPathDialogOptions = {
 } as OpenDialogOptions
 
 const INITIAL_VALUES: Partial<IDeployServiceFormValues> = {
-  applicationName: 'blabla',
   syncable: true
 }
 
 const FolderAndApplicationDefinitionPathBindings: React.SFC = () => (
   <Field name='applicationDefinitionPath'>
     {({ input: { onChange, value: applicationDefinitionPathValue }}) => (
-      <OnChange name={'folder'}>
+      <OnChange name='folder'>
       {async (folderValue: string) => {
         if (!applicationDefinitionPathValue) {
           const fmcPath = `${folderValue}/fmc.json`
@@ -55,7 +54,7 @@ const FolderAndApplicationDefinitionPathBindings: React.SFC = () => (
       }}
       </OnChange>
     )}
-    </Field>
+  </Field>
 )
 export const DeployServiceForm: React.SFC<IDeployServiceFormProps> = ({
   onSubmit,
