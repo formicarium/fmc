@@ -136,11 +136,22 @@ export class Graph extends React.Component<IGraph, IGraphState> {
   private deselectEdge = () => {
     this.props.onDeselectEdge()
   }
+
+  private selectNode = (event: ISelectNodeEvent) => {
+    // impl
+  }
+
+  private deselectNode = (event: ISelectNodeEvent) => {
+    // impl
+  }
+
   private handlers = {
     hoverEdge: this.hoverEdge,
     blurEdge: this.blurEdge,
     selectEdge: this.selectEdge,
     deselectEdge: this.deselectEdge,
+    selectNode: this.selectNode,
+    deselectNode: this.deselectNode
   }
   public render() {
     const {
