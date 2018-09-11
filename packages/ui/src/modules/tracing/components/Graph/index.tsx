@@ -28,6 +28,7 @@ const options = {
     borderWidth: 0,
   },
   interaction: {
+    hover: true,
     selectConnectedEdges: false,
     multiselect: true,
   },
@@ -93,9 +94,19 @@ interface ISelectNodeEvent {
 const buildVisGraph = (graph: IGraphDescription) => {
   return graph
 }
-export class Graph extends React.Component<IGraph> {
-  public shouldComponentUpdate(nextProps: IGraph) {
-    return nextProps.graph !== this.props.graph
+
+export interface IGraphState {
+  hovering: boolean
+}
+
+type VisNetwork = any
+export class Graph extends React.Component<IGraph, IGraphState> {
+  private network: VisNetwork
+  public state = {
+    hovering: false
+  }
+  public shouldComponentUpdate(nextProps: IGraph, nextState: IGraphState) {
+    return nextProps.graph !== this.props.graph || this.state !== nextState
   }
 
   private selectEdge = (ev: ISelectEdgeEvent) => {
@@ -107,32 +118,48 @@ export class Graph extends React.Component<IGraph> {
     this.props.onSelectEdge(edge)
   }
 
+  private getNetwork = (network: VisNetwork) => {
+    this.network = network
+  }
+
+  private hoverEdge = () => {
+    this.setState({
+      hovering: true
+    })
+  }
+  private blurEdge = () => {
+    this.setState({
+      hovering: false
+    })
+  }
+
+  private deselectEdge = () => {
+    this.props.onDeselectEdge()
+  }
+  private handlers = {
+    hoverEdge: this.hoverEdge,
+    blurEdge: this.blurEdge,
+    selectEdge: this.selectEdge,
+    deselectEdge: this.deselectEdge,
+  }
   public render() {
     const {
       graph,
       children,
-      onDeselectEdge,
-      onSelectNode,
-      onDeselectNode,
     } = this.props
     return (
-      <VisGraph
-        graph={buildVisGraph(graph)}
-        events={{
-          selectEdge: this.selectEdge,
-          deselectEdge: () => {
-            onDeselectEdge()
-          },
-          selectNode: (ev: ISelectNodeEvent) => {
-            onSelectNode(ev.nodes[0])
-          },
-          deselectNode: (e: ISelectNodeEvent) => {
-            onDeselectNode()
-          },
-        }}
-        options={options}
-        children={children}
-      />
+      <div style={{
+        cursor: this.state.hovering ? 'pointer' : 'inherit'
+      }}>
+        <VisGraph
+          getNetwork={this.getNetwork}
+          graph={buildVisGraph(graph)}
+          events={this.handlers}
+          options={options}
+          children={children}
+        />
+      </div>
+
     )
   }
 }

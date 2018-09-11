@@ -64,7 +64,7 @@ export class MainLayoutInner extends React.Component<IProps> {
         <Subscribe to={[DashboardState]}>
           {(dashboard: DashboardState) => {
             return (
-              <Transition visible={!dashboard.state.showFilter || !!dashboard.state.selectedEdge} animation='fade down' duration={300}>
+              <Transition visible={!dashboard.state.showFilter && !dashboard.state.selectedEdge} animation='fade down' duration={300}>
                 {/* This div is here because without it, Transition does not work for some reason */}
                 <div>
                   <TopMenu />
