@@ -25,12 +25,13 @@ const Wrapper = styled.div`
 `
 
 const LateralMenuWrapper = styled(Segment)`
+  margin: 0px !important;
+  padding: 0px !important;
   position: absolute !important;
   left: 0px;
   top: 0px;
   bottom: 0px;
   width: 600px;
-  margin: 0px;
   display: flex;
   flex-direction: column;
   background-color: #FFF;
