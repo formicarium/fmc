@@ -31,6 +31,22 @@ const LateralMenuWrapper = styled.div`
   background-color: #FFF;
 `
 
+const DetailModal = styled.div`
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+`
+
+const CloseButton = styled(Button)`
+  position: absolute;
+  right: 10px;
+  top: -44px;
+  z-index: 999;
+  margin: 0px;
+`
 export class Dashboard extends React.Component {
   public render() {
     return (
@@ -40,26 +56,26 @@ export class Dashboard extends React.Component {
           {(dashboard: DashboardState) => (
             <Wrapper>
               <KeyHandler keyEventName={KEYPRESS} keyValue='f' onKeyHandle={dashboard.toggleShowFilter} />
+              <KeyHandler keyEventName={KEYPRESS} keyValue='d' onKeyHandle={() => {
+                if (dashboard.state.showFilter) {
+                  dashboard.toggleShowFilter()
+                }
+                if (dashboard.state.selectedEdge) {
+                  dashboard.deselectEdge()
+                }
+              }} />
 
-              <div style={{flexGrow: 1}}>
-                <DynamicGraph/>
-              </div>
+              <DynamicGraph/>
               <Transition visible={!!dashboard.state.selectedEdge} animation='fade' duration={500}>
-                <div style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0}}>
-                  <div style={{display: 'flex', alignItems: 'flex-end'}}>
-                    <Button icon='close' onClick={dashboard.deselectEdge} />
-                  </div>
+                <DetailModal>
+                  <CloseButton icon='close' onClick={dashboard.deselectEdge} />
                   <HTTPGrid
-                    // outProducer={outProducer}
-                    // inConsumer={inConsumer}
-                    // inProducer={inProducer}
-                    // outConsumer={outConsumer}
                     {...getHttpPanelRequestsAndResponses({
                       dashboardState: dashboard.state,
                       messages,
                     })}
                   />
-                </div>
+                </DetailModal>
               </Transition>
 
               <Transition visible={dashboard.state.showFilter} animation='fade right' duration={500}>

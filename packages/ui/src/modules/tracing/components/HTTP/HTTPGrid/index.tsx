@@ -15,6 +15,15 @@ export interface IHTTPGridProps {
   inProducer: IRequestProps
   outConsumer: IRequestProps
 }
+
+const Grid = styled.div`
+  padding: 0 10 10 10;
+  display: grid;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+`
 export class HTTPGrid extends React.Component<IHTTPGridProps> {
   public render() {
     const {
@@ -24,7 +33,7 @@ export class HTTPGrid extends React.Component<IHTTPGridProps> {
       outConsumer,
     } = this.props
     return (
-      <div style={{width: '100%', height: '100%', padding: 10, backgroundColor: '#f7f7f7', display: 'grid', gridColumnGap: 10, gridRowGap: 10, gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr'}}>
+      <Grid>
         {/* x:0 y: 0 */}
         <Segment style={{margin: 0, backgroundColor: '#FFF'}}>
           <HTTPRequest
@@ -52,7 +61,7 @@ export class HTTPGrid extends React.Component<IHTTPGridProps> {
             {...inProducer}
           />
         </Segment>
-      </div>
+      </Grid>
     )
   }
 }
