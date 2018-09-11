@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { IDashboardState } from '~/modules/tracing/state/DashboardState';
 import { IEventMessage } from '~/modules/tracing/model/event';
-import { httpEventToRequest, httpEventToResponse } from '~/modules/tracing/logic/event-http';
+import { httpEventToRequest } from '~/modules/tracing/logic/event-http';
 import { isRequest } from '~/modules/tracing/components/HTTP/logic';
 
 export interface IStateGroup {
