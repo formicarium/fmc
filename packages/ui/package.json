@@ -31,6 +31,7 @@
     "react-dom": "^16.4.2",
     "react-final-form": "^3.6.5",
     "react-final-form-arrays": "^1.0.6",
+    "react-final-form-listeners": "^1.0.1",
     "react-graph-vis": "^1.0.2",
     "react-grid-layout": "^0.16.6",
     "react-hotkeys": "^1.1.4",

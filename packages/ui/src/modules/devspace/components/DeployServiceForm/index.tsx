@@ -9,6 +9,8 @@ import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { FieldArray } from 'react-final-form-arrays'
 import arrayMutators from 'final-form-arrays'
 import { BooleanInput } from '~/modules/common/components/BooleanInput';
+import { OnChange } from 'react-final-form-listeners'
+import fs from 'fs-extra'
 
 export interface IDeployServiceFormValues {
   syncable: boolean
@@ -38,6 +40,23 @@ const INITIAL_VALUES: Partial<IDeployServiceFormValues> = {
   applicationName: 'blabla',
   syncable: true
 }
+
+const FolderAndApplicationDefinitionPathBindings: React.SFC = () => (
+  <Field name='applicationDefinitionPath'>
+    {({ input: { onChange, value: applicationDefinitionPathValue }}) => (
+      <OnChange name={'folder'}>
+      {async (folderValue: string) => {
+        if (!applicationDefinitionPathValue) {
+          const fmcPath = `${folderValue}/fmc.json`
+          if (await fs.pathExists(fmcPath)) {
+            onChange(fmcPath)
+          }
+        }
+      }}
+      </OnChange>
+    )}
+    </Field>
+)
 export const DeployServiceForm: React.SFC<IDeployServiceFormProps> = ({
   onSubmit,
 }) => (
@@ -50,6 +69,7 @@ export const DeployServiceForm: React.SFC<IDeployServiceFormProps> = ({
         validate={validateDeployServiceForm}
         render={({handleSubmit, submitting, invalid, form: {reset, mutators: { push, pop } }, values }) => (
           <SemanticForm onSubmit={() => handleSubmit().then(reset)}>
+            <FolderAndApplicationDefinitionPathBindings />
             <SemanticForm.Field disabled={submitting}>
               <label>Application Name</label>
               <Field
