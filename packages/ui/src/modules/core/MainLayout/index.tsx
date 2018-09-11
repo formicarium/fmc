@@ -60,7 +60,7 @@ export class MainLayoutInner extends React.Component<IProps> {
             <ToastContainer />
               <Subscribe to={[DashboardState]}>
                 {(dashboard: DashboardState) => (
-                  <Transition visible={!dashboard.state.showFilter && !dashboard.state.selectedEdge} animation='fade down' duration={500}>
+                  <Transition visible={!dashboard.state.showFilter} animation='fade down' duration={300}>
                     <div>
                       <TopMenu />
                     </div>
