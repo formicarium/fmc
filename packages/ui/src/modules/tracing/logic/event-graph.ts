@@ -3,28 +3,30 @@ import { IEventMessage, Direction, EventType } from '~/modules/tracing/model/eve
 import * as R from 'ramda'
 import { v4 } from 'uuid'
 const getReporterId = (event: IEventMessage) => event.meta.service
-const getLabel = (event: IEventMessage) => {
+const getLabel = (event: IEventMessage, index: number) => {
   const { type, direction } = event.payload
+
+  let label = '?'
   if (type === EventType.HTTP && direction === Direction.CONSUMER) {
-    return 'HTTP-REQ'
+    label = 'HTTP-REQ'
   }
   if (type === EventType.HTTP && direction === Direction.PRODUCER) {
-    return 'HTTP-RES'
+    label = 'HTTP-RES'
   }
 
   if (type === EventType.HTTP_OUT && direction === Direction.PRODUCER) {
-    return 'HTTP-REQ'
+    label = 'HTTP-REQ'
   }
 
   if (type === EventType.HTTP_OUT && direction === Direction.CONSUMER) {
-    return 'HTTP-RES'
+    label = 'HTTP-RES'
   }
 
   if (type === EventType.KAFKA) {
-    return 'KAFKA'
+    label = 'KAFKA'
   }
 
-  return '?'
+  return `${index} - ${label}`
 }
 
 const extractNodeFromEvent = (event: IEventMessage): INode => ({
@@ -43,7 +45,7 @@ const getDashes = (event: IEventMessage): boolean => event.payload.type === Even
 
 export const getEdges = (events: IEventMessage[]): IEdge[] => {
   const uniqEvents = R.uniqBy((event) => `${event.meta.spanId}_${event.payload.direction}`, events)
-  return uniqEvents.reduce((edges, event) => {
+  return uniqEvents.reduce((edges, event, i) => {
     let from: string
     let to: string
     let label: string
@@ -54,7 +56,7 @@ export const getEdges = (events: IEventMessage[]): IEdge[] => {
       const childProducers = uniqEvents.filter((ev) => !isConsumer(ev) && ev.meta.parentId === event.meta.spanId)
       if (!childProducers.length) { return edges }
       to = getReporterId(event)
-      label = getLabel(event)
+      label = getLabel(event, i)
       dashes = getDashes(event)
 
       newEdges = childProducers.reduce((accNewEdges, prod) => {
@@ -81,7 +83,7 @@ export const getEdges = (events: IEventMessage[]): IEdge[] => {
       const childConsumer = uniqEvents.filter((ev) => !isProducer(ev) && ev.meta.parentId === event.meta.spanId)
       if (!childConsumer.length) { return edges }
       from = getReporterId(event)
-      label = getLabel(event)
+      label = getLabel(event, i)
       dashes = getDashes(event)
 
       newEdges = childConsumer.reduce((accNewEdges, cons) => {
