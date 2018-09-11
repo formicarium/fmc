@@ -10,7 +10,7 @@ import { Transition, Button } from 'semantic-ui-react';
 import { HTTPGrid } from '~/modules/tracing/components/HTTP/HTTPGrid';
 import { getHttpPanelRequestsAndResponses } from '~/modules/tracing/selectors/http';
 import { WithMessages } from '~/modules/tracing/render-props/MessageList';
-import { inProducer, outProducer, inConsumer, outConsumer } from '~/modules/tracing/mock/http';
+// import { inProducer, outProducer, inConsumer, outConsumer } from '~/modules/tracing/mock/http';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -44,20 +44,20 @@ export class Dashboard extends React.Component {
               <div style={{flexGrow: 1}}>
                 <DynamicGraph/>
               </div>
-              <Transition visible={!!dashboard.state.selectedEdge || true} animation='fade' duration={500}>
+              <Transition visible={!!dashboard.state.selectedEdge} animation='fade' duration={500}>
                 <div style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0}}>
-                  {/* <div style={{display: 'flex', alignItems: 'flex-end'}}>
+                  <div style={{display: 'flex', alignItems: 'flex-end'}}>
                     <Button icon='close' onClick={dashboard.deselectEdge} />
-                  </div> */}
+                  </div>
                   <HTTPGrid
-                    outProducer={outProducer}
-                    inConsumer={inConsumer}
-                    inProducer={inProducer}
-                    outConsumer={outConsumer}
-                    // {...getHttpPanelRequestsAndResponses({
-                    //   dashboardState: dashboard.state,
-                    //   messages,
-                    // })}
+                    // outProducer={outProducer}
+                    // inConsumer={inConsumer}
+                    // inProducer={inProducer}
+                    // outConsumer={outConsumer}
+                    {...getHttpPanelRequestsAndResponses({
+                      dashboardState: dashboard.state,
+                      messages,
+                    })}
                   />
                 </div>
               </Transition>

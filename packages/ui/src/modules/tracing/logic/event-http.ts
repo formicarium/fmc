@@ -9,14 +9,17 @@ import { IResponseProps } from '~/modules/tracing/components/HTTP/Response';
 //   body: object
 //   timestamp: number
 
-export const httpEventToRequest = (event: IEventMessage): IRequestProps => {
+export const httpEventToRequest = (event: IEventMessage, peerService: string): IRequestProps => {
   const payload = event.payload as IHttpPayload
 
   return {
-    eventType: event.payload.type,
+    spanId: event.meta.spanId,
+    direction: payload.direction,
+    status: payload.data.request.status,
+    eventType: payload.type,
     service: event.meta.service,
     verb: payload.data.request.verb,
-    targetService: payload.data.endpoint.service,
+    peerService,
     endpoint: payload.data.endpoint.uri,
     headers: payload.data.request.headers,
     body: payload.data.request.body,

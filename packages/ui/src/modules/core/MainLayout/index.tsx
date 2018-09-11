@@ -9,16 +9,15 @@ import {HotKeys} from 'react-hotkeys';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { Subscribe } from 'unstated';
 import { DashboardState } from '~/modules/tracing/state/DashboardState';
-import { HTTPGrid } from '~/modules/tracing/components/HTTP/HTTPGrid';
 
 interface IMainLayoutProps {
   syncState: SyncState
 }
-const MenuWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
+// const MenuWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// `
 const RoutesWrapper = styled.div`
   padding-top: 14px;
 `
@@ -61,7 +60,7 @@ export class MainLayoutInner extends React.Component<IProps> {
             <ToastContainer />
               <Subscribe to={[DashboardState]}>
                 {(dashboard: DashboardState) => (
-                  <Transition visible={!dashboard.state.showFilter && !dashboard.state.selectedEdge && false} animation='fade down' duration={500}>
+                  <Transition visible={!dashboard.state.showFilter && !dashboard.state.selectedEdge} animation='fade down' duration={500}>
                     <div>
                       <TopMenu />
                     </div>

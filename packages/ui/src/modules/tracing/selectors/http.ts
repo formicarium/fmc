@@ -20,16 +20,21 @@ export const getHttpPanelRequestsAndResponses = createSelector(
   selectedEdgeSelector,
   (events, selectedEdge) => {
     if (!selectedEdge) { return null }
+    console.log('selectedEdge')
+    console.log(selectedEdge)
     const sourceHttpEvent = events.find((event) => event.id === selectedEdge.metadata.fromEvent)
     const destHttpEvent = events.find((event) => event.id === selectedEdge.metadata.toEvent)
-    console.log(sourceHttpEvent, destHttpEvent)
-    const request = httpEventToRequest(sourceHttpEvent)
-    const response = httpEventToResponse(destHttpEvent)
+    console.log('sourceHttpEvent')
+    console.log(sourceHttpEvent)
+    console.log('destHttpEvent')
+    console.log(destHttpEvent)
+    const outProducer = httpEventToRequest(sourceHttpEvent, destHttpEvent.meta.service)
+    const inConsumer = httpEventToRequest(destHttpEvent, sourceHttpEvent.meta.service)
     return {
-      clientRequest: request,
-      serverRequest: request,
-      serverResponse: response,
-      clientResponse: response,
+      outProducer,
+      inConsumer,
+      inProducer: outProducer,
+      outConsumer: inConsumer,
     }
   }
 )
