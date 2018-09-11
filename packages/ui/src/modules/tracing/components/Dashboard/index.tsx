@@ -7,9 +7,10 @@ import { DynamicGraph } from '../../containers/DynamicGraph';
 import _ from 'lodash'
 import { FilterPalette } from '~/modules/tracing/components/FilterPalette';
 import { Transition, Button } from 'semantic-ui-react';
-import { HTTPGrid, requestOut, requestIn, responseOut, responseIn } from '~/modules/tracing/components/HTTP/HTTPGrid';
+import { HTTPGrid } from '~/modules/tracing/components/HTTP/HTTPGrid';
 import { getHttpPanelRequestsAndResponses } from '~/modules/tracing/selectors/http';
 import { WithMessages } from '~/modules/tracing/render-props/MessageList';
+import { inProducer, outProducer, inConsumer, outConsumer } from '~/modules/tracing/mock/http';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -49,10 +50,10 @@ export class Dashboard extends React.Component {
                     <Button icon='close' onClick={dashboard.deselectEdge} />
                   </div> */}
                   <HTTPGrid
-                    clientRequest={requestOut}
-                    clientResponse={responseOut}
-                    serverRequest={requestIn}
-                    serverResponse={responseIn}
+                    outProducer={outProducer}
+                    inConsumer={inConsumer}
+                    inProducer={inProducer}
+                    outConsumer={outConsumer}
                     // {...getHttpPanelRequestsAndResponses({
                     //   dashboardState: dashboard.state,
                     //   messages,

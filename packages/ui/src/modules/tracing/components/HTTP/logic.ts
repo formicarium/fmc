@@ -1,3 +1,5 @@
+import { EventType, Direction } from '~/modules/tracing/model/event';
+
 export enum HTTPVerb {
   POST = 'POST',
   GET = 'GET',
@@ -6,7 +8,7 @@ export enum HTTPVerb {
 }
 
 export const colorForVerb: {[key: string]: string} = {
-  [HTTPVerb.POST]: '#27ae60',
+  [HTTPVerb.POST]: '#e67e22',
   [HTTPVerb.DELETE]: 'e74c3c',
   [HTTPVerb.HEAD]: '#8e44ad',
   [HTTPVerb.GET]: '#2980b9',
@@ -20,3 +22,6 @@ export const statusColorTable: {[key: string ]: string} = {
   4: '#e74c3c',
   5: '#c0392b',
 }
+
+export const isRequest = (eventType: EventType, direction: Direction) => eventType === EventType.HTTP_OUT && direction === Direction.PRODUCER || eventType === EventType.HTTP && direction === Direction.CONSUMER
+export const isResponse = (eventType: EventType, direction: Direction) => !isRequest(eventType, direction)

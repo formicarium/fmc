@@ -1,115 +1,73 @@
-import React, { CSSProperties } from 'react'
-import { Header as SemanticHeader, Segment, HeaderProps, Divider } from 'semantic-ui-react';
+import React from 'react'
+import { Segment, Divider } from 'semantic-ui-react';
 import { ObjectInspector } from 'react-inspector';
-import { DisplayHTTPVerb, HTTPVerb } from '~/modules/tracing/components/HTTP/HTTPVerb';
-import moment from 'moment';
-import { EventType } from '~/modules/tracing/model/event';
+import { HTTPVerb } from '~/modules/tracing/components/HTTP/HTTPVerb';
+import { EventType, Direction } from '~/modules/tracing/model/event';
+import { Row } from '~/modules/common/components/Row';
+import { Header } from '~/modules/common/Header';
+import { DisplayEventType } from '~/modules/common/components/DisplayEventType';
+import { DisplayTimestamp } from '~/modules/common/components/DisplayTimestamp';
+import { DisplayEndpoint } from '~/modules/tracing/components/HTTP/DisplayEndpoint';
+import { FadedText } from '~/modules/common/components/FadedText';
+import { isRequest, isResponse } from '~/modules/tracing/components/HTTP/logic';
+import { DisplayHTTPStatus } from '~/modules/tracing/components/HTTP/HTTPStatus';
 
 export interface IRequestProps {
+  spanId: string,
   eventType: EventType,
+  direction: Direction,
+  status?: number,
   verb: HTTPVerb,
   service: string,
-  targetService: string
+  peerService: string
   endpoint: string
   headers: object,
   body: object
   timestamp: number
 }
 
-const Row: React.SFC<{spaceBetween: boolean, centerVertical: boolean}> = ({
-  children,
-  spaceBetween,
-  centerVertical,
-}) => (
-  <div style={{display: 'flex', flexDirection: 'row', alignItems: centerVertical ? 'center' : 'inherit', justifyContent: spaceBetween ? 'space-between' : 'inherit'}}>
-    {children}
-  </div>
-)
+const ARROW_RIGHT = '→'
+const ARROW_LEFT = '←'
 
-const DisplayTimestamp: React.SFC<{
-  timestamp: number
-}> = ({
-  timestamp
-}) => (
-  <div style={{textAlign: 'right', fontStyle: 'italic'}}>
-    {moment(timestamp).format('DD/MM/YYYY HH:mm:ss')}
-  </div>
-)
-
-const Header: React.SFC<HeaderProps & {noMargin?: boolean}> = ({
-  noMargin,
-  style,
-  ...props
-}) => (
-  <SemanticHeader {...props} style={{...style, margin: noMargin ? 0 : 'inherit'}}/>
-)
-
-const DisplayEndpoint: React.SFC<{
-  endpoint: string,
-  verb: HTTPVerb,
-}> = ({
-  endpoint,
-  verb
-}) => (
-  <Segment tertiary style={{fontFamily: 'Courier New'}}>
-    <DisplayHTTPVerb verb={verb} />
-    <b style={{marginLeft: 20 }}>{endpoint}</b>
-  </Segment>
-)
-
-const colorForEventType = {
-  [EventType.HTTP]: 'purple',
-  [EventType.HTTP_OUT]: 'tomato',
-  [EventType.KAFKA]: 'red'
-}
-
-const DisplayEventType: React.SFC<{
-  eventType: EventType,
-  style?: CSSProperties
-}> = ({
-  eventType,
-  style
-}) => (
-  <span style={{...style, fontWeight: 'bold', color: '#FFF', fontFamily: 'Courier New', backgroundColor: colorForEventType[eventType], padding: '2 8 2 8', borderRadius: 4}}>
-    {eventType && eventType.toLowerCase().replace('_', ' ')}
-  </span>
-)
-
-const FadedText: React.SFC<{faded?: boolean}> = ({
-children,
-faded,
-}) => (
-  <span style={{color: faded ? '#ccc' : 'inherit'}}>
-    {children}
-  </span>
-)
 export const HTTPRequest: React.SFC<IRequestProps> = ({
+  spanId,
   eventType,
+  direction,
   verb,
   service,
-  targetService,
+  peerService,
   endpoint,
   headers,
   body,
   timestamp,
+  status,
 }) => (
   <div style={{padding: 14}}>
     <Row spaceBetween centerVertical>
       <Header as='h3' noMargin>
         <DisplayEventType eventType={eventType} style={{marginRight: 20}} />
-        <FadedText faded={eventType === EventType.HTTP}>{service}</FadedText>
-        <FadedText faded> → </FadedText>
-        <FadedText faded={eventType === EventType.HTTP_OUT}>{targetService}</FadedText>
+        <span style={{fontFamily: 'Courier New', marginRight: 10}}>[{spanId}]</span>
+        <FadedText faded={eventType === EventType.HTTP}>{eventType === EventType.HTTP_OUT ? service : peerService}</FadedText>
+        <FadedText faded> {isResponse(eventType, direction) ? ARROW_LEFT : ARROW_RIGHT} </FadedText>
+        <FadedText faded={eventType === EventType.HTTP_OUT}>{eventType === EventType.HTTP ? service : peerService}</FadedText>
       </Header>
       <DisplayTimestamp timestamp={timestamp} />
     </Row>
     <Divider />
 
-    {eventType === EventType.HTTP_OUT && (
+    {isRequest(eventType, direction) && (
     <DisplayEndpoint
       endpoint={endpoint}
       verb={verb}
     />
+    )}
+    {(status && isResponse(eventType, direction)) && (
+      <Segment tertiary style={{fontFamily: 'Courier new'}}>
+        <DisplayHTTPStatus
+          status={status}
+          style={{marginRight: 20}}
+        />
+      </Segment>
     )}
 
     <Header as='h5'>Headers</Header>
