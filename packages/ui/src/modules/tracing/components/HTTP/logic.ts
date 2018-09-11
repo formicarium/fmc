@@ -8,7 +8,7 @@ export enum HTTPVerb {
 }
 
 export const colorForVerb: {[key: string]: string} = {
-  [HTTPVerb.POST]: '#e67e22',
+  [HTTPVerb.POST]: '#f1c40f',
   [HTTPVerb.DELETE]: 'e74c3c',
   [HTTPVerb.HEAD]: '#8e44ad',
   [HTTPVerb.GET]: '#2980b9',

@@ -2,9 +2,9 @@ import React, { CSSProperties } from 'react'
 import { EventType } from '~/modules/tracing/model/event';
 
 const colorForEventType = {
-  [EventType.HTTP]: 'purple',
-  [EventType.HTTP_OUT]: 'tomato',
-  [EventType.KAFKA]: 'red'
+  [EventType.HTTP]: '#3498db', // blue
+  [EventType.HTTP_OUT]: '#c0392b', // sun flower
+  [EventType.KAFKA]: '#2980b9' // pomegranate
 }
 
 export const DisplayEventType: React.SFC<{

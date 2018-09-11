@@ -31,7 +31,7 @@ export const TopMenuInner: React.SFC<RouteComponentProps<{}>> = ({
       onClick={() => history.push('/my-devspace')}
     />
     <Menu.Item
-      name='Tracing'
+      name='Debug'
       active={history.location.pathname === '/tracing'}
       onClick={() => history.push('/tracing')}
     />
