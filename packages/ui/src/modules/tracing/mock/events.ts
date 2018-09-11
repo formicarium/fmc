@@ -27,7 +27,16 @@ export const createHttpInMessage = (timestamp: number, reporter: string, directi
         },
         request: {
           body: {
-            body1: 'body1'
+            body1: 'body1',
+            meta: {
+              type: MessageType.EVENT,
+              timestamp,
+              service: reporter,
+              traceId,
+              spanId,
+              parentId,
+              kind,
+            },
           },
           headers: {
             headers: 'header1'
