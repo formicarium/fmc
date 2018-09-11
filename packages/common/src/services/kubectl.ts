@@ -17,6 +17,8 @@ const joinCommandAndArgs = ({
   return command
 }
 
+const DEFAULT_TAIL_SIZE = 100
+
 const scripts = {
   searchPodsByLabel: (label: string, namespace: string): ICommandAndArgs => ({
     command: 'kubectl',
@@ -28,7 +30,7 @@ const scripts = {
   }),
   logs: (podName: string, namespace: string): ICommandAndArgs => ({
     command: 'kubectl',
-    args: ['logs', podName, '-n', namespace, '-f'],
+    args: ['logs', podName, '-n', namespace, '-f', '--tail', `${DEFAULT_TAIL_SIZE}`],
   }),
 }
 
