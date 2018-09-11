@@ -12,6 +12,7 @@ export interface IFolderPathInputProps {
 
 const defaultOptions = {
   properties: ['openDirectory'],
+  defaultPath: process.env.NU_HOME
 } as OpenDialogOptions
 
 export class FolderPathInput extends React.Component<FieldRenderProps & IFolderPathInputProps> {
