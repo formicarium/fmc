@@ -55,6 +55,12 @@ export class ApplicationLogsInner extends React.Component<ISystemProps & IApplic
     }
   }
 
+  private handleClear = () => {
+    this.setState({
+      streamedText: ''
+    })
+  }
+
   public render() {
     if (this.state.loading) {
       return (
@@ -67,7 +73,7 @@ export class ApplicationLogsInner extends React.Component<ISystemProps & IApplic
     }
     return (
       <TerminalWrapper inverted>
-        <TerminalScreen text={this.state.streamedText} />
+        <TerminalScreen text={this.state.streamedText} onClear={this.handleClear} />
       </TerminalWrapper>
     )
   }
