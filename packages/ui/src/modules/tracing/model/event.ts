@@ -1,4 +1,5 @@
 import { Nullable } from '@formicarium/common';
+import { HTTPVerb } from '~/modules/tracing/components/HTTP/Request';
 
 // MESSAGE
 export enum MessageType {
@@ -53,6 +54,12 @@ export interface IHttpPayload {
       uri: string
       service: string,
     },
+    request?: {
+      headers?: object,
+      body?: object,
+      verb?: HTTPVerb,
+      status?: number,
+    }
   }
 }
 

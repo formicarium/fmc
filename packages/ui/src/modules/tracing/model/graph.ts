@@ -13,9 +13,10 @@ export interface IEdge {
   color?: string
   hidden?: boolean
 
-  traceId?: string
-  spanId?: string
-  parentId?: string
+  metadata: {
+    fromEvent: string
+    toEvent: string
+  }
 }
 export interface IGraphDescription {
   nodes: INode[]

@@ -2,7 +2,7 @@ import React, { CSSProperties } from 'react'
 import TreeView from 'react-treeview'
 import { IHashMap } from '@formicarium/common';
 import { getTreeNodeForSpan } from '~/modules/tracing/components/SpanTree/logic';
-import { IEventMessage } from '@formicarium/ui/src/modules/tracing/model/event';
+import { IEventMessage } from '~/modules/tracing/model/event';
 import memoize from 'memoize-one';
 
 export interface ITreeNode {

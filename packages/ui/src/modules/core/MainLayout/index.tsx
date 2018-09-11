@@ -9,6 +9,7 @@ import {HotKeys} from 'react-hotkeys';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { Subscribe } from 'unstated';
 import { DashboardState } from '~/modules/tracing/state/DashboardState';
+import { HTTPGrid } from '~/modules/tracing/components/HTTP/HTTPGrid';
 
 interface IMainLayoutProps {
   syncState: SyncState
@@ -58,16 +59,15 @@ export class MainLayoutInner extends React.Component<IProps> {
         <HotKeys handlers={this.handlers}>
           <Container style={{paddingTop: 14}}>
             <ToastContainer />
-            <Subscribe to={[DashboardState]}>
-              {(dashboard: DashboardState) => (
-                <Transition visible={!dashboard.state.showFilter} animation='fade down' duration={500}>
-                  <MenuWrapper>
-                    <TopMenu />
-                  </MenuWrapper>
-                </Transition>
-
-              )}
-            </Subscribe>
+              <Subscribe to={[DashboardState]}>
+                {(dashboard: DashboardState) => (
+                  <Transition visible={!dashboard.state.showFilter && !dashboard.state.selectedEdge && false} animation='fade down' duration={500}>
+                    <div>
+                      <TopMenu />
+                    </div>
+                  </Transition>
+                )}
+              </Subscribe>
             <RoutesWrapper>
               <Routes />
             </RoutesWrapper>

@@ -1,4 +1,9 @@
-import { HTTPVerb } from '~/modules/tracing/components/HTTP/Request';
+export enum HTTPVerb {
+  POST = 'POST',
+  GET = 'GET',
+  HEAD = 'HEAD',
+  DELETE = 'DELETE',
+}
 
 export const colorForVerb: {[key: string]: string} = {
   [HTTPVerb.POST]: '#27ae60',

@@ -2,6 +2,7 @@ import { EventKind } from './../model/event';
 import { Direction } from '~/modules/tracing/model/event';
 import { IEventMessage, MessageType, EventType } from '../model/event';
 import { v4 } from 'uuid'
+import { HTTPVerb } from '~/modules/tracing/components/HTTP/HTTPVerb';
 
 export const createHttpInMessage = (timestamp: number, reporter: string, direction: Direction,  spanId: string, traceId: string, parentId: string, kind: EventKind): IEventMessage => {
   return {
@@ -24,6 +25,16 @@ export const createHttpInMessage = (timestamp: number, reporter: string, directi
           uri: '/blabla',
           service: 'xxx',
         },
+        request: {
+          body: {
+            body1: 'body1'
+          },
+          headers: {
+            headers: 'header1'
+          },
+          verb: HTTPVerb.POST,
+          status: 200
+        }
       },
     },
   }
@@ -49,6 +60,16 @@ export const createHttpOutMessage = (timestamp: number, reporter: string, direct
           uri: '/blabla',
           service: 'xxx',
         },
+        request: {
+          body: {
+            body1: 'body1'
+          },
+          headers: {
+            headers: 'header1'
+          },
+          verb: HTTPVerb.POST,
+          status: 200
+        }
       },
     },
   }

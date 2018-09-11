@@ -1,4 +1,4 @@
-import { IGraphDescription, INode } from '~/modules/tracing/model/graph';
+import { IGraphDescription, INode, IEdge } from '~/modules/tracing/model/graph';
 import { IEventMessage, Direction, EventType } from '~/modules/tracing/model/event';
 import * as R from 'ramda'
 import { v4 } from 'uuid'
@@ -41,7 +41,7 @@ const isConsumer = (event: IEventMessage) => event.payload.direction === Directi
 const isProducer = (event: IEventMessage) => event.payload.direction === Direction.PRODUCER
 const getDashes = (event: IEventMessage): boolean => event.payload.type === EventType.KAFKA
 
-export const getEdges = (events: IEventMessage[]) => {
+export const getEdges = (events: IEventMessage[]): IEdge[] => {
   const uniqEvents = R.uniqBy((event) => `${event.meta.spanId}_${event.payload.direction}`, events)
   return uniqEvents.reduce((edges, event) => {
     let from: string
@@ -68,7 +68,11 @@ export const getEdges = (events: IEventMessage[]) => {
           from,
           to,
           label,
-        }]
+          metadata: {
+            fromEvent: prod.id,
+            toEvent: event.id,
+          }
+        } as IEdge]
       }, [])
     }
 
@@ -90,7 +94,11 @@ export const getEdges = (events: IEventMessage[]) => {
           from,
           to,
           label,
-        }]
+          metadata: {
+            fromEvent: event.id,
+            toEvent: cons.id,
+          }
+        } as IEdge]
       }, [])
     }
     return [

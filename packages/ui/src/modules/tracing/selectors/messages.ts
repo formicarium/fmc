@@ -3,8 +3,8 @@ import { IEventMessage } from '~/modules/tracing/model/event';
 import memoizeOne from 'memoize-one';
 import R from 'ramda'
 import { createSelector } from 'reselect'
-import { IExplorerState } from '@formicarium/ui/src/modules/tracing/state/ExplorerState';
-import { IFilterState } from '@formicarium/ui/src/modules/tracing/state/FilterState';
+import { IExplorerState } from '~/modules/tracing/state/ExplorerState';
+import { IFilterState } from '~/modules/tracing/state/FilterState';
 
 export interface IStateGroup {
   explorerState: IExplorerState

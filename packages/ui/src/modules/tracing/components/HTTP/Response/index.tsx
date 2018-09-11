@@ -1,8 +1,10 @@
 import React from 'react'
 import { Header, Segment } from 'semantic-ui-react';
 import { ObjectInspector } from 'react-inspector';
+import { EventType } from '~/modules/tracing/model/event';
 
 export interface IResponseProps {
+  eventType: EventType,
   status: number
   service: string,
   headers: object

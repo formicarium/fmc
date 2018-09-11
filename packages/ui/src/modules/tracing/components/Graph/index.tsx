@@ -1,6 +1,7 @@
 import React from 'react'
 import VisGraph from 'react-graph-vis'
-import { IGraphDescription } from '../../model/graph';
+import { IGraphDescription, IEdge } from '../../model/graph';
+import R from 'ramda'
 
 export const GROUPS = {
   SERVICES: 'SERVICE',
@@ -74,7 +75,7 @@ const options = {
 
 export interface IGraph {
   graph: IGraphDescription
-  onSelectEdge: (edgeId: string) => void;
+  onSelectEdge: (edge: IEdge) => void;
   onDeselectEdge: () => void;
   onSelectNode: (nodeId: string) => void;
   onDeselectNode: () => void;
@@ -96,11 +97,20 @@ export class Graph extends React.Component<IGraph> {
   public shouldComponentUpdate(nextProps: IGraph) {
     return nextProps.graph !== this.props.graph
   }
+
+  private selectEdge = (ev: ISelectEdgeEvent) => {
+    const edgeId = ev.edges[0]
+    if (!edgeId) {
+      return
+    }
+    const edge = R.find((ed) => ed.id === edgeId, this.props.graph.edges)
+    this.props.onSelectEdge(edge)
+  }
+
   public render() {
     const {
       graph,
       children,
-      onSelectEdge,
       onDeselectEdge,
       onSelectNode,
       onDeselectNode,
@@ -109,9 +119,7 @@ export class Graph extends React.Component<IGraph> {
       <VisGraph
         graph={buildVisGraph(graph)}
         events={{
-          selectEdge: (ev: ISelectEdgeEvent) => {
-            onSelectEdge(ev.edges[0])
-          },
+          selectEdge: this.selectEdge,
           deselectEdge: () => {
             onDeselectEdge()
           },

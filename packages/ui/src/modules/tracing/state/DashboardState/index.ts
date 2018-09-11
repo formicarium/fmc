@@ -1,22 +1,29 @@
 import { Container } from 'unstated';
-interface IDashboardState {
+import { IEdge } from '~/modules/tracing/model/graph';
+export interface IDashboardState {
   showFilter: boolean
   expandedSections: {
     filter: boolean,
     spanExplorer: boolean,
     eventList: boolean,
-  }
+  },
+  selectedEdge: IEdge | null
 }
 
 export class DashboardState extends Container<IDashboardState> {
-  public state = {
-    showFilter: false,
-    expandedSections: {
-      filter: false,
-      spanExplorer: false,
-      eventList: false,
-    },
+  constructor() {
+    super()
+    this.state = {
+      showFilter: false,
+      expandedSections: {
+        filter: false,
+        spanExplorer: false,
+        eventList: false,
+      },
+      selectedEdge: null,
+    }
   }
+
   public toggleShowFilter = () => this.setState({
     showFilter: !this.state.showFilter,
   })
@@ -26,4 +33,12 @@ export class DashboardState extends Container<IDashboardState> {
       [expandedSectionId]: open,
     },
   }))
+
+  public selectEdge = (edge: IEdge) => this.setState({
+    selectedEdge: edge
+  })
+
+  public deselectEdge = () => this.setState({
+    selectedEdge: null,
+  })
 }

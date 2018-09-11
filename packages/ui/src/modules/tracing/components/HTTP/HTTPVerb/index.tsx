@@ -1,6 +1,12 @@
 import React from 'react'
 import { colorForVerb } from '~/modules/tracing/components/HTTP/logic';
-import { HTTPVerb } from '~/modules/tracing/components/HTTP/Request';
+
+export enum HTTPVerb {
+  POST = 'POST',
+  GET = 'GET',
+  HEAD = 'HEAD',
+  DELETE = 'DELETE',
+}
 
 export const DisplayHTTPVerb: React.SFC<{
   verb: HTTPVerb,

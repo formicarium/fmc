@@ -1,5 +1,6 @@
 import React from 'react'
 import './styles.css'
+import './react-grid.css'
 import { Provider, Subscribe } from 'unstated';
 import { ApolloProvider } from 'react-apollo'
 import { BrowserRouter } from 'react-router-dom';
