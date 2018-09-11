@@ -6,7 +6,7 @@ import { DashboardState } from '../../state/DashboardState';
 import { DynamicGraph } from '../../containers/DynamicGraph';
 import _ from 'lodash'
 import { FilterPalette } from '~/modules/tracing/components/FilterPalette';
-import { Transition, Button } from 'semantic-ui-react';
+import { Transition, Button, Segment, Dimmer } from 'semantic-ui-react';
 import { HTTPGrid } from '~/modules/tracing/components/HTTP/HTTPGrid';
 import { getHttpPanelRequestsAndResponses } from '~/modules/tracing/selectors/http';
 import { WithMessages } from '~/modules/tracing/render-props/MessageList';
@@ -24,18 +24,20 @@ const Wrapper = styled.div`
   bottom: 0px;
 `
 
-const LateralMenuWrapper = styled.div`
-  position: absolute;
+const LateralMenuWrapper = styled(Segment)`
+  position: absolute !important;
   left: 0px;
   top: 0px;
   bottom: 0px;
   width: 600px;
+  margin: 0px;
   display: flex;
   flex-direction: column;
   background-color: #FFF;
 `
 
 const DetailModal = styled.div`
+  z-index: 9999;
   position: absolute;
   left: 0px;
   right: 0px;
@@ -88,11 +90,13 @@ export class Dashboard extends React.Component {
                 </DetailModal>
               </Transition>
 
-              <Transition visible={dashboard.state.showFilter} animation='fade right' duration={500}>
+              <Dimmer active={!!dashboard.state.selectedEdge} page />
+              <Transition visible={dashboard.state.showFilter && !dashboard.state.selectedEdge} animation='fade right' duration={500}>
                 <LateralMenuWrapper>
                   <FilterPalette activeIndex={0} />
                 </LateralMenuWrapper>
               </Transition>
+
             </Wrapper>
           )}
           </Subscribe>
