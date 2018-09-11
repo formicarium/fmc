@@ -12,26 +12,42 @@ interface IPromiseButtonState {
   promiseState: PromiseState
 }
 export class PromiseButton extends React.Component<ButtonProps, IPromiseButtonState> {
+  private mounted = false
+
   public state = {
     promiseState: PromiseState.IDLE,
   }
 
+  public componentDidMount() {
+    this.mounted = true
+  }
+
+  public componentWillUnmount() {
+    this.mounted = false
+  }
+
+  private safeStateState: React.Component<ButtonProps, IPromiseButtonState>['setState'] = (state) => {
+    if (this.mounted) {
+      this.setState(state)
+    }
+  }
+
   private handleClick = async (event: React.MouseEvent<HTMLButtonElement>, data: ButtonProps) => {
-    this.setState({
+    this.safeStateState({
       promiseState: PromiseState.LOADING,
     })
     try {
       await this.props.onClick(event, data)
-      this.setState({
+      this.safeStateState({
         promiseState: PromiseState.SUCCESS,
       })
     } catch (err) {
-      this.setState({
+      this.safeStateState({
         promiseState: PromiseState.ERROR,
       })
     } finally {
       setTimeout(() => {
-        this.setState({
+        this.safeStateState({
           promiseState: PromiseState.IDLE,
         })
       }, 1000)
