@@ -1,10 +1,13 @@
 import React from 'react'
-import { Form as SemanticForm, Button, Segment } from 'semantic-ui-react';
+import { Form as SemanticForm, Button, Segment, Message } from 'semantic-ui-react';
 import { Form, Field } from 'react-final-form'
 import { IKubectlVersion, IMinMajor } from '@formicarium/common'
 import compareVersions from 'compare-versions'
 import { TextInput } from '~/modules/common/components/TextInput';
 import _ from 'lodash'
+import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
+import { DisplayError } from '~/modules/common/components/DisplayError';
+import { DisplayLoader } from '~/modules/common/components/DisplayLoader';
 
 const validate = () => {
   return {}
@@ -51,10 +54,10 @@ export const SettingsForm: React.SFC<ISettingsForm> = ({
       onSubmit={onSubmit}
       initialValues={initialValues}
       validate={validate}
-      render={({handleSubmit, submitting, invalid, validating, errors }) => {
+      render={({handleSubmit, submitting, invalid, validating, errors, values, valid }) => {
         return (
-          <SemanticForm onSubmit={handleSubmit}>
-            <SemanticForm.Field disabled={submitting} error={errors.kubectlBin}>
+          <SemanticForm onSubmit={handleSubmit} success={valid} error={!!errors}>
+            <SemanticForm.Field disabled={submitting}>
               <label>Kubectl bin</label>
               <Field
                 validate={validateKubectlBin(getVersionForKubectlBin)}
@@ -62,6 +65,19 @@ export const SettingsForm: React.SFC<ISettingsForm> = ({
                 component={TextInput}
                 placeholder='Name'
               />
+              <Message error>
+                {errors.kubectlBin}
+              </Message>
+              <PromiseManager
+              promise={() => getVersionForKubectlBin(values.kubectlBin)}
+              ErrorComponent={DisplayError}
+              LoadingComponent={DisplayLoader}>
+              {({ data }) => (
+                <Message success>
+                  {minMajorToSemanticString(data.clientVersion)}
+                </Message>
+              )}
+            </PromiseManager>
             </SemanticForm.Field>
             <div style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Button
