@@ -38,7 +38,7 @@ export class SettingsContainer extends React.Component<{}, ISettingsContainerSta
             ErrorComponent={DisplayError}>
             {({ data }) => (
               <SettingsForm
-                getVersionForKubectlBin={system.kubectl.version}
+                getVersionForKubectlBin={(bin: string) => system.kubectl.version({ bin })}
                 initialValues={data}
                 onSubmit={this.handleSubmit(system)}
               />

@@ -58,30 +58,30 @@ const spawnCommandAndArgs = (commandAndArgs: ICommandAndArgs, options?: SpawnOpt
   options,
 )
 
-export interface IOptions {
+export interface IKubectlServiceOptions {
   bin?: string
 }
 export interface IKubectlService {
-  getPodByLabel: (namespace: string, label: string, options?: IOptions) => Promise<Nullable<IPod>>
-  streamLogs: (namespace: string, label: string, options?: IOptions) => ChildProcess
-  portForward: (namespace: string, podName: string, localPort: number, containerPort: number, options?: IOptions) => ChildProcess
-  version: () => Promise<IKubectlVersion>
+  getPodByLabel: (namespace: string, label: string, options?: IKubectlServiceOptions) => Promise<Nullable<IPod>>
+  streamLogs: (namespace: string, label: string, options?: IKubectlServiceOptions) => ChildProcess
+  portForward: (namespace: string, podName: string, localPort: number, containerPort: number, options?: IKubectlServiceOptions) => ChildProcess
+  version: (options?: IKubectlServiceOptions) => Promise<IKubectlVersion>
 }
 export class KubectlService implements IKubectlService {
-  public getPodByLabel = (namespace: string, label: string, options: IOptions = {}): Promise<Nullable<IPod>> => {
+  public getPodByLabel = (namespace: string, label: string, options: IKubectlServiceOptions = {}): Promise<Nullable<IPod>> => {
     return execAndParseJson<IResponse>(scripts(options.bin).searchPodsByLabel(label, namespace))
     .then((response) => response.items[0])
   }
 
-  public streamLogs = (namespace: string, podName: string, options: IOptions = {}): ChildProcess => {
+  public streamLogs = (namespace: string, podName: string, options: IKubectlServiceOptions = {}): ChildProcess => {
     return spawnCommandAndArgs(scripts(options.bin).logs(podName, namespace))
   }
 
-  public portForward = (namespace: string, podName: string, localPort: number, containerPort: number, options: IOptions = {}): ChildProcess => {
+  public portForward = (namespace: string, podName: string, localPort: number, containerPort: number, options: IKubectlServiceOptions = {}): ChildProcess => {
     return spawnCommandAndArgs(scripts(options.bin).forward(podName, localPort, containerPort, namespace))
   }
 
-  public version = (options: IOptions = {}): Promise<IKubectlVersion> => {
+  public version = (options: IKubectlServiceOptions = {}): Promise<IKubectlVersion> => {
     return execAndParseJson(scripts(options.bin).version())
   }
 }
