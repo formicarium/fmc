@@ -6,3 +6,9 @@ export const DisplayLoader: React.SFC = () => (
     <Loader indeterminate>Loading...</Loader>
   </Dimmer>
 )
+
+export const DisplayLocalizedLoader: React.SFC = () => (
+  <Dimmer inverted active>
+    <Loader indeterminate>Loading...</Loader>
+  </Dimmer>
+)

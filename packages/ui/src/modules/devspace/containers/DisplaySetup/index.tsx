@@ -4,14 +4,14 @@ import { ObjectInspector } from 'react-inspector';
 import * as path from 'path'
 import * as os from 'os'
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
-import { IApplicationDefinition } from '@formicarium/common';
+import { IApplicationDefinition, sleep } from '@formicarium/common';
 import { ISystem } from '~/system';
 import { DisplayError } from '~/modules/common/components/DisplayError';
-import { DisplayLoader } from '~/modules/common/components/DisplayLoader';
+import { DisplayLocalizedLoader } from '~/modules/common/components/DisplayLoader';
 
 export class DisplaySetupContainer extends React.Component {
 
-  private readSetupFile = (system: ISystem) => () => {
+  private readSetupFile = (system: ISystem) => async () => {
     const setupFile = path.resolve(os.homedir(), '.fmc/setup.json')
     return system.filesService.safelyReadJSON<IApplicationDefinition[]>(setupFile)
   }
@@ -22,7 +22,7 @@ export class DisplaySetupContainer extends React.Component {
         {(system) => (
           <PromiseManager
             promise={this.readSetupFile(system)}
-            LoadingComponent={DisplayLoader}
+            LoadingComponent={DisplayLocalizedLoader}
             ErrorComponent={DisplayError}
             >
             {({ data }) => (
