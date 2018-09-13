@@ -2,6 +2,16 @@ import { IPod, IResponse } from './../model/pod'
 import { exec } from 'child-process-promise'
 import { spawn, ChildProcess, SpawnOptions } from 'child_process'
 import { Nullable } from '../utils'
+
+export interface IMinMajor {
+  minor: string
+  major: string
+}
+export interface IKubectlVersion {
+  clientVersion: IMinMajor
+  serverVersion: IMinMajor
+}
+
 export interface ICommandAndArgs {
   command: string
   args?: string[]
@@ -19,20 +29,24 @@ const joinCommandAndArgs = ({
 
 const DEFAULT_TAIL_SIZE = 100
 
-const scripts = {
+const scripts = (command: string = 'kubectl') => ({
   searchPodsByLabel: (label: string, namespace: string): ICommandAndArgs => ({
-    command: 'kubectl',
+    command,
     args: ['get', 'pod', '-l', `app="${label}"`, '-o', 'json', '-n', namespace],
   }),
   forward: (podName: string, localPort: number, containerPort: number, namespace: string): ICommandAndArgs => ({
-    command: 'kubectl',
+    command,
     args: ['port-forward', podName, `"${localPort}":"${containerPort}"`, '-n', namespace],
   }),
   logs: (podName: string, namespace: string): ICommandAndArgs => ({
-    command: 'kubectl',
+    command,
     args: ['logs', podName, '-n', namespace, '-f', '--tail', `${DEFAULT_TAIL_SIZE}`],
   }),
-}
+  version: (): ICommandAndArgs => ({
+    command,
+    args: ['version', '-o', 'json'],
+  }),
+})
 
 const execAndParseJson = <T>(commandAndArgs: ICommandAndArgs): Promise<T> => exec(joinCommandAndArgs(commandAndArgs))
   .then((result) => result.stdout)
@@ -44,21 +58,26 @@ const spawnCommandAndArgs = (commandAndArgs: ICommandAndArgs, options?: SpawnOpt
   options,
 )
 export interface IKubectlService {
-  getPodByLabel: (namespace: string, label: string) => Promise<Nullable<IPod>>
-  streamLogs: (namespace: string, label: string) => ChildProcess
-  portForward: (namespace: string, podName: string, localPort: number, containerPort: number) => ChildProcess
+  getPodByLabel: (bin: string, namespace: string, label: string) => Promise<Nullable<IPod>>
+  streamLogs: (bin: string, namespace: string, label: string) => ChildProcess
+  portForward: (bin: string, namespace: string, podName: string, localPort: number, containerPort: number) => ChildProcess
+  version: (bin: string) => Promise<IKubectlVersion>
 }
 export class KubectlService implements IKubectlService {
-  public getPodByLabel = (namespace: string, label: string): Promise<Nullable<IPod>> => {
-    return execAndParseJson<IResponse>(scripts.searchPodsByLabel(label, namespace))
+  public getPodByLabel = (bin: string, namespace: string, label: string): Promise<Nullable<IPod>> => {
+    return execAndParseJson<IResponse>(scripts(bin).searchPodsByLabel(label, namespace))
     .then((response) => response.items[0])
   }
 
-  public streamLogs = (namespace: string, podName: string): ChildProcess => {
-    return spawnCommandAndArgs(scripts.logs(podName, namespace))
+  public streamLogs = (bin: string, namespace: string, podName: string): ChildProcess => {
+    return spawnCommandAndArgs(scripts(bin).logs(podName, namespace))
   }
 
-  public portForward = (namespace: string, podName: string, localPort: number, containerPort: number): ChildProcess => {
-    return spawnCommandAndArgs(scripts.forward(podName, localPort, containerPort, namespace))
+  public portForward = (bin: string, namespace: string, podName: string, localPort: number, containerPort: number): ChildProcess => {
+    return spawnCommandAndArgs(scripts(bin).forward(podName, localPort, containerPort, namespace))
+  }
+
+  public version = (bin: string): Promise<IKubectlVersion> => {
+    return execAndParseJson(scripts(bin).version())
   }
 }
