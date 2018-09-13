@@ -57,27 +57,31 @@ const spawnCommandAndArgs = (commandAndArgs: ICommandAndArgs, options?: SpawnOpt
   commandAndArgs.args,
   options,
 )
+
+export interface IOptions {
+  bin?: string
+}
 export interface IKubectlService {
-  getPodByLabel: (bin: string, namespace: string, label: string) => Promise<Nullable<IPod>>
-  streamLogs: (bin: string, namespace: string, label: string) => ChildProcess
-  portForward: (bin: string, namespace: string, podName: string, localPort: number, containerPort: number) => ChildProcess
-  version: (bin: string) => Promise<IKubectlVersion>
+  getPodByLabel: (namespace: string, label: string, options?: IOptions) => Promise<Nullable<IPod>>
+  streamLogs: (namespace: string, label: string, options?: IOptions) => ChildProcess
+  portForward: (namespace: string, podName: string, localPort: number, containerPort: number, options?: IOptions) => ChildProcess
+  version: () => Promise<IKubectlVersion>
 }
 export class KubectlService implements IKubectlService {
-  public getPodByLabel = (bin: string, namespace: string, label: string): Promise<Nullable<IPod>> => {
-    return execAndParseJson<IResponse>(scripts(bin).searchPodsByLabel(label, namespace))
+  public getPodByLabel = (namespace: string, label: string, options: IOptions = {}): Promise<Nullable<IPod>> => {
+    return execAndParseJson<IResponse>(scripts(options.bin).searchPodsByLabel(label, namespace))
     .then((response) => response.items[0])
   }
 
-  public streamLogs = (bin: string, namespace: string, podName: string): ChildProcess => {
-    return spawnCommandAndArgs(scripts(bin).logs(podName, namespace))
+  public streamLogs = (namespace: string, podName: string, options: IOptions = {}): ChildProcess => {
+    return spawnCommandAndArgs(scripts(options.bin).logs(podName, namespace))
   }
 
-  public portForward = (bin: string, namespace: string, podName: string, localPort: number, containerPort: number): ChildProcess => {
-    return spawnCommandAndArgs(scripts(bin).forward(podName, localPort, containerPort, namespace))
+  public portForward = (namespace: string, podName: string, localPort: number, containerPort: number, options: IOptions = {}): ChildProcess => {
+    return spawnCommandAndArgs(scripts(options.bin).forward(podName, localPort, containerPort, namespace))
   }
 
-  public version = (bin: string): Promise<IKubectlVersion> => {
-    return execAndParseJson(scripts(bin).version())
+  public version = (options: IOptions = {}): Promise<IKubectlVersion> => {
+    return execAndParseJson(scripts(options.bin).version())
   }
 }
