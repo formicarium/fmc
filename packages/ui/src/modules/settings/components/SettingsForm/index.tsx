@@ -1,13 +1,13 @@
 import React from 'react'
-import { Form as SemanticForm, Button, Segment, Message } from 'semantic-ui-react';
+import { Form as SemanticForm, Button, Segment, Message, Loader } from 'semantic-ui-react';
 import { Form, Field } from 'react-final-form'
-import { IKubectlVersion, IMinMajor } from '@formicarium/common'
+import { IKubectlVersion, IMinMajor, sleep } from '@formicarium/common'
 import compareVersions from 'compare-versions'
-import { TextInput } from '~/modules/common/components/TextInput';
 import _ from 'lodash'
 import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
 import { DisplayError } from '~/modules/common/components/DisplayError';
 import { DisplayLoader } from '~/modules/common/components/DisplayLoader';
+import { DebouncedTextInput } from '~/modules/common/components/DebouncedTextInput';
 
 const validate = () => {
   return {}
@@ -54,30 +54,36 @@ export const SettingsForm: React.SFC<ISettingsForm> = ({
       onSubmit={onSubmit}
       initialValues={initialValues}
       validate={validate}
-      render={({handleSubmit, submitting, invalid, validating, errors, values, valid }) => {
+      render={({handleSubmit, submitting, invalid, validating, errors, values, valid, pristine, touched }) => {
         return (
-          <SemanticForm onSubmit={handleSubmit} success={valid} error={!!errors}>
+          <SemanticForm
+            onSubmit={handleSubmit}
+            success={valid && !validating}
+            error={!!errors && !validating}>
             <SemanticForm.Field disabled={submitting}>
               <label>Kubectl bin</label>
               <Field
                 validate={validateKubectlBin(getVersionForKubectlBin)}
                 name='kubectlBin'
-                component={TextInput}
+                component={DebouncedTextInput}
                 placeholder='Name'
               />
+              {(touched && validating) && <Message>
+                Loading...
+              </Message>}
               <Message error>
                 {errors.kubectlBin}
               </Message>
               <PromiseManager
-              promise={() => getVersionForKubectlBin(values.kubectlBin)}
-              ErrorComponent={DisplayError}
-              LoadingComponent={DisplayLoader}>
-              {({ data }) => (
-                <Message success>
-                  {minMajorToSemanticString(data.clientVersion)}
-                </Message>
-              )}
-            </PromiseManager>
+                promise={() => getVersionForKubectlBin(values.kubectlBin)}
+                ErrorComponent={DisplayError}
+                LoadingComponent={DisplayLoader}>
+                {({ data }) => (
+                  <Message success>
+                    Valid bin: <b>{minMajorToSemanticString(data.clientVersion)}</b>
+                  </Message>
+                )}
+              </PromiseManager>
             </SemanticForm.Field>
             <div style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Button

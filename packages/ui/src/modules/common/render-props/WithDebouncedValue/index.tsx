@@ -4,7 +4,8 @@ import _ from 'lodash'
 export interface IDebouncedTextInputProps {
   value: string,
   onChange: (value: string) => void
-  render: (onChange: IDebouncedTextInputProps['onChange'], value: string) => JSX.Element
+  render?: (onChange: IDebouncedTextInputProps['onChange'], value: string) => JSX.Element
+  children?: (onChange: IDebouncedTextInputProps['onChange'], value: string) => JSX.Element
 }
 
 export interface IDebouncedTextInputState {
@@ -27,7 +28,7 @@ export class WithDebouncedValue extends React.Component<IDebouncedTextInputProps
     }
   }
 
-  private debouncedOnChangeProps = _.debounce(this.props.onChange, 500)
+  private debouncedOnChangeProps = _.debounce(this.props.onChange, 300)
 
   private handleLocalChange = (value: string) => {
     this.setState({
@@ -42,7 +43,10 @@ export class WithDebouncedValue extends React.Component<IDebouncedTextInputProps
     } = this.state
     const {
       render,
+      children
     } = this.props
-    return render(this.handleLocalChange, onHoldValue)
+
+    const renderFn = render || children
+    return renderFn(this.handleLocalChange, onHoldValue)
   }
 }
