@@ -6,6 +6,8 @@ import * as os from 'os'
 import { WithFMCSystem } from '~/modules/common/components/WithFMCSystem';
 import { IApplicationDefinition } from '@formicarium/common';
 import { ISystem } from '~/system';
+import { DisplayError } from '~/modules/common/components/DisplayError';
+import { DisplayLoader } from '~/modules/common/components/DisplayLoader';
 
 export class DisplaySetupContainer extends React.Component {
 
@@ -20,8 +22,8 @@ export class DisplaySetupContainer extends React.Component {
         {(system) => (
           <PromiseManager
             promise={this.readSetupFile(system)}
-            LoadingComponent={() => null}
-            ErrorComponent={() => null}
+            LoadingComponent={DisplayLoader}
+            ErrorComponent={DisplayError}
             >
             {({ data }) => (
               <ObjectInspector
