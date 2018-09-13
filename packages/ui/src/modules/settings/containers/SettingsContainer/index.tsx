@@ -6,14 +6,21 @@ import { ToastService } from '~/modules/common/services/ToastService';
 import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
 import { DisplayLoader } from '~/modules/common/components/DisplayLoader';
 import { DisplayError } from '~/modules/common/components/DisplayError';
+import { IKubectlVersion, Nullable } from '@formicarium/common';
 
 export interface ISettingsContainerState {
   initialValues: Partial<ISettingsFormValue>
+  lastObtainedVersion: Nullable<IKubectlVersion>
 }
 export class SettingsContainer extends React.Component<{}, ISettingsContainerState> {
-  public initialValues = {
-
+  constructor(props: {}) {
+    super(props)
+    this.state = {
+      initialValues: {},
+      lastObtainedVersion: null,
+    }
   }
+
   private handleSubmit = (system: ISystem) => async (values: ISettingsFormValue) => {
     try {
       await system.jsonStorage.set('kubectlBin', values.kubectlBin)
@@ -28,16 +35,21 @@ export class SettingsContainer extends React.Component<{}, ISettingsContainerSta
     (): Promise<Partial<ISettingsFormValue>> =>
       system.jsonStorage.get<string>('kubectlBin').then((kubectlBin) => ({ kubectlBin }))
 
+  private setLastObtainedVersion = (lastObtainedVersion: IKubectlVersion) => this.setState({
+    lastObtainedVersion,
+  })
   public render() {
     return (
       <WithFMCSystem>
         {(system) => (
           <PromiseManager
             promise={this.loadInitialValues(system)}
-            LoadingComponent={DisplayLoader}
+            LoadingComponent={() => null}
             ErrorComponent={DisplayError}>
             {({ data }) => (
               <SettingsForm
+                lastObtainedVersion={this.state.lastObtainedVersion}
+                setLastObtainedVersion={this.setLastObtainedVersion}
                 getVersionForKubectlBin={(bin: string) => system.kubectl.version({ bin })}
                 initialValues={data}
                 onSubmit={this.handleSubmit(system)}

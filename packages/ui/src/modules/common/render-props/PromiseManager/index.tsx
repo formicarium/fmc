@@ -34,11 +34,7 @@ export class PromiseManager<T> extends React.Component<IPromiseManagerProps<T>, 
     }
   }
 
-  private dispatchPromise = async () => {
-    const {
-      promise,
-    } = this.props
-
+  private dispatchPromise = async (promise: () => Promise<T>) => {
     try {
       this.setState({
         loading: true,
@@ -61,16 +57,23 @@ export class PromiseManager<T> extends React.Component<IPromiseManagerProps<T>, 
       }
     }
   }
+
+  // public componentWillReceiveProps(nextProps: IPromiseManagerProps<T>) {
+  //   if (nextProps.promise !== this.props.promise) {
+  //     this.dispatchPromise(nextProps.promise)
+  //   }
+  // }
+
   public componentDidMount() {
     this.mounted = true
-    this.dispatchPromise()
+    this.dispatchPromise(this.props.promise)
   }
 
   public componentWillUnmount() {
     this.mounted = false
   }
   private retry = () => {
-    this.dispatchPromise()
+    this.dispatchPromise(this.props.promise)
   }
 
   private patchData = (data: T) => this.setState({
