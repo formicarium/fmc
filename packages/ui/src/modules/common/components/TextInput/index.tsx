@@ -10,7 +10,7 @@ export const TextInput: React.SFC<FieldRenderProps> = ({
   return (
     <Input
       {...rest}
-      error
+      error={!!meta.error}
       value={input.value}
       onChange={(_, { value }) => input.onChange(value)}
     />
