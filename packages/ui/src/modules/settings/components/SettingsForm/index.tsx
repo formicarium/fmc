@@ -34,43 +34,47 @@ export const SettingsForm: React.SFC<ISettingsForm> = ({
       onSubmit={onSubmit}
       initialValues={initialValues}
       validate={validate}
-      render={({handleSubmit, submitting, invalid, validating, errors, values, valid, pristine, touched }) => {
-        return (
-          <SemanticForm
-            onSubmit={handleSubmit}
-            success={valid && !validating}
-            error={!!errors && !validating}>
-            <SemanticForm.Field disabled={submitting}>
-              <label>Kubectl bin</label>
-              <Field
-                validate={validateKubectlBin(getVersionForKubectlBin, lastObtainedVersion, setLastObtainedVersion)}
-                name='kubectlBin'
-                component={DebouncedTextInput}
-                placeholder='Name'
-              />
-              {(touched && validating) && <Message>
-                Loading...
-              </Message>}
-              <Message error>
-                {errors.kubectlBin}
+      render={({handleSubmit, submitting, invalid, validating, errors, valid, touched }) => (
+        <SemanticForm
+          onSubmit={handleSubmit}
+          success={valid && !validating}
+          error={!!errors && !validating}>
+          <SemanticForm.Field disabled={submitting}>
+            <label>Kubectl bin</label>
+            <Field
+              name='kubectlBin'
+              component={DebouncedTextInput}
+              validate={validateKubectlBin(getVersionForKubectlBin, lastObtainedVersion, setLastObtainedVersion)}
+              placeholder='Name'
+            />
+            {/* Loading */}
+            {(touched && validating) && (
+              <Message>
+                Checking bin...
               </Message>
-              <Message success>
-                {lastObtainedVersion && minMajorToSemanticString(lastObtainedVersion.clientVersion)}
-              </Message>
-            </SemanticForm.Field>
-            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-              <Button
-                type='submit'
-                color='purple'
-                loading={submitting || validating}
-                disabled={submitting || invalid}
-                basic >
-                Save
-              </Button>
-            </div>
-          </SemanticForm>
-        )
-      }}
+            )}
+            {/* Erorr */}
+            <Message error>
+              {errors.kubectlBin}
+            </Message>
+            {/* Success */}
+            <Message success>
+              {lastObtainedVersion && minMajorToSemanticString(lastObtainedVersion.clientVersion)}
+            </Message>
+          </SemanticForm.Field>
+          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+            <Button
+              type='submit'
+              color='purple'
+              loading={submitting || validating}
+              disabled={submitting || invalid || validating}
+              basic
+            >
+              Save
+            </Button>
+          </div>
+        </SemanticForm>
+      )}
     />
   </Segment>
 )
