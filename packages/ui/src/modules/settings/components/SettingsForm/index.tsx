@@ -1,7 +1,7 @@
 import React from 'react'
-import { Form as SemanticForm, Button, Segment, Message, Loader } from 'semantic-ui-react';
+import { Form as SemanticForm, Button, Segment, Message } from 'semantic-ui-react';
 import { Form, Field } from 'react-final-form'
-import { IKubectlVersion, IMinMajor, sleep } from '@formicarium/common'
+import { IKubectlVersion, IMinMajor } from '@formicarium/common'
 import compareVersions from 'compare-versions'
 import _ from 'lodash'
 import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
