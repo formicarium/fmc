@@ -20,6 +20,8 @@ import {
   httpClient,
   KubectlService,
   IKubectlService,
+  ElectronJsonStorage,
+  IJSONStorage,
 } from '@formicarium/common'
 
 export interface ISystem {
@@ -34,6 +36,7 @@ export interface ISystem {
   httpClient: IHttpClient
   filesService: IFilesService
   kubectl: IKubectlService
+  jsonStorage: IJSONStorage,
 }
 
 export const getSystem = async (): Promise<ISystem> => {
@@ -50,7 +53,7 @@ export const getSystem = async (): Promise<ISystem> => {
   const stingerService = new StingerService(httpClient, localDB)
   const filesService = new FilesService()
   const kubectl = new KubectlService()
-
+  const jsonStorage = new ElectronJsonStorage()
   return {
     configService,
     soilService,
@@ -63,5 +66,6 @@ export const getSystem = async (): Promise<ISystem> => {
     httpClient,
     filesService,
     kubectl,
+    jsonStorage,
   }
 }
