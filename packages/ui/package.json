@@ -17,6 +17,8 @@
     "apollo-link-error": "^1.1.0",
     "apollo-link-http": "^1.5.4",
     "apollo-link-state": "^0.4.1",
+    "compare-versions": "^3.4.0",
+    "electron-json-storage": "^4.1.2",
     "final-form": "^4.10.0",
     "final-form-arrays": "^1.1.0",
     "graphql": "^0.13.2",
@@ -58,6 +60,8 @@
     "serve:electron": "node electron/bundler.js"
   },
   "devDependencies": {
+    "@types/compare-versions": "^3.0.0",
+    "@types/electron-json-storage": "^4.0.0",
     "@types/history": "^4.7.0",
     "@types/lodash": "^4.14.116",
     "@types/moment": "^2.13.0",

@@ -5,6 +5,7 @@ import { NewDevspacePage } from '~/modules/devspace/pages/NewDevspace';
 import { Switch, Route } from 'react-router';
 import { Dashboard } from '~/modules/tracing/components/Dashboard';
 import { SyncDashboard } from '~/modules/sync/components/SyncDashboard';
+import { SettingsContainer } from '~/modules/settings/containers/SettingsContainer';
 
 export const Routes: React.SFC = () => (
   <Switch>
@@ -13,5 +14,6 @@ export const Routes: React.SFC = () => (
     <Route path='/my-devspace' component={DevspaceDetailPage}/>
     <Route path='/tracing' component={Dashboard}/>
     <Route path='/sync' component={SyncDashboard}/>
+    <Route path='/settings' component={SettingsContainer}/>
   </Switch>
 )

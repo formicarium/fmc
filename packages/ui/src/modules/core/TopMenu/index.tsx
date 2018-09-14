@@ -40,6 +40,11 @@ export const TopMenuInner: React.SFC<RouteComponentProps<{}>> = ({
       active={history.location.pathname === '/sync'}
       onClick={() => history.push('/sync')}
     />
+    <Menu.Item
+      name='Settings'
+      active={history.location.pathname === '/settings'}
+      onClick={() => history.push('/settings')}
+    />
   </StyledMenu>
 )
 

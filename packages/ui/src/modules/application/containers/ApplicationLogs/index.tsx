@@ -35,12 +35,14 @@ export class ApplicationLogsInner extends React.Component<ISystemProps & IApplic
       namespace,
       applicationName,
     } = this.props
-    const pod = await system.kubectl.getPodByLabel(namespace, applicationName)
+    const kubectlBin = await system.jsonStorage.get<string>('kubectlBin')
+
+    const pod = await system.kubectl.getPodByLabel(namespace, applicationName, {bin: kubectlBin})
     this.setState({
       loading: false,
     })
     const podName = pod.metadata.name
-    const childProcess = system.kubectl.streamLogs(namespace, podName)
+    const childProcess = system.kubectl.streamLogs(namespace, podName, {bin: kubectlBin})
     this.childProcess = childProcess
     childProcess.stdout.on('data', (data) => {
       this.setState((state) => ({
