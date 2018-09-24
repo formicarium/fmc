@@ -20,9 +20,9 @@ import {
   httpClient,
   KubectlService,
   IKubectlService,
-  ElectronJsonStorage,
   IJSONStorage,
 } from '@formicarium/common'
+import { ElectronJsonStorage } from '~/services/json-storage.electron';
 
 export interface ISystem {
   configService: IConfigService
