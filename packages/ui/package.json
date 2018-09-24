@@ -1,10 +1,26 @@
 {
   "name": "@formicarium/ui",
+  "description": "An UI to operate on Formicarium",
+  "author": {
+    "name": "Rafael Ribeiro Correia",
+    "email": "rafael.correia.poli@gmail.com"
+  },
+  "build": {
+    "productName": "Formicarium",
+    "appId": "io.formicarium.ui",
+    "mac": {
+      "category": "your.app.category.type"
+    },
+    "files": [
+      "main.js",
+      "build/*"
+    ]
+  },
   "version": "1.0.3",
   "publishConfig": {
     "access": "public"
   },
-  "main": "electron/main.js",
+  "main": "main.js",
   "source": true,
   "license": "MIT",
   "dependencies": {
@@ -26,6 +42,7 @@
     "lodash": "^4.17.10",
     "memoize-one": "^4.0.2",
     "moment": "^2.22.2",
+    "parcel-bundler": "^1.9.7",
     "ramda": "^0.25.0",
     "react": "^16.4.2",
     "react-apollo": "^2.1.11",
@@ -51,13 +68,17 @@
   },
   "scripts": {
     "clean": "rimraf lib && rimraf build",
-    "build": "tsc -p .",
+    "build:ts": "tsc -p .",
+    "build": "parcel build ./src/index.html -d build/ --public-url ./ --target electron",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "dev:electron": "ELECTRON_START_URL=http://localhost:1235 electron .",
+    "start:electron": "electron .",
     "serve:browser": "parcel src/index.html -d build/ --target browser --open",
-    "serve:electron": "node electron/bundler.js"
+    "serve:electron": "node electron/bundler.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "devDependencies": {
     "@types/compare-versions": "^3.0.0",
@@ -73,6 +94,7 @@
     "@types/react-router-dom": "^4.3.0",
     "@types/reselect": "^2.2.0",
     "@types/uuid": "^3.4.4",
+    "electron-builder": "^20.28.4",
     "electron-devtools-installer": "^2.2.4"
   },
   "gitHead": "9febd1b58fefc04f042b39279d8a137915b04427"
