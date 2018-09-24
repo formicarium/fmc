@@ -3,19 +3,20 @@ const electron = require('electron');
 const {app, BrowserWindow} = electron;
 const path = require('path');
 const url = require('url');
-const {default: installExtension, REACT_DEVELOPER_TOOLS, APOLLO_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 
-const installAndLog = (extension) => installExtension(extension)
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log('An error occurred: ', err))
+// const {default: installExtension, REACT_DEVELOPER_TOOLS, APOLLO_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+
+// const installAndLog = (extension) => installExtension(extension)
+//     .then((name) => console.log(`Added Extension:  ${name}`))
+//     .catch((err) => console.log('An error occurred: ', err))
 
 
 // To avoid being garbage collected
 let mainWindow;
 
 app.on('ready', () => {
-  installAndLog(REACT_DEVELOPER_TOOLS)
-  .then(() => installAndLog(APOLLO_DEVELOPER_TOOLS))
+  // installAndLog(REACT_DEVELOPER_TOOLS)
+  // .then(() => installAndLog(APOLLO_DEVELOPER_TOOLS))
 
   mainWindow = new BrowserWindow({
     width: 800, height: 600,
@@ -25,8 +26,7 @@ app.on('ready', () => {
   });
 
   const startUrl = process.env.ELECTRON_START_URL || url.format({
-    // pathname: path.join(__dirname, './build/index.html'),
-    pathname: path.join(__dirname, './src/index.html'),
+    pathname: path.join(__dirname, './build/index.html'),
     protocol: 'file:',
     slashes: true
   });
