@@ -1,4 +1,4 @@
-import { IJSONStorage } from './json-storage'
+import { IJSONStorage } from '@formicarium/common'
 import * as storage from 'electron-json-storage'
 
 export class ElectronJsonStorage implements IJSONStorage {
