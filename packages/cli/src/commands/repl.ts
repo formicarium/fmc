@@ -30,7 +30,6 @@ export default class Repl extends FMCCommand {
 
   private connect(host: string) {
     if (!host.startsWith("nrepl")) {
-      //console.log(`||${host.slice(0, 5)}||`)
       console.warn("Trying to connect on a non-repl interface: " + host)
     }
     spawn('lein', ['repl', ':connect', host], {
