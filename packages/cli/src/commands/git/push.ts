@@ -17,10 +17,10 @@ const baseRegexTest = (x: string) => !/\.git|\.fmcgit/.test(x)
 const clearPath = R.compose(clearSlash, removeSubpathFromPath)
 
 export default class GitPush extends FMCCommand {
-  public static description = 'Configures local syncthing and hive'
+  public static description = 'Configures local fmcgit and hive'
 
   public static examples = [
-    `$ fmc sync:push`,
+    `$ fmc git:push`,
   ]
 
   public static flags = {

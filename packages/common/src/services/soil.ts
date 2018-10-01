@@ -1,4 +1,4 @@
-import { IDevspace, IApplicationDefinition, IApplicationLinks } from '../model/devspace'
+import {IDevspace, IApplicationDefinition, IApplicationLinks, IApplication} from '../model/devspace'
 import { IHttpClient } from '../components/http-client'
 import { Nullable } from '../utils/types'
 import * as R from 'ramda'
@@ -45,6 +45,7 @@ export interface ISoilService {
   createDevspace: (devspaceName: string, setup: Nullable<IApplicationDefinition[]>) => Promise<IDevspace>
   getDevspaces: () => Promise<IDevspace[]>
   getDevspace: (name: string) => Promise<IDevspace>
+  getService: (devspace: string, name: string) => Promise<IApplication>
   deployService: (
     devspace: string, name: string,
     applicationDefinition: Nullable<IApplicationDefinition>,
@@ -90,6 +91,14 @@ export class SoilService implements ISoilService {
     return this.httpClient.request<IDevspace>({
       method: 'get',
       url: `/api/devspaces/${name}`,
+      baseURL: this.url,
+    }).then((response) => response.data)
+  }
+
+  public getService = async (devspace: string, name: string): Promise<IApplication> => {
+    return this.httpClient.request<IApplication>({
+      method: 'get',
+      url: `/api/devspaces/${devspace}/services/${name}`,
       baseURL: this.url,
     }).then((response) => response.data)
   }
