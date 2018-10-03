@@ -19,6 +19,5 @@ export const DebouncedTextInput: React.SFC<FieldRenderProps> = ({
         />
       )}
     </WithDebouncedValue>
-
   )
 }
