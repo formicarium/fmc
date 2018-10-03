@@ -4,20 +4,20 @@ const {app, BrowserWindow} = electron;
 const path = require('path');
 const url = require('url');
 
-// const {default: installExtension, REACT_DEVELOPER_TOOLS, APOLLO_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+const {default: installExtension, REACT_DEVELOPER_TOOLS, APOLLO_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 
-// const installAndLog = (extension) => installExtension(extension)
-//     .then((name) => console.log(`Added Extension:  ${name}`))
-//     .catch((err) => console.log('An error occurred: ', err))
+const installAndLog = (extension) => installExtension(extension)
+    .then((name) => console.log(`Added Extension:  ${name}`))
+    .catch((err) => console.log('An error occurred: ', err))
 
 
 // To avoid being garbage collected
 let mainWindow;
 
 app.on('ready', () => {
-  // installAndLog(REACT_DEVELOPER_TOOLS)
-  // .then(() => installAndLog(APOLLO_DEVELOPER_TOOLS))
-
+  installAndLog(REACT_DEVELOPER_TOOLS)
+  .then(() => installAndLog(APOLLO_DEVELOPER_TOOLS))
+  
   mainWindow = new BrowserWindow({
     width: 800, height: 600,
     webPreferences: {
@@ -39,6 +39,8 @@ app.on('ready', () => {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+  mainWindow.webContents.openDevTools();
 });
 
 // Quit when all windows are closed.
