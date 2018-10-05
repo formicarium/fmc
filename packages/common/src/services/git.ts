@@ -8,6 +8,7 @@ type SimpleGitGetter = (basePath?: string) => gitP.SimpleGit
 
 const FMC_GIT_AUTHOR = 'formigao'
 const FMC_GIT_EMAIL = 'fmc@example.com'
+const SKIP_TOKEN = '[skip-pull]'
 
 export interface IGitService {
   addRemote: (basePath: string, name: string, url: string) => Promise<any>
@@ -16,7 +17,7 @@ export interface IGitService {
   removeRemote: (basePath: string, remoteName: string) => Promise<void>
   checkIfRepo: (basePath: string) => Promise<boolean>
   gitAddAll: (basePath: string) => Promise<void>
-  gitCommit: (basePath: string) => Promise<gitP.CommitSummary>
+  gitCommit: (basePath: string, skipPull?: boolean) => Promise<gitP.CommitSummary>
   createMirrorRepo: (basePath: string) => Promise<void>
   alreadyHasMirrorRepo: (basePath: string) => Promise<boolean>
 }
@@ -58,7 +59,14 @@ export class GitService {
     return this.getGit(basePath).checkIsRepo()
   }
 
-  private getCommitMessage = () => moment().format('DD/MM/YYYY HH:mm:ss')
+  private getCommitMessage = (skip?: boolean) => {
+    const dateString = moment().format('DD/MM/YYYY HH:mm:ss')
+    if (skip) {
+      return `${dateString} ${SKIP_TOKEN}`
+    }
+
+    return `${dateString}`
+  }
 
   private getMirrorGitRepoPath = (basePath: string) => path.join(basePath, GitService.MIRROR_GIT_FOLDER)
   private getExcludeFilePath = (basePath: string, gitFolder: string) => path.join(basePath, gitFolder, 'info', 'exclude')
@@ -67,10 +75,12 @@ export class GitService {
     return this.getGit(basePath).add(['.'])
   }
 
-  public gitCommit = async (basePath: string): Promise<gitP.CommitSummary> => {
-    return this.getGit(basePath).commit(this.getCommitMessage(), undefined, { '--allow-empty': true,
-                                                                              '--author': `${FMC_GIT_AUTHOR} <${FMC_GIT_EMAIL}>`})
-
+  public gitCommit = async (basePath: string, skipPull?: boolean): Promise<gitP.CommitSummary> => {
+    return this.getGit(basePath)
+      .commit(this.getCommitMessage(skipPull), undefined, {
+        '--allow-empty': true,
+        '--author': `${FMC_GIT_AUTHOR} <${FMC_GIT_EMAIL}>`,
+      })
   }
 
   private hasAlreadyExcluded = (lines: string[]) => !!lines.find((line) => line === GitService.MIRROR_GIT_FOLDER)
@@ -96,7 +106,7 @@ export class GitService {
     await this.safelyAddExcludeToGit(basePath, GitService.ORIGINAL_GIT_FOLDER)
     await this.safelyAddExcludeToGit(basePath, GitService.MIRROR_GIT_FOLDER)
     await this.gitAddAll(basePath)
-    await this.gitCommit(basePath)
+    await this.gitCommit(basePath, true)
   }
 
   public alreadyHasMirrorRepo = async (basePath: string): Promise<boolean> => fs.pathExists(this.getMirrorGitRepoPath(basePath))
