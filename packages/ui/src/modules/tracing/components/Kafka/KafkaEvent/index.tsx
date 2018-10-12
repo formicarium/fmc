@@ -6,10 +6,11 @@ import { Row } from '~/modules/common/components/Row';
 import { Header } from '~/modules/common/Header';
 import { DisplayTimestamp } from '~/modules/common/components/DisplayTimestamp';
 import { FadedText } from '~/modules/common/components/FadedText';
+import { SpanDirection } from '~/modules/tracing/graphql/queries/events';
 
 export interface IKafkaEventProps {
   spanId: string,
-  direction: Direction,
+  direction: SpanDirection,
   service: string,
   peerService: string,
   topic: string
