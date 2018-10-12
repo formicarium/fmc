@@ -46,7 +46,7 @@ export const HTTPRequest: React.SFC<IRequestProps> = ({
     <Row spaceBetween centerVertical>
       <Header as='h3' noMargin>
         <DisplayEventType eventType={eventType} style={{marginRight: 20}} />
-        <span style={{fontFamily: 'Courier New', marginRight: 10}}>[{spanId}]</span>
+        {/* <span style={{fontFamily: 'Courier New', marginRight: 10}}>[{spanId}]</span> */}
         <FadedText faded={eventType === SpanType.httpIn}>{eventType === SpanType.httpOut ? service : peerService}</FadedText>
         <FadedText faded> {isResponse(eventType, direction) ? ARROW_LEFT : ARROW_RIGHT} </FadedText>
         <FadedText faded={eventType === SpanType.httpOut}>{eventType === SpanType.httpIn ? service : peerService}</FadedText>

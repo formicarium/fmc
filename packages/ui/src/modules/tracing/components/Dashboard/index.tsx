@@ -9,11 +9,11 @@ import { FilterPalette } from '~/modules/tracing/components/FilterPalette';
 import { Transition, Button, Segment, Dimmer } from 'semantic-ui-react';
 import { HTTPGrid } from '~/modules/tracing/components/HTTP/HTTPGrid';
 import { getHttpPanelRequestsAndResponses } from '~/modules/tracing/selectors/http';
-import { WithMessages } from '~/modules/tracing/render-props/MessageList';
 import { KafkaGrid } from '~/modules/tracing/components/Kafka/KafkaGrid';
 import { IEdge } from '~/modules/tracing/model/graph';
-import { EventType } from '~/modules/tracing/model/event';
 import { getKafkaGrid } from '~/modules/tracing/selectors/kafka';
+import { WithEvents } from '~/modules/tracing/render-props/WithEvents';
+import { SpanType } from '~/modules/tracing/graphql/queries/events';
 // import { inProducer, outProducer, inConsumer, outConsumer } from '~/modules/tracing/mock/http';
 
 const Wrapper = styled.div`
@@ -55,13 +55,14 @@ const CloseButton = styled(Button)`
   margin: 0px;
 `
 
-const isHttpEdge = (edge: IEdge | null) => edge && (edge.metadata.type === EventType.HTTP || edge.metadata.type === EventType.HTTP_OUT)
-const isKafkaEdge = (edge: IEdge | null) => edge && (edge.metadata.type === EventType.KAFKA)
+const isHttpEdge = (edge: IEdge | null) => edge && (edge.metadata.type === SpanType.httpIn || edge.metadata.type === SpanType.httpOut)
+const isKafkaEdge = (edge: IEdge | null) => edge && (edge.metadata.type === SpanType.kafka)
+
 export class Dashboard extends React.Component {
   public render() {
     return (
-      <WithMessages>
-        {({messages}) => (
+      <WithEvents>
+        {({ events }) => (
           <Subscribe to={[DashboardState]}>
           {(dashboard: DashboardState) => (
             <Wrapper>
@@ -76,7 +77,7 @@ export class Dashboard extends React.Component {
                     <HTTPGrid
                     {...getHttpPanelRequestsAndResponses({
                       dashboardState: dashboard.state,
-                      messages,
+                      events,
                     })}
                   />
                   )}
@@ -84,7 +85,7 @@ export class Dashboard extends React.Component {
                     <KafkaGrid
                       {...getKafkaGrid({
                         dashboardState: dashboard.state,
-                        messages,
+                        events,
                       })}
                     />
                   )}
@@ -102,7 +103,7 @@ export class Dashboard extends React.Component {
           )}
           </Subscribe>
         )}
-      </WithMessages>
+      </WithEvents>
     )
   }
 }

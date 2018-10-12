@@ -4,7 +4,6 @@ import { ISystem } from '~/system';
 import { ISettingsFormValue, SettingsForm } from '~/modules/settings/components/SettingsForm';
 import { ToastService } from '~/modules/common/services/ToastService';
 import { PromiseManager } from '~/modules/common/render-props/PromiseManager';
-import { DisplayLoader } from '~/modules/common/components/DisplayLoader';
 import { DisplayError } from '~/modules/common/components/DisplayError';
 import { IKubectlVersion, Nullable } from '@formicarium/common';
 

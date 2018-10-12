@@ -1,4 +1,4 @@
-import { EventType, Direction } from '~/modules/tracing/model/event';
+import { SpanType, SpanDirection } from '~/modules/tracing/graphql/queries/events';
 
 export enum HTTPVerb {
   POST = 'POST',
@@ -23,5 +23,8 @@ export const statusColorTable: {[key: string ]: string} = {
   5: '#c0392b',
 }
 
-export const isRequest = (eventType: EventType, direction: Direction) => eventType === EventType.HTTP_OUT && direction === Direction.PRODUCER || eventType === EventType.HTTP && direction === Direction.CONSUMER
-export const isResponse = (eventType: EventType, direction: Direction) => !isRequest(eventType, direction)
+export const isRequest = (eventType: SpanType, direction: SpanDirection) =>
+  eventType === SpanType.httpOut && direction === SpanDirection.producer ||
+  eventType === SpanType.httpIn && direction === SpanDirection.consumer
+
+export const isResponse = (eventType: SpanType, direction: SpanDirection) => !isRequest(eventType, direction)

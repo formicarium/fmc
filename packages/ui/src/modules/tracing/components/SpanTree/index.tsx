@@ -3,7 +3,7 @@ import TreeView from 'react-treeview'
 import { IHashMap } from '@formicarium/common';
 import { getTreeNodeForSpan } from '~/modules/tracing/components/SpanTree/logic';
 import memoize from 'memoize-one';
-import { IEvent } from '@formicarium/ui/src/modules/tracing/graphql/queries/events';
+import { IEvent } from '~/modules/tracing/graphql/queries/events';
 
 export interface ITreeNode {
   id: string
