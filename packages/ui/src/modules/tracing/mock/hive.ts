@@ -1,4 +1,4 @@
-import { IEventsQueryResponse } from '@formicarium/ui/src/modules/tracing/graphql/queries/events';
+import { IEventsQueryResponse } from '~/modules/tracing/graphql/queries/events';
 
 export interface IHiveResponseMock {
   data: IEventsQueryResponse
@@ -8,6 +8,7 @@ export const hiveResponseMock: IHiveResponseMock = {
   data: {
     events: [
       {
+        id: '0',
         identity: 'hagen',
         meta: {
           type: 'newEvent',
@@ -39,6 +40,7 @@ export const hiveResponseMock: IHiveResponseMock = {
         }
       },
       {
+        id: '1',
         identity: 'hagen',
         meta: {
           type: 'newEvent',
@@ -70,6 +72,7 @@ export const hiveResponseMock: IHiveResponseMock = {
         }
       },
       {
+        id: '2',
         identity: 'hagen',
         meta: {
           type: 'newEvent',
@@ -101,6 +104,7 @@ export const hiveResponseMock: IHiveResponseMock = {
         }
       },
       {
+        id: '3',
         identity: 'hagen',
         meta: {
           type: 'newEvent',
@@ -132,6 +136,7 @@ export const hiveResponseMock: IHiveResponseMock = {
         }
       },
       {
+        id: '4',
         identity: 'consigliere',
         meta: {
           type: 'newEvent',
@@ -163,6 +168,7 @@ export const hiveResponseMock: IHiveResponseMock = {
         }
       },
       {
+        id: '5',
         identity: 'consigliere',
         meta: {
           type: 'newEvent',
@@ -194,6 +200,7 @@ export const hiveResponseMock: IHiveResponseMock = {
         }
       },
       {
+        id: '8',
         identity: 'hagen',
         meta: {
           type: 'newEvent',
@@ -225,6 +232,7 @@ export const hiveResponseMock: IHiveResponseMock = {
         }
       },
       {
+        id: '9',
         identity: 'hagen',
         meta: {
           type: 'newEvent',
@@ -256,6 +264,7 @@ export const hiveResponseMock: IHiveResponseMock = {
         }
       },
       {
+        id: '10',
         identity: 'corleone',
         meta: {
           type: 'newEvent',
@@ -287,6 +296,7 @@ export const hiveResponseMock: IHiveResponseMock = {
         }
       },
       {
+        id: '11',
         identity: 'corleone',
         meta: {
           type: 'newEvent',
@@ -318,6 +328,7 @@ export const hiveResponseMock: IHiveResponseMock = {
         }
       },
       {
+        id: '12',
         identity: 'hagen',
         meta: {
           type: 'newEvent',
