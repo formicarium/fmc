@@ -57,9 +57,9 @@ export interface IPeer {
 }
 
 export interface ITags {
-  type: string
-  direction: string
-  kind: string
+  type: SpanType
+  direction: SpanDirection
+  kind: SpanKind
   http?: Nullable<IHttpTags>
   kafka?: Nullable<IKafkaTags>
   peer: IPeer
