@@ -23,7 +23,10 @@ export class SettingsContainer extends React.Component<{}, ISettingsContainerSta
 
   private handleSubmit = (system: ISystem) => async (values: ISettingsFormValue) => {
     try {
-      await system.jsonStorage.set('kubectlBin', values.kubectlBin)
+      await Promise.all([
+        system.jsonStorage.set('kubectlBin', values.kubectlBin),
+        system.jsonStorage.set('kubectlContext', values.kubectlContext)
+      ])
 
       ToastService.toastSuccess('📝 Settings saved!')
     } catch (err) {
@@ -33,7 +36,11 @@ export class SettingsContainer extends React.Component<{}, ISettingsContainerSta
 
   private loadInitialValues = (system: ISystem) =>
     (): Promise<Partial<ISettingsFormValue>> =>
-      system.jsonStorage.get<string>('kubectlBin').then((kubectlBin) => ({ kubectlBin }))
+      Promise.all([
+        system.jsonStorage.get<string>('kubectlBin'),
+        system.jsonStorage.get<string>('kubectlContext'),
+      ])
+      .then(([ kubectlBin, kubectlContext ]) => ({ kubectlBin, kubectlContext }))
 
   private setLastObtainedVersion = (lastObtainedVersion: IKubectlVersion) => this.setState({
     lastObtainedVersion,
