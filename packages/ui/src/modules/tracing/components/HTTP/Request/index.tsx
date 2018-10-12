@@ -2,7 +2,6 @@ import React from 'react'
 import { Segment, Divider } from 'semantic-ui-react';
 import { ObjectInspector } from 'react-inspector';
 import { HTTPVerb } from '~/modules/tracing/components/HTTP/HTTPVerb';
-import { EventType, Direction } from '~/modules/tracing/model/event';
 import { Row } from '~/modules/common/components/Row';
 import { Header } from '~/modules/common/Header';
 import { DisplayEventType } from '~/modules/common/components/DisplayEventType';
@@ -48,9 +47,9 @@ export const HTTPRequest: React.SFC<IRequestProps> = ({
       <Header as='h3' noMargin>
         <DisplayEventType eventType={eventType} style={{marginRight: 20}} />
         <span style={{fontFamily: 'Courier New', marginRight: 10}}>[{spanId}]</span>
-        <FadedText faded={eventType === EventType.HTTP}>{eventType === EventType.HTTP_OUT ? service : peerService}</FadedText>
+        <FadedText faded={eventType === SpanType.httpIn}>{eventType === SpanType.httpOut ? service : peerService}</FadedText>
         <FadedText faded> {isResponse(eventType, direction) ? ARROW_LEFT : ARROW_RIGHT} </FadedText>
-        <FadedText faded={eventType === EventType.HTTP_OUT}>{eventType === EventType.HTTP ? service : peerService}</FadedText>
+        <FadedText faded={eventType === SpanType.httpOut}>{eventType === SpanType.httpIn ? service : peerService}</FadedText>
       </Header>
       <DisplayTimestamp timestamp={timestamp} />
     </Row>
