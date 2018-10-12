@@ -1,11 +1,11 @@
 import React from 'react'
-import { WithMessages } from '../../render-props/MessageList';
 import { EventList } from '../../components/EventList';
 import { Subscribe } from 'unstated';
 import { EventListState } from '../../state/EventList';
 import { FilterState } from '../../state/FilterState';
 import { ExplorerState } from '~/modules/tracing/state/ExplorerState';
-import { getFilteredMessagesReselect } from '~/modules/tracing/selectors/messages';
+import { getFilteredEvents } from '~/modules/tracing/selectors/messages';
+import { WithEvents } from '~/modules/tracing/render-props/WithEvents';
 
 // const getActiveStartIndex = ({ state }: EventListState, messages: IMessage[]) => {
 //   if (state.cumulative || state.showAll) {
@@ -22,25 +22,28 @@ import { getFilteredMessagesReselect } from '~/modules/tracing/selectors/message
 // }
 
 export const EventListContainer = () => (
-  <WithMessages>
-    {({ messages }) => (
+  <WithEvents>
+    {({ events }) => (
       <Subscribe to={[EventListState, FilterState, ExplorerState]}>
         {(eventListState: EventListState, filter: FilterState, explorer: ExplorerState) => {
-          const filteredMessages = getFilteredMessagesReselect({
-            messages,
+          console.log(events)
+          const filteredEvents = getFilteredEvents({
+            events,
             filterState: filter.state,
             explorerState: explorer.state,
           })
+
+          console.log(filteredEvents)
           return (
             <EventList
-              events={filteredMessages}
+              events={filteredEvents}
               activeStartIndex={0}
-              activeEndIndex={filteredMessages.length}
+              activeEndIndex={filteredEvents.length}
               onClickRow={(message, index) => eventListState.setSelectedIndex(index)}
             />
           )
         }}
       </Subscribe>
     )}
-  </WithMessages>
+  </WithEvents>
 )
