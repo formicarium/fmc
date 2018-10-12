@@ -1,20 +1,28 @@
-import { IEventMessage, IHttpPayload } from '~/modules/tracing/model/event';
 import { IRequestProps } from '~/modules/tracing/components/HTTP/Request';
+import { IEvent } from '~/modules/tracing/graphql/queries/events';
+import { getSpanIdFromEvent, getDirectionFromEvent, getTypeFromEvent, getReporterId, getTimestampFromEvent } from '~/modules/tracing/logic/event';
+import { HTTPVerb } from '~/modules/tracing/components/HTTP/HTTPVerb';
 
-export const httpEventToRequest = (event: IEventMessage, peerService: string): IRequestProps => {
-  const payload = event.payload as IHttpPayload
+export const httpEventToRequest = (event: IEvent, peerService: string): IRequestProps => {
+  const {
+    statusCode,
+    method,
+    url,
+  } = event.payload.tags.http
+  const headers = {} // TODO
+  const body = {}    // TODO
 
   return {
-    spanId: event.meta.spanId,
-    direction: payload.direction,
-    status: payload.data.request.status,
-    eventType: payload.type,
-    service: event.meta.service,
-    verb: payload.data.request.verb,
+    spanId: getSpanIdFromEvent(event),
+    direction: getDirectionFromEvent(event),
+    status: statusCode,
+    eventType: getTypeFromEvent(event),
+    service: getReporterId(event),
+    verb: method as HTTPVerb,
     peerService,
-    endpoint: payload.data.endpoint.uri,
-    headers: payload.data.request.headers,
-    body: payload.data.request.body,
-    timestamp: event.meta.timestamp,
+    endpoint: url,
+    headers,
+    body,
+    timestamp: getTimestampFromEvent(event),
   }
 }
