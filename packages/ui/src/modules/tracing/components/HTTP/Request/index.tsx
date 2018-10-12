@@ -11,11 +11,12 @@ import { DisplayEndpoint } from '~/modules/tracing/components/HTTP/DisplayEndpoi
 import { FadedText } from '~/modules/common/components/FadedText';
 import { isRequest, isResponse } from '~/modules/tracing/components/HTTP/logic';
 import { DisplayHTTPStatus } from '~/modules/tracing/components/HTTP/HTTPStatus';
+import { SpanType, SpanDirection } from '~/modules/tracing/graphql/queries/events';
 
 export interface IRequestProps {
   spanId: string,
-  eventType: EventType,
-  direction: Direction,
+  eventType: SpanType,
+  direction: SpanDirection,
   status?: number,
   verb: HTTPVerb,
   service: string,
