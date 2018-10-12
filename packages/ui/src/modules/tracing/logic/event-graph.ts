@@ -1,50 +1,57 @@
 import { IGraphDescription, INode, IEdge } from '~/modules/tracing/model/graph';
-import { IEventMessage, Direction, EventType } from '~/modules/tracing/model/event';
-import * as R from 'ramda'
 import { v4 } from 'uuid'
-const getReporterId = (event: IEventMessage) => event.meta.service
-const getLabel = (event: IEventMessage, index: number) => {
-  const { type, direction } = event.payload
+import { IEvent, SpanDirection, SpanType } from '~/modules/tracing/graphql/queries/events';
+import R from 'ramda'
+
+const getParentIdFromEvent = (event: IEvent): string => R.pathOr('', ['payload', 'context', 'parentId'], event)
+const getSpanIdFromEvent = (event: IEvent): string => R.pathOr('', ['payload', 'context', 'spanId'], event)
+const getDirectionFromEvent = (event: IEvent): SpanDirection => R.pathOr('', ['payload', 'tags', 'direction'], event)
+const getTypeFromEvent = (event: IEvent): SpanType => R.pathOr('', ['payload', 'tags', 'type'], event)
+
+const getReporterId = (event: IEvent) => event.meta.service
+const getLabel = (event: IEvent, index: number) => {
+  const type = getTypeFromEvent(event)
+  const direction = getDirectionFromEvent(event)
 
   let label = '?'
-  if (type === EventType.HTTP && direction === Direction.CONSUMER) {
+  if (type === SpanType.httpIn && direction === SpanDirection.consumer) {
     label = 'HTTP-REQ'
   }
-  if (type === EventType.HTTP && direction === Direction.PRODUCER) {
+  if (type === SpanType.httpIn && direction === SpanDirection.producer) {
     label = 'HTTP-RES'
   }
 
-  if (type === EventType.HTTP_OUT && direction === Direction.PRODUCER) {
+  if (type === SpanType.httpOut && direction === SpanDirection.producer) {
     label = 'HTTP-REQ'
   }
 
-  if (type === EventType.HTTP_OUT && direction === Direction.CONSUMER) {
+  if (type === SpanType.httpOut && direction === SpanDirection.consumer) {
     label = 'HTTP-RES'
   }
 
-  if (type === EventType.KAFKA) {
+  if (type === SpanType.kafka) {
     label = 'KAFKA'
   }
 
   return `${index} - ${label}`
 }
 
-const extractNodeFromEvent = (event: IEventMessage): INode => ({
+const extractNodeFromEvent = (event: IEvent): INode => ({
   id: event.meta.service,
   label: event.meta.service,
 })
 
-export const getNodes = (events: IEventMessage[]) => {
+export const getNodes = (events: IEvent[]) => {
   return R.uniqBy(getReporterId, events)
     .map(extractNodeFromEvent)
 }
 
-const isConsumer = (event: IEventMessage) => event.payload.direction === Direction.CONSUMER
-const isProducer = (event: IEventMessage) => event.payload.direction === Direction.PRODUCER
-const getDashes = (event: IEventMessage): boolean => event.payload.type === EventType.KAFKA
+const isConsumer = (event: IEvent) => getDirectionFromEvent(event) === SpanDirection.consumer
+const isProducer = (event: IEvent) => getDirectionFromEvent(event) === SpanDirection.producer
+const getDashes = (event: IEvent): boolean => getTypeFromEvent(event) === SpanType.kafka
 
-export const getEdges = (events: IEventMessage[]): IEdge[] => {
-  const uniqEvents = R.uniqBy((event) => `${event.meta.spanId}_${event.payload.direction}`, events)
+export const getEdges = (events: IEvent[]): IEdge[] => {
+  const uniqEvents = R.uniqBy((event) => `${getSpanIdFromEvent(event)}_${getDirectionFromEvent(event)}`, events)
   return uniqEvents.reduce((edges, event, i) => {
     let from: string
     let to: string
@@ -53,7 +60,7 @@ export const getEdges = (events: IEventMessage[]): IEdge[] => {
     let newEdges = []
 
     if (isConsumer(event)) {
-      const childProducers = uniqEvents.filter((ev) => !isConsumer(ev) && ev.meta.parentId === event.meta.spanId)
+      const childProducers = uniqEvents.filter((ev) => !isConsumer(ev) && getParentIdFromEvent(event) === getSpanIdFromEvent(event))
       if (!childProducers.length) { return edges }
       to = getReporterId(event)
       label = getLabel(event, i)
@@ -73,14 +80,14 @@ export const getEdges = (events: IEventMessage[]): IEdge[] => {
           metadata: {
             fromEvent: prod.id,
             toEvent: event.id,
-            type: event.payload.type
+            type: getTypeFromEvent(event),
           }
         } as IEdge]
       }, [])
     }
 
     if (isProducer(event)) {
-      const childConsumer = uniqEvents.filter((ev) => !isProducer(ev) && ev.meta.parentId === event.meta.spanId)
+      const childConsumer = uniqEvents.filter((ev) => !isProducer(ev) && getParentIdFromEvent(event) === getSpanIdFromEvent(event))
       if (!childConsumer.length) { return edges }
       from = getReporterId(event)
       label = getLabel(event, i)
@@ -100,7 +107,7 @@ export const getEdges = (events: IEventMessage[]): IEdge[] => {
           metadata: {
             fromEvent: event.id,
             toEvent: cons.id,
-            type: event.payload.type,
+            type: getTypeFromEvent(event),
           }
         } as IEdge]
       }, [])
@@ -112,7 +119,7 @@ export const getEdges = (events: IEventMessage[]): IEdge[] => {
   }, [])
 }
 
-export const getGraphFromEvents = (events: IEventMessage[]): IGraphDescription => ({
+export const getGraphFromEvents = (events: IEvent[]): IGraphDescription => ({
   nodes: getNodes(events),
   edges: getEdges(events),
 })
