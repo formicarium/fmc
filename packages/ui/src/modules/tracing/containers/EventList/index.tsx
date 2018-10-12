@@ -26,14 +26,11 @@ export const EventListContainer = () => (
     {({ events }) => (
       <Subscribe to={[EventListState, FilterState, ExplorerState]}>
         {(eventListState: EventListState, filter: FilterState, explorer: ExplorerState) => {
-          console.log(events)
           const filteredEvents = getFilteredEvents({
             events,
             filterState: filter.state,
             explorerState: explorer.state,
           })
-
-          console.log(filteredEvents)
           return (
             <EventList
               events={filteredEvents}

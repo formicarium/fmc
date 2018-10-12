@@ -22,7 +22,7 @@ export class FilterContainer extends React.Component {
               setSearchRegex={filterState.setSearchRegex}
               searchRegex={filterState.state.searchRegex}
               submitSearch={() => {
-                console.log('submti')
+                console.log('TODO')
               }}
             />
           )}

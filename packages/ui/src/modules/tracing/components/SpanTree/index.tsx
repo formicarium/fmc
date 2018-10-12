@@ -83,8 +83,6 @@ export class SpanTree extends React.Component<ISpanTreeProps> {
 
   public render() {
     const node = this.calculateTree(this.props.events)
-    console.log(this.props.events)
-    console.log(node)
     return (
       <TreeNode
         node={node}
