@@ -71,6 +71,7 @@ export interface IEventPayload {
   tags: ITags
 }
 export interface IEvent {
+  id: string
   identity: string
   meta: IEventMeta
   payload: IEventPayload
@@ -82,6 +83,7 @@ export interface IEventsQueryResponse {
 export const EVENTS_QUERY = gql`
   query eventsQuery {
     events {
+      id
       identity
       meta {
         type
