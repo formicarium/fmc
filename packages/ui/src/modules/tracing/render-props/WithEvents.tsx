@@ -14,12 +14,17 @@ export const WithEvents: React.SFC<IWithEventsProps> = ({
   children
 }) => (
   <Query query={EVENTS_QUERY}>
-    {({ data, error }) => {
+    {({ data, error, loading }) => {
       if (error) {
         return (
           <div>
             Error! {error.toString()}
           </div>
+        )
+      }
+      if (loading) {
+        return (
+          <Loader />
         )
       }
 
