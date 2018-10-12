@@ -3,20 +3,15 @@ import { Dropdown } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { EventType } from '~/modules/tracing/model/event';
 import { SearchBar } from '~/modules/tracing/components/SearchBar';
+import { SpanType } from '~/modules/tracing/graphql/queries/events';
 
-const EVENT_TYPE_OPTIONS = [{
-  key: EventType.KAFKA,
-  value: EventType.KAFKA,
-  text: 'Kafka',
-}, {
-  key: EventType.HTTP,
-  value: EventType.HTTP,
-  text: 'HTTP_IN',
-}, {
-  key: EventType.HTTP_OUT,
-  value: EventType.HTTP_OUT,
-  text: 'HTTP_OUT',
-}]
+const enumToOptions = (obj: any) => Object.keys(obj).map((k) => ({
+  key: k,
+  value: obj[k] as string,
+  text: obj[k] as string,
+}))
+
+const EVENT_TYPE_OPTIONS = enumToOptions(SpanType)
 
 const buildOptionsFromStringArray = (stringArray: string[]) => stringArray.map((str) => ({
   key: str,
