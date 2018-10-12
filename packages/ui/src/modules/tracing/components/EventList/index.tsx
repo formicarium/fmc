@@ -1,14 +1,15 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react'
-import { IMessage, IHttpPayload, IKafkaPayload } from '../../model/event';
+import R from 'ramda'
 import moment from 'moment'
 import styled from 'styled-components';
+import { IEvent } from '~/modules/tracing/graphql/queries/events';
 
 export interface IEventListProps {
-  events: IMessage[]
+  events: IEvent[]
   activeStartIndex: number
   activeEndIndex: number
-  onClickRow: (message: IMessage, index: number) => void
+  onClickRow: (event: IEvent, index: number) => void
 }
 const ROW_HEIGHT = 42
 const HEADER_HEIGHT = 46
@@ -29,6 +30,9 @@ const StyledTableBody = styled(Table.Body)`
 const StyledTableRow = styled(Table.Row)`
   transition: background-color 300ms;
 `
+
+const pathOrEmptyString = R.pathOr('')
+
 export class EventList extends React.Component<IEventListProps> {
   private scrollRef = React.createRef<HTMLDivElement>()
   public componentDidUpdate() {
@@ -62,10 +66,10 @@ export class EventList extends React.Component<IEventListProps> {
                 onClick={() => onClickRow(event, i)}
                 >
                 <Table.Cell>{event.meta.service}</Table.Cell>
-                <Table.Cell>{(event.payload as IHttpPayload | IKafkaPayload).type}</Table.Cell>
-                <Table.Cell>{(event.payload as IHttpPayload | IKafkaPayload).direction}</Table.Cell>
+                <Table.Cell>{pathOrEmptyString(['payload', 'tags', 'type'], event)}</Table.Cell>
+                <Table.Cell>{pathOrEmptyString(['payload', 'tags', 'direction'], event)}</Table.Cell>
                 <Table.Cell>{moment(event.meta.timestamp).format('HH:mm:ss')}</Table.Cell>
-                <Table.Cell>{`${event.meta.spanId}`}</Table.Cell>
+                <Table.Cell>{pathOrEmptyString(['payload', 'context', 'spanId'], event)}</Table.Cell>
               </StyledTableRow>
             ))}
           </StyledTableBody>
