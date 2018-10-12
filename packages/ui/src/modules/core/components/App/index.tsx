@@ -11,6 +11,7 @@ import { SystemProvider } from '../SystemProvider';
 import { Nullable } from '@formicarium/common'
 import { ISystem, getSystem } from '~/system';
 import { SyncState } from '~/modules/sync/state/SyncState';
+import { MockedHive } from '~/modules/core/components/MockedHive';
 
 interface IState {
   system: Nullable<ISystem>
@@ -43,7 +44,8 @@ export class App extends React.Component<{}, IState> {
     return (
       <SystemProvider system={this.state.system}>
         <Provider inject={[new SyncState(this.state.system)]}>
-          <ApolloProvider client={client}>
+          {/* <ApolloProvider client={client}> */}
+          <MockedHive>
             <Subscribe to={[SyncState]}>
               {(syncState: SyncState) => (
                 <BrowserRouter>
@@ -51,7 +53,8 @@ export class App extends React.Component<{}, IState> {
                 </BrowserRouter>
               )}
             </Subscribe>
-          </ApolloProvider>
+          </MockedHive>
+          {/* </ApolloProvider> */}
         </Provider>
       </SystemProvider>
     )
