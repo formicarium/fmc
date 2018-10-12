@@ -2,13 +2,8 @@ import { IGraphDescription, INode, IEdge } from '~/modules/tracing/model/graph';
 import { v4 } from 'uuid'
 import { IEvent, SpanDirection, SpanType } from '~/modules/tracing/graphql/queries/events';
 import R from 'ramda'
+import { getTypeFromEvent, getDirectionFromEvent, getSpanIdFromEvent, getReporterId, getParentIdFromEvent } from '~/modules/tracing/logic/event';
 
-const getParentIdFromEvent = (event: IEvent): string => R.pathOr('', ['payload', 'context', 'parentId'], event)
-const getSpanIdFromEvent = (event: IEvent): string => R.pathOr('', ['payload', 'context', 'spanId'], event)
-const getDirectionFromEvent = (event: IEvent): SpanDirection => R.pathOr('', ['payload', 'tags', 'direction'], event)
-const getTypeFromEvent = (event: IEvent): SpanType => R.pathOr('', ['payload', 'tags', 'type'], event)
-
-const getReporterId = (event: IEvent) => event.meta.service
 const getLabel = (event: IEvent, index: number) => {
   const type = getTypeFromEvent(event)
   const direction = getDirectionFromEvent(event)
@@ -33,7 +28,7 @@ const getLabel = (event: IEvent, index: number) => {
     label = 'KAFKA'
   }
 
-  return `${index} - ${label}`
+  return label
 }
 
 const extractNodeFromEvent = (event: IEvent): INode => ({
@@ -52,6 +47,8 @@ const getDashes = (event: IEvent): boolean => getTypeFromEvent(event) === SpanTy
 
 export const getEdges = (events: IEvent[]): IEdge[] => {
   const uniqEvents = R.uniqBy((event) => `${getSpanIdFromEvent(event)}_${getDirectionFromEvent(event)}`, events)
+
+  console.log({ uniqEvents })
   return uniqEvents.reduce((edges, event, i) => {
     let from: string
     let to: string
@@ -60,7 +57,7 @@ export const getEdges = (events: IEvent[]): IEdge[] => {
     let newEdges = []
 
     if (isConsumer(event)) {
-      const childProducers = uniqEvents.filter((ev) => !isConsumer(ev) && getParentIdFromEvent(event) === getSpanIdFromEvent(event))
+      const childProducers = uniqEvents.filter((ev) => !isConsumer(ev) && getParentIdFromEvent(ev) === getSpanIdFromEvent(event))
       if (!childProducers.length) { return edges }
       to = getReporterId(event)
       label = getLabel(event, i)
@@ -87,7 +84,7 @@ export const getEdges = (events: IEvent[]): IEdge[] => {
     }
 
     if (isProducer(event)) {
-      const childConsumer = uniqEvents.filter((ev) => !isProducer(ev) && getParentIdFromEvent(event) === getSpanIdFromEvent(event))
+      const childConsumer = uniqEvents.filter((ev) => !isProducer(ev) && getParentIdFromEvent(ev) === getSpanIdFromEvent(event))
       if (!childConsumer.length) { return edges }
       from = getReporterId(event)
       label = getLabel(event, i)
