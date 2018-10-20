@@ -1,27 +1,27 @@
 import React from 'react'
-import { WithMessages } from '~/modules/tracing/render-props/MessageList';
 import { ExplorerState } from '~/modules/tracing/state/ExplorerState';
 import { SpanTree } from '~/modules/tracing/components/SpanTree';
 import { Subscribe } from 'unstated';
+import { WithEvents } from '~/modules/tracing/render-props/WithEvents';
 
 export class SpanExplorerContainer extends React.Component {
   public render() {
     return (
-      <WithMessages>
-        {({ messages}) => (
+      <WithEvents>
+        {({ events }) => (
           <Subscribe to={[ExplorerState]}>
           {(explorer: ExplorerState) => (
             <SpanTree
               onOpenNode={explorer.setNodeOpenState}
               onSelectNode={explorer.selectNode}
-              messages={messages}
+              events={events}
               openMap={explorer.state.openNodesMap}
               selectedMap={explorer.state.selectedNodesMap}
             />
           )}
           </Subscribe>
         )}
-      </WithMessages>
+      </WithEvents>
     )
   }
 }

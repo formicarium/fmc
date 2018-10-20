@@ -1,9 +1,9 @@
 import { Container } from 'unstated';
-import { EventType } from '~/modules/tracing/model/event';
+import { SpanType } from '~/modules/tracing/graphql/queries/events';
 
 export interface IFilterState {
   services: string[]
-  eventTypes: EventType[]
+  eventTypes: SpanType[]
   searchRegex: string
 }
 export class FilterState extends Container<IFilterState> {
@@ -19,7 +19,7 @@ export class FilterState extends Container<IFilterState> {
   public setServices = (services: string[]) => this.setState({
     services,
   })
-  public setEventTypes = (eventTypes: EventType[]) => this.setState({
+  public setEventTypes = (eventTypes: SpanType[]) => this.setState({
     eventTypes,
   })
   public setSearchRegex = (searchRegex: string) => this.setState({

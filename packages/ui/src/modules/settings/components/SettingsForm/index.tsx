@@ -12,6 +12,7 @@ const validate = () => {
 
 export interface ISettingsFormValue {
   kubectlBin: string
+  kubectlContext: string
 }
 
 export interface ISettingsForm {
@@ -39,6 +40,14 @@ export const SettingsForm: React.SFC<ISettingsForm> = ({
           onSubmit={handleSubmit}
           success={valid && !validating}
           error={!!errors && !validating}>
+          <SemanticForm.Field disabled={submitting}>
+            <label>Kubectl ctx</label>
+            <Field
+              name='kubectlContext'
+              component={DebouncedTextInput}
+              placeholder='Context'
+            />
+          </SemanticForm.Field>
           <SemanticForm.Field disabled={submitting}>
             <label>Kubectl bin</label>
             <Field

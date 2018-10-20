@@ -85,10 +85,7 @@ export class SyncState extends Container<ISyncState> {
 
     // Create mirror .git
     if (!await gitService.alreadyHasMirrorRepo(folder)) {
-      console.log('creating mirror repo...')
       await gitService.createMirrorRepo(folder)
-    } else {
-      console.log('no need to create')
     }
 
     // Add in mirror .git

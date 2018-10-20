@@ -32,6 +32,8 @@ export class HTTPGrid extends React.Component<IHTTPGridProps> {
       inProducer,
       outConsumer,
     } = this.props
+
+    console.log(this.props)
     return (
       <Grid>
         {/* x:0 y: 0 */}

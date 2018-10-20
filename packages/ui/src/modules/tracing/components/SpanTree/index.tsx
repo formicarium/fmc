@@ -2,8 +2,8 @@ import React, { CSSProperties } from 'react'
 import TreeView from 'react-treeview'
 import { IHashMap } from '@formicarium/common';
 import { getTreeNodeForSpan } from '~/modules/tracing/components/SpanTree/logic';
-import { IEventMessage } from '~/modules/tracing/model/event';
 import memoize from 'memoize-one';
+import { IEvent } from '~/modules/tracing/graphql/queries/events';
 
 export interface ITreeNode {
   id: string
@@ -32,17 +32,6 @@ export interface ILeafViewProps {
   onClick: () => void
   style?: CSSProperties
 }
-
-// const LeafLabelView: React.SFC<ILeafViewProps> = ({
-//   node,
-//   selected,
-//   onClick,
-//   style,
-// }) => (
-//   <span onClick={onClick} style={{ ...style, fontWeight: selected ? 'bold' : 'normal', cursor: 'pointer', display: 'block', fontFamily: 'Open Sans', fontSize: 20}}>
-//     {node.label}
-//   </span>
-// )
 
 export interface INodeViewProps {
   node: ITreeNode
@@ -81,7 +70,7 @@ const TreeNode: React.SFC<INodeViewProps> = ({
 )
 
 export interface ISpanTreeProps {
-  messages: IEventMessage[]
+  events: IEvent[]
   onOpenNode: (node: ITreeNode, open: boolean) => void
   onSelectNode: (node: ITreeNode, selected: boolean) => void;
   openMap: IHashMap<boolean>
@@ -89,13 +78,14 @@ export interface ISpanTreeProps {
 }
 export class SpanTree extends React.Component<ISpanTreeProps> {
   private calculateTree = memoize(
-    (messages: IEventMessage[]) => getTreeNodeForSpan(messages, 'O'),
+    (events: IEvent[]) => getTreeNodeForSpan(events, 'DEFAULT'),
   )
 
   public render() {
+    const node = this.calculateTree(this.props.events)
     return (
       <TreeNode
-        node={this.calculateTree(this.props.messages)}
+        node={node}
         openMap={this.props.openMap}
         selectedMap={this.props.selectedMap}
         onSelectNode={this.props.onSelectNode}

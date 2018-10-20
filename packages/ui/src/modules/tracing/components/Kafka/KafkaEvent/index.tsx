@@ -1,15 +1,15 @@
 import React from 'react'
 import { Segment, Divider } from 'semantic-ui-react';
 import { ObjectInspector } from 'react-inspector';
-import { Direction } from '~/modules/tracing/model/event';
 import { Row } from '~/modules/common/components/Row';
 import { Header } from '~/modules/common/Header';
 import { DisplayTimestamp } from '~/modules/common/components/DisplayTimestamp';
 import { FadedText } from '~/modules/common/components/FadedText';
+import { SpanDirection } from '~/modules/tracing/graphql/queries/events';
 
 export interface IKafkaEventProps {
   spanId: string,
-  direction: Direction,
+  direction: SpanDirection,
   service: string,
   peerService: string,
   topic: string
@@ -32,9 +32,9 @@ export const KafkaEvent: React.SFC<IKafkaEventProps> = ({
     <Row spaceBetween centerVertical>
       <Header as='h3' noMargin>
         <span style={{fontFamily: 'Courier New', marginRight: 10}}>[{spanId}]</span>
-        <FadedText faded={direction === Direction.CONSUMER}>{direction === Direction.PRODUCER ? service : peerService}</FadedText>
+        <FadedText faded={direction === SpanDirection.consumer}>{direction === SpanDirection.producer ? service : peerService}</FadedText>
         <FadedText faded> {ARROW_RIGHT} </FadedText>
-        <FadedText faded={direction === Direction.PRODUCER}>{direction === Direction.PRODUCER ? peerService : service}</FadedText>
+        <FadedText faded={direction === SpanDirection.producer}>{direction === SpanDirection.producer ? peerService : service}</FadedText>
       </Header>
       <DisplayTimestamp timestamp={timestamp} />
     </Row>

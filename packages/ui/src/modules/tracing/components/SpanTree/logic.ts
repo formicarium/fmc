@@ -1,11 +1,11 @@
-import { IEventMessage } from './../../model/event';
 import { ITreeNode } from './index';
+import { IEvent } from '~/modules/tracing/graphql/queries/events';
 
-export const getTreeNodeForSpan = (messages: IEventMessage[], spanId: string): ITreeNode => {
+export const getTreeNodeForSpan = (messages: IEvent[], spanId: string): ITreeNode => {
   const childrenSpans = Array.from(new Set(messages
-    .filter((message) => message.meta.parentId === spanId)
-    .filter((message) => messages.find((m) => m.meta.parentId === message.meta.spanId))
-    .map((x) => x.meta.spanId)))
+    .filter((message) => message.payload.context.parentId === spanId)
+    .filter((message) => messages.find((m) => m.payload.context.parentId === message.payload.context.spanId))
+    .map((x) => x.payload.context.spanId)))
 
   return ({
     id: spanId,

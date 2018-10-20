@@ -1,16 +1,18 @@
-import { IEventMessage, IKafkaPayload } from '~/modules/tracing/model/event';
 import { IKafkaEventProps } from '~/modules/tracing/components/Kafka/KafkaEvent';
+import { IEvent } from '~/modules/tracing/graphql/queries/events';
+import { getSpanIdFromEvent, getDirectionFromEvent, getReporterId, getTimestampFromEvent } from '~/modules/tracing/logic/event';
 
-export const kafkaEventToProps = (event: IEventMessage, peerService: string): IKafkaEventProps => {
-  const payload = event.payload as IKafkaPayload
+export const kafkaEventToProps = (event: IEvent, peerService: string): IKafkaEventProps => {
+  const topic = 'TODO' // TODO
+  const data = {}
 
   return {
-    spanId: event.meta.spanId,
-    direction: payload.direction,
-    service: event.meta.service,
+    spanId: getSpanIdFromEvent(event),
+    direction: getDirectionFromEvent(event),
+    service: getReporterId(event),
     peerService,
-    topic: payload.data.endpoint.topic,
-    data: payload.data.message.data,
-    timestamp: event.meta.timestamp,
+    topic,
+    data,
+    timestamp: getTimestampFromEvent(event),
   }
 }

@@ -67,7 +67,7 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "clean": "rimraf lib && rimraf build",
+    "clean": "rimraf lib && rimraf build && rimraf .cache && rimraf dist",
     "build:ts": "tsc -p .",
     "build": "parcel build ./src/index.html -d build/ --public-url ./ --target electron",
     "test": "jest",
@@ -75,7 +75,6 @@
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "dev:electron": "ELECTRON_START_URL=http://localhost:1235 electron .",
     "start:electron": "electron .",
-    "serve:browser": "parcel src/index.html -d build/ --target browser --open",
     "serve:electron": "node electron/bundler.js",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"

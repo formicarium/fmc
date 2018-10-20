@@ -1,4 +1,4 @@
-import { EventType } from '~/modules/tracing/model/event';
+import { SpanType } from '~/modules/tracing/graphql/queries/events';
 
 export interface INode {
   id: string,
@@ -18,7 +18,7 @@ export interface IEdge {
   metadata: {
     fromEvent: string
     toEvent: string
-    type: EventType
+    type: SpanType
   }
 }
 export interface IGraphDescription {

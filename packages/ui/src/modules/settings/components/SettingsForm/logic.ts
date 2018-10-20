@@ -36,6 +36,7 @@ export const validateKubectlBin = (
       return `Version needs to be greater than ${major}.${minor}`
     }
   } catch (err) {
+    console.log(err)
     return 'Invalid bin!'
   }
 }

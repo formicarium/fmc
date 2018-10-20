@@ -62,8 +62,6 @@ export class DevspaceServices extends React.Component {
       }
     }
 
-    console.log(repoPath)
-
     if (sync) {
       syncState.startSyncing(currentDevspace.name, application.name, repoPath)
     } else {
