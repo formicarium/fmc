@@ -2,6 +2,7 @@ import { IRequestProps } from '~/modules/tracing/components/HTTP/Request';
 import { IEvent } from '~/modules/tracing/graphql/queries/events';
 import { getSpanIdFromEvent, getDirectionFromEvent, getTypeFromEvent, getReporterId, getTimestampFromEvent } from '~/modules/tracing/logic/event';
 import { HTTPVerb } from '~/modules/tracing/components/HTTP/HTTPVerb';
+import edn from 'jsedn';
 
 export const httpEventToRequest = (event: IEvent, peerService: string): IRequestProps => {
   const {
@@ -9,9 +10,10 @@ export const httpEventToRequest = (event: IEvent, peerService: string): IRequest
     method,
     url,
   } = event.payload.tags.http
-  const headers = {} // TODO
-  const body = {}    // TODO
 
+  const parsed = edn.toJS(edn.parse(event.payload.payload))
+  const body = parsed[":payload"]
+  const headers = parsed[":headers"]
   return {
     spanId: getSpanIdFromEvent(event),
     direction: getDirectionFromEvent(event),

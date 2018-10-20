@@ -1,3 +1,3 @@
 export const config = {
-  hiveUrl: 'http://f898e31e.ngrok.io/graphql',
+  hiveUrl: 'http://hive.pla.test-fmc-a.nubank.com.br/graphql',
 }

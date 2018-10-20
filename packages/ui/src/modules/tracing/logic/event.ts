@@ -6,4 +6,4 @@ export const getSpanIdFromEvent = (event: IEvent): string => R.pathOr('', ['payl
 export const getDirectionFromEvent = (event: IEvent): SpanDirection => R.pathOr('', ['payload', 'tags', 'direction'], event)
 export const getTypeFromEvent = (event: IEvent): SpanType => R.pathOr('', ['payload', 'tags', 'type'], event)
 export const getReporterId = (event: IEvent) => event.meta.service
-export const getTimestampFromEvent = (event: IEvent) => R.pathOr(null, ['meta', 'timestamp'], event)
+export const getTimestampFromEvent = (event: IEvent) => R.pathOr(null, ['payload', 'timestamp'], event)

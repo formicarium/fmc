@@ -66,12 +66,12 @@ export interface ITags {
 }
 export interface IEventPayload {
   context: IPayloadContext
-  data: string
+  payload: string
   timestamp: Nullable<string>
   tags: ITags
 }
 export interface IEvent {
-  id: string
+  id: Nullable<string>
   identity: string
   meta: IEventMeta
   payload: IEventPayload
@@ -81,38 +81,38 @@ export interface IEventsQueryResponse {
 }
 
 export const EVENTS_QUERY = gql`
-  query eventsQuery {
-    events {
-      id
-      identity
-      meta {
+query eventsQuery {
+  events{
+    id
+    identity
+    meta {
+      service
+      type
+      timestamp
+    }
+    payload {
+      tags {
+        direction
+        http{
+          method
+          statusCode
+          url
+        }
+        kind
+        peer{
+          port
+          service
+        }
         type
-        service
-        timestamp
       }
-      payload {
-        context {
-          parentId
-          spanId
-          traceId
-        }
-        data
-        timestamp
-        tags {
-          type
-          direction
-          kind
-          http {
-            method
-            statusCode
-            url
-          }
-          peer {
-            port
-            service
-          }
-        }
+      payload
+      context{
+        parentId
+        spanId
+        traceId
       }
+      timestamp
     }
   }
+}
 `

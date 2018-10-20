@@ -44,8 +44,7 @@ export class App extends React.Component<{}, IState> {
     return (
       <SystemProvider system={this.state.system}>
         <Provider inject={[new SyncState(this.state.system)]}>
-          {/* <ApolloProvider client={client}> */}
-          <MockedHive>
+          <ApolloProvider client={client}>
             <Subscribe to={[SyncState]}>
               {(syncState: SyncState) => (
                 <BrowserRouter>
@@ -53,8 +52,7 @@ export class App extends React.Component<{}, IState> {
                 </BrowserRouter>
               )}
             </Subscribe>
-          </MockedHive>
-          {/* </ApolloProvider> */}
+         </ApolloProvider>
         </Provider>
       </SystemProvider>
     )
