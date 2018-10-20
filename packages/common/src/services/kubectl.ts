@@ -32,7 +32,7 @@ const DEFAULT_TAIL_SIZE = 100
 const scripts = (command: string = 'kubectl') => ({
   searchPodsByLabel: (label: string, namespace: string): ICommandAndArgs => ({
     command,
-    args: ['get', 'pod', '-l', `app="${label}"`, '-o', 'json', '-n', namespace],
+    args: ['get', 'pod', '-l', `formicarium.io\/application="${label}"`, '-o', 'json', '-n', namespace],
   }),
   forward: (podName: string, localPort: number, containerPort: number, namespace: string): ICommandAndArgs => ({
     command,
@@ -74,7 +74,7 @@ export class KubectlService implements IKubectlService {
   }
 
   public streamLogs = (namespace: string, podName: string, options: IKubectlServiceOptions = {}): ChildProcess => {
-    return spawnCommandAndArgs(scripts(options.bin).logs(podName, namespace))
+    return spawnCommandAndArgs(scripts(options.bin).logs(podName, namespace), {shell: true})
   }
 
   public portForward = (namespace: string, podName: string, localPort: number, containerPort: number, options: IKubectlServiceOptions = {}): ChildProcess => {
