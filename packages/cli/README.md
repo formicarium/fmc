@@ -22,7 +22,7 @@ $ npm install -g @formicarium/cli
 $ fmc COMMAND
 running command...
 $ fmc (-v|--version|version)
-@formicarium/cli/1.3.3 darwin-x64 node-v10.8.0
+@formicarium/cli/1.3.4 darwin-x64 node-v10.8.0
 $ fmc --help [COMMAND]
 USAGE
   $ fmc COMMAND
@@ -65,7 +65,7 @@ EXAMPLE
   $ fmc devspace:create paps
 ```
 
-_See code: [src/commands/devspace/create.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/devspace/create.ts)_
+_See code: [src/commands/devspace/create.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/devspace/create.ts)_
 
 ## `fmc devspace:delete NAME`
 
@@ -83,7 +83,7 @@ EXAMPLE
   $ fmc devspace:delete paps
 ```
 
-_See code: [src/commands/devspace/delete.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/devspace/delete.ts)_
+_See code: [src/commands/devspace/delete.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/devspace/delete.ts)_
 
 ## `fmc devspace:info`
 
@@ -101,7 +101,7 @@ EXAMPLE
   $ fmc devspace:info
 ```
 
-_See code: [src/commands/devspace/info.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/devspace/info.ts)_
+_See code: [src/commands/devspace/info.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/devspace/info.ts)_
 
 ## `fmc devspace:list`
 
@@ -119,7 +119,7 @@ EXAMPLE
   $ fmc devspace:list
 ```
 
-_See code: [src/commands/devspace/list.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/devspace/list.ts)_
+_See code: [src/commands/devspace/list.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/devspace/list.ts)_
 
 ## `fmc devspace:services [NAME]`
 
@@ -137,7 +137,7 @@ EXAMPLE
   $ fmc devspace:services
 ```
 
-_See code: [src/commands/devspace/services.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/devspace/services.ts)_
+_See code: [src/commands/devspace/services.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/devspace/services.ts)_
 
 ## `fmc devspace:use NAME`
 
@@ -155,7 +155,7 @@ EXAMPLE
   $ fmc devspace:use paps
 ```
 
-_See code: [src/commands/devspace/use.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/devspace/use.ts)_
+_See code: [src/commands/devspace/use.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/devspace/use.ts)_
 
 ## `fmc git:push [SERVICENAME]`
 
@@ -174,7 +174,7 @@ EXAMPLE
   $ fmc git:push
 ```
 
-_See code: [src/commands/git/push.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/git/push.ts)_
+_See code: [src/commands/git/push.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/git/push.ts)_
 
 ## `fmc git:setup [NAME] [LOCALFOLDER]`
 
@@ -193,7 +193,7 @@ EXAMPLE
   $ fmc service:setup .
 ```
 
-_See code: [src/commands/git/setup.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/git/setup.ts)_
+_See code: [src/commands/git/setup.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/git/setup.ts)_
 
 ## `fmc help [COMMAND]`
 
@@ -230,7 +230,7 @@ EXAMPLES
   $ fmc repl purgatory common-repl
 ```
 
-_See code: [src/commands/repl.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/repl.ts)_
+_See code: [src/commands/repl.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/repl.ts)_
 
 ## `fmc service:delete NAME`
 
@@ -249,7 +249,7 @@ EXAMPLE
   $ fmc service:delete mancini
 ```
 
-_See code: [src/commands/service/delete.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/service/delete.ts)_
+_See code: [src/commands/service/delete.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/service/delete.ts)_
 
 ## `fmc service:deploy:image [SERVICENAME]`
 
@@ -269,7 +269,7 @@ EXAMPLES
   $ fmc service:deploy:image my-service --arg version=5cfc8f3
 ```
 
-_See code: [src/commands/service/deploy/image.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/service/deploy/image.ts)_
+_See code: [src/commands/service/deploy/image.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/service/deploy/image.ts)_
 
 ## `fmc service:deploy:local [SERVICENAME] [LOCALPATH]`
 
@@ -289,7 +289,7 @@ EXAMPLE
   $ fmc service:deploy:local -l . -f my-args.json my-service --arg version=1 --arg xablau=xpto
 ```
 
-_See code: [src/commands/service/deploy/local.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/service/deploy/local.ts)_
+_See code: [src/commands/service/deploy/local.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/service/deploy/local.ts)_
 
 ## `fmc service:logs NAME`
 
@@ -308,7 +308,7 @@ EXAMPLE
   $ fmc service:logs mancini
 ```
 
-_See code: [src/commands/service/logs.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/service/logs.ts)_
+_See code: [src/commands/service/logs.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/service/logs.ts)_
 
 ## `fmc service:restart NAME`
 
@@ -327,7 +327,7 @@ EXAMPLE
   $ fmc service:restart mancini
 ```
 
-_See code: [src/commands/service/restart.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/service/restart.ts)_
+_See code: [src/commands/service/restart.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/service/restart.ts)_
 
 ## `fmc service:status`
 
@@ -346,7 +346,7 @@ EXAMPLE
   $ fmc service:restart mancini
 ```
 
-_See code: [src/commands/service/status.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/service/status.ts)_
+_See code: [src/commands/service/status.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/service/status.ts)_
 
 ## `fmc setup URL`
 
@@ -364,5 +364,5 @@ EXAMPLE
   $ fmc setup https://soil.your.host.here
 ```
 
-_See code: [src/commands/setup.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.3/src/commands/setup.ts)_
+_See code: [src/commands/setup.ts](https://github.com/formicarium/formicarium-cli/blob/v1.3.4/src/commands/setup.ts)_
 <!-- commandsstop -->
