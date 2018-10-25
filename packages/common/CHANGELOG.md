@@ -13,6 +13,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 <a name="1.2.3"></a>
+## [1.2.3](https://github.com/formicarium/frontend-monorepo/compare/@formicarium/common@1.2.3...@formicarium/common@1.2.3) (2018-10-25)
+
+**Note:** Version bump only for package @formicarium/common
+
+
+
+
+
+<a name="1.2.3"></a>
 ## [1.2.3](https://github.com/formicarium/frontend-monorepo/compare/@formicarium/common@1.1.1...@formicarium/common@1.2.3) (2018-10-25)
 
 **Note:** Version bump only for package @formicarium/common
