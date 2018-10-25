@@ -19,7 +19,7 @@ export default class ServiceLogs extends FMCCommand {
   ]
 
   public async run() {
-    const { configService, soilService, uiService, kubectl } = this.system
+    const { configService, kubectl } = this.system
     const { args } = this.parse(ServiceLogs)
     const { name } = args
 
@@ -27,11 +27,13 @@ export default class ServiceLogs extends FMCCommand {
     const { devspace } = config
 
     const pod = await kubectl.getPodByLabel(devspace.name, name, {bin: config.kubectlBin})
-
+    if (!pod) {
+      this.error(`No pod "${name}" found in "${devspace.name}"`)
+    }
     const podName = pod.metadata.name
     const childProcess = kubectl.streamLogs(devspace.name, podName, {bin: config.kubectlBin})
-    childProcess.stdout.on('data', function (buf: any) {
-      console.log(buf.toString());
+    childProcess.stdout.on('data', (buf) => {
+      console.log(buf.toString())
     })
   }
 }

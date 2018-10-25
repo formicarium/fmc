@@ -17,6 +17,7 @@ export interface IDevspaceConfig {
 export interface IConfigContent {
   soilUrl: string
   devspace: IDevspaceConfig
+  kubectlBin: string
 }
 
 export interface IConfigService {
