@@ -1,0 +1,6 @@
+55 warn complete Waiting for 1 child process to exit. CTRL-C to exit immediately.
+56 error Error: Command failed: git tag @formicarium/cli@1.3.3 -m @formicarium/cli@1.3.3
+56 error fatal: tag '@formicarium/cli@1.3.3' already exists
+56 error
+56 error     at makeError (/Users/rafaeleal/Code/Formicarium/frontend-monorepo/node_modules/@lerna/child-process/node_modules/execa/index.js:174:9)
+56 error     at Promise.all.then.arr (/Users/rafaeleal/Code/Formicarium/frontend-monorepo/node_modules/@lerna/child-process/node_modules/execa/index.js:278:16)
