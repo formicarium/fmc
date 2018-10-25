@@ -22,6 +22,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 <a name="1.3.3"></a>
+## [1.3.3](https://github.com/formicarium/formicarium-cli/compare/@formicarium/cli@1.3.3...@formicarium/cli@1.3.3) (2018-10-25)
+
+**Note:** Version bump only for package @formicarium/cli
+
+
+
+
+
+<a name="1.3.3"></a>
 ## [1.3.3](https://github.com/formicarium/formicarium-cli/compare/@formicarium/cli@1.2.2...@formicarium/cli@1.3.3) (2018-10-25)
 
 **Note:** Version bump only for package @formicarium/cli
