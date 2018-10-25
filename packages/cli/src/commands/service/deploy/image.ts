@@ -1,7 +1,7 @@
 
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../../FMCCommand'
-import { parseArg } from './logic'
+import { parseArg } from '@formicarium/cli/src/logic/args'
 
 export default class ServiceDeployImage extends FMCCommand {
   public static description = 'Deploys service'

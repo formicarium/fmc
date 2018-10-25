@@ -10,7 +10,7 @@
     "eofline": true,
     "member-ordering": [false],
     "no-implicit-dependencies": false,
-    "no-submodule-imports": [true, "src", "simple-git", "lowdb", "controllers", "commands", "@oclif/command", "@oclif/errors"],
+    "no-submodule-imports": [true, "src", "simple-git", "lowdb", "controllers", "commands", "@oclif/command", "@oclif/errors", "@formicarium"],
     "semicolon": [true, "never"],
     "no-object-literal-type-assertion": false,
     "no-console": false

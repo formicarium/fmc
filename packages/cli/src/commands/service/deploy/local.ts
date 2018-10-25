@@ -5,7 +5,7 @@ import FMCCommand from '../../../FMCCommand'
 import * as fs from 'fs-extra'
 import * as path from 'path'
 import { IApplicationDefinition, IArgs, Nullable } from '@formicarium/common'
-import { parseArg } from './logic'
+import { parseArg } from '@formicarium/cli/src/logic/args'
 
 export default class ServiceDeployLocal extends FMCCommand {
   public static description = 'Deploys service'
