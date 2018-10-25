@@ -1,6 +1,6 @@
 {
   "name": "@formicarium/cli",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "A CLI to operate on Formicarium",
   "publishConfig": {
     "access": "public"
@@ -11,7 +11,7 @@
   },
   "bugs": "https://github.com/formicarium/formicarium-cli/issues",
   "dependencies": {
-    "@formicarium/common": "^1.2.2",
+    "@formicarium/common": "^1.2.3",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^2",
