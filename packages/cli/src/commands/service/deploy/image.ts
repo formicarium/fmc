@@ -1,10 +1,7 @@
 
-import { gitSetup } from '../../../controllers/git'
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../../FMCCommand'
-import * as fs from 'fs-extra'
-import * as path from 'path'
-import { IApplicationDefinition, IArgs, Nullable } from '@formicarium/common'
+import { parseArg } from './logic'
 
 export default class ServiceDeployImage extends FMCCommand {
   public static description = 'Deploys service'
@@ -27,28 +24,17 @@ export default class ServiceDeployImage extends FMCCommand {
 
   public static args = [
     { name: 'serviceName' },
-    { name: 'localPath' },
   ]
 
-  private parseArg = (argString: string[]): IArgs => {
-    return argString.reduce((acc, arg) => {
-      const [ key, value ] = arg.split('=')
-      return {
-        ...acc,
-        [key]: value,
-      }
-    }, {})
-  }
-
   public async run() {
-    const { configService, tanajuraService, gitService, uiService, localDB } = this.system
+    const { configService, uiService } = this.system
     const { devspace } = await configService.readConfig()
 
     const { args, flags } = this.parse(ServiceDeployImage)
-    const { serviceName, localPath } = args
+    const { serviceName } = args
     const { arg } = flags
 
-    const argMap = (arg && arg.length) ? this.parseArg(arg) : null
+    const argMap = (arg && arg.length) ? parseArg(arg) : null
 
     uiService.jsonToTable({
       serviceName,
@@ -59,13 +45,7 @@ export default class ServiceDeployImage extends FMCCommand {
      * Deploy service on soil
      */
     uiService.spinner.start('Deploying service...')
-    const response = await this.system.soilService.deployService(devspace.name, serviceName, null, argMap, false)
-
-    await localDB.registerServiceForDevspace(devspace.name, {
-      name: serviceName,
-      repoPath: null,
-      stingerUrl: response.stinger,
-    })
+    await this.system.soilService.deployService(devspace.name, serviceName, null as any, argMap as any, false)
 
     uiService.spinner.succeed()
   }

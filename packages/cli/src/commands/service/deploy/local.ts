@@ -5,6 +5,7 @@ import FMCCommand from '../../../FMCCommand'
 import * as fs from 'fs-extra'
 import * as path from 'path'
 import { IApplicationDefinition, IArgs, Nullable } from '@formicarium/common'
+import { parseArg } from './logic'
 
 export default class ServiceDeployLocal extends FMCCommand {
   public static description = 'Deploys service'
@@ -30,16 +31,6 @@ export default class ServiceDeployLocal extends FMCCommand {
     { name: 'localPath' },
   ]
 
-  private parseArg = (argString: string[]): IArgs => {
-    return argString.reduce((acc, arg) => {
-      const [ key, value ] = arg.split('=')
-      return {
-        ...acc,
-        [key]: value,
-      }
-    }, {})
-  }
-
   private getFileContent = async <T>(filePath: string): Promise<Nullable<T>> => {
     const fileExists = await fs.pathExists(filePath)
     if (!fileExists) {
@@ -63,7 +54,7 @@ export default class ServiceDeployLocal extends FMCCommand {
     const absoluteFilePath = filePath && path.resolve(process.cwd(), filePath)
 
     const applicationDefinition: any = absoluteFilePath ? await this.getFileContent<IApplicationDefinition>(absoluteFilePath) : null
-    const argMap = (arg && arg.length) ? this.parseArg(arg) : null
+    const argMap = (arg && arg.length) ? parseArg(arg) : null
 
     uiService.jsonToTable({
       serviceName,

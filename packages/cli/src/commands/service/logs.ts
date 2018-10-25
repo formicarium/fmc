@@ -29,6 +29,7 @@ export default class ServiceLogs extends FMCCommand {
     const pod = await kubectl.getPodByLabel(devspace.name, name, {bin: config.kubectlBin})
     if (!pod) {
       this.error(`No pod "${name}" found in "${devspace.name}"`)
+      return
     }
     const podName = pod.metadata.name
     const childProcess = kubectl.streamLogs(devspace.name, podName, {bin: config.kubectlBin})

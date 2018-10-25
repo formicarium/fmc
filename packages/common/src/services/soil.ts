@@ -48,7 +48,7 @@ export interface ISoilService {
   getService: (devspace: string, name: string) => Promise<IApplication>
   deployService: (
     devspace: string, name: string,
-    applicationDefinition: Nullable<IApplicationDefinition>,
+    applicationDefinition: IApplicationDefinition | null,
     args: Nullable<IArgs>,
     syncable: boolean,
   ) => Promise<IApplicationLinks>
@@ -105,7 +105,7 @@ export class SoilService implements ISoilService {
 
   public deployService = async (
     devspace: string, name: string,
-    applicationDefinition: Nullable<IApplicationDefinition>,
+    applicationDefinition: IApplicationDefinition | null,
     args: Nullable<IArgs>,
     syncable: boolean,
   ): Promise<IApplicationLinks> => {
