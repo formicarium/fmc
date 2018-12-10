@@ -29,8 +29,8 @@ export default class Repl extends FMCCommand {
   ]
 
   private connect(host: string) {
-    if (!host.startsWith("nrepl")) {
-      console.warn("Trying to connect on a non-repl interface: " + host)
+    if (!host.startsWith('nrepl')) {
+      console.warn('Trying to connect on a non-repl interface: ' + host)
     }
     spawn('lein', ['repl', ':connect', host], {
       stdio: [process.stdin, process.stdout, process.stderr],
@@ -46,24 +46,24 @@ export default class Repl extends FMCCommand {
       const {links} = await soilService.getService(currentDevspace, serviceName)
       if (interfaceName) {
         const replUrl = links[interfaceName]
-        this.connect(replUrl);
+        this.connect(replUrl)
       } else {
         const interfaces = Object.keys(links)
-        const nreplInterfaces = interfaces.filter((i: string) => links[i].startsWith("nrepl"))
-        let responses: any = await inquirer.prompt([{
+        const nreplInterfaces = interfaces.filter((i: string) => links[i].startsWith('nrepl'))
+        const responses: any = await inquirer.prompt([{
           name: 'nreplInterface',
           message: 'select a interface',
           type: 'list',
           choices: nreplInterfaces,
         }])
 
-        let nrepl = responses.nreplInterface
+        const nrepl = responses.nreplInterface
         console.info(`You selected ${nrepl} interface. Trying to connect to ${links[nrepl]}`)
         this.connect(links[nrepl])
       }
     }
     if (!serviceName && !interfaceName) {
-      this.connect(hiveReplUrl);
+      this.connect(hiveReplUrl)
     }
   }
 }

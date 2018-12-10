@@ -16,10 +16,10 @@ export default abstract class FMCCommand extends Command {
     signale.info(`Currently using devspace: ${chalk.underline(name)}`)
   }
 
-  public async catch(err: Error) {
-    // handle any error from the command
-  }
-  public async finally(err: Error) {
-    // called after run and catch regardless of whether or not the command errored
-  }
+  // public async catch(err: Error) {
+  //   // handle any error from the command
+  // }
+  // public async finally(err: Error) {
+  //   // called after run and catch regardless of whether or not the command errored
+  // }
 }
