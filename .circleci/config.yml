@@ -12,7 +12,7 @@ jobs:
           name: Checks if cli version is published
           command: |
             cd packages/cli
-            VERSION=$(node -pe "require('./package.json').version)
+            VERSION=$(node -pe "require('./package.json').version")
             ! npm install -g @formicarium/cli@$VERSION
   test-cli:
     <<: *defaults
