@@ -38,7 +38,8 @@ workflows:
     jobs:
       - test-cli
       - build-cli:
-          requires: test-cli
+          requires: 
+            - test-cli
   common:
     jobs:
       - test-common
