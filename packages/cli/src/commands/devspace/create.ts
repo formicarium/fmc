@@ -1,7 +1,7 @@
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
 import { createDevspace } from '../../controllers/devspace'
-import {parseArg} from "../../logic/args";
+import {parseArg} from '../../logic/args'
 
 export default class DevspaceCreate extends FMCCommand {
   public static description = 'Creates a Devspace'
@@ -20,28 +20,28 @@ export default class DevspaceCreate extends FMCCommand {
     { name: 'id', required: true },
   ]
   private static parseValue = (v: string) => {
-    if (v == "true") return true
-    if (v == "false") return false
-    if (/\d+\.\d+/.test(v)) return parseFloat(v)
-    if (/\d+/.test(v)) return parseInt(v)
+    if (v === 'true') { return true }
+    if (v === 'false') { return false }
+    if (/\d+\.\d+/.test(v)) { return parseFloat(v) }
+    if (/\d+/.test(v)) { return parseInt(v, 10) }
     return v
   }
   private static parseArgValue = (arg: string) => {
-    if (arg.includes("=")) {
-      const [left, ...rest] = arg.split("=")
-      const rightString = rest.join("=")
+    if (arg.includes('=')) {
+      const [left, ...rest] = arg.split('=')
+      const rightString = rest.join('=')
       const right = DevspaceCreate.parseValue(rightString)
-      return new Object({[left]: right})
+      return {[left]: right}
     } else {
-      return new Object({[arg]: true})
+      return {[arg]: true}
     }
   }
 
   private static parseArg = (arg: any): object => {
-    if(arg != null && arg != undefined) {
-      return arg.map(DevspaceCreate.parseArgValue).reduce((acc: object, arg: object) => Object.assign(acc, arg))
+    if (arg !== null && arg !== undefined) {
+      return arg.map(DevspaceCreate.parseArgValue).reduce((acc: object, a: object) => ({...acc, ...a}))
     }
-    return new Object({})
+    return {}
   }
   public async run() {
     const { localDB, uiService } = this.system

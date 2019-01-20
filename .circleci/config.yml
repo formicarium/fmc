@@ -20,7 +20,9 @@ jobs:
       - checkout
       - run:
           name: Test CLI
-          command: echo "Testing CLI"
+          command: |
+            cd packages/cli
+            yarn test
   build-and-deploy-cli:
     <<: *defaults
     steps:

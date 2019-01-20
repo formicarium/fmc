@@ -11,7 +11,7 @@ export default class ServiceDeploy extends FMCCommand {
 
   public static flags = {
     ...FMCCommand.flags,
-    help: Flags.help({ char: 'h' })
+    help: Flags.help({ char: 'h' }),
   }
 
   public static args = [
