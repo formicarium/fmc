@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Test CLI
           command: echo "Testing CLI"
-  build-cli:
+  build-and=deploy-cli:
     <<: *defaults
     steps:
       - checkout
@@ -48,10 +48,13 @@ workflows:
     jobs:
       - check-version-cli
       - test-cli
-      - build-cli:
+      - build-and-deploy-cli:
           requires: 
             - test-cli
             - check-version-cli
+          filters:
+            branches:
+              only: master
   common:
     jobs:
       - test-common
