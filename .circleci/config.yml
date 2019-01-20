@@ -21,8 +21,8 @@ jobs:
       - run:
           name: Test CLI
           command: |
-            cd packages/cli
             yarn install
+            cd packages/cli
             yarn test
   build-and-deploy-cli:
     <<: *defaults
