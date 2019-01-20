@@ -4,6 +4,16 @@ defaults: &defaults
   docker:
     - image: circleci/node:8
 jobs:
+  check-version-cli:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Checks if cli version is published
+          command: |
+            cd packages/cli
+            VERSION=$(node -pe "require('./package.json').version")
+            ! npm install -g @formicarium/cli@$VERSION
   test-cli:
     <<: *defaults
     steps:
@@ -11,7 +21,7 @@ jobs:
       - run:
           name: Test CLI
           command: echo "Testing CLI"
-  build-cli:
+  build-and-deploy-cli:
     <<: *defaults
     steps:
       - checkout
@@ -36,9 +46,15 @@ workflows:
   version: 2
   cli:
     jobs:
+      - check-version-cli
       - test-cli
-      - build-cli:
-          requires: test-cli
+      - build-and-deploy-cli:
+          requires: 
+            - test-cli
+            - check-version-cli
+          filters:
+            branches:
+              only: master
   common:
     jobs:
       - test-common
