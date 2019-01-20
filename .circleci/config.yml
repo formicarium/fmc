@@ -4,79 +4,32 @@ defaults: &defaults
   docker:
     - image: circleci/node:8
 jobs:
-  check-version-cli:
+  test:
     <<: *defaults
     steps:
       - checkout
       - run:
-          name: Checks if cli version is published
-          command: |
-            cd packages/cli
-            VERSION=$(node -pe "require('./package.json').version")
-            ! npm install -g @formicarium/cli@$VERSION
-  test-cli:
-    <<: *defaults
-    steps:
-      - checkout
-      - run:
-          name: Test CLI
+          name: Test
           command: |
             yarn install
-            cd packages/cli
-            yarn test
-  build-and-deploy-cli:
+            yarn run test
+  publish:
     <<: *defaults
     steps:
       - checkout
       - run:
           name: Build CLI
-          command: echo "Build CLI"
-  check-version-common:
-    <<: *defaults
-    steps:
-      - checkout
-      - run:
-          name: Checks if cli version is published
           command: |
-            cd packages/cli
-            VERSION=$(node -pe "require('./package.json').version")
-            ! npm install -g @formicarium/cli@$VERSION
-  build-and-deploy-common:
-    <<: *defaults
-    steps:
-      - checkout
-      - run:
-          name: Test Common
-          command: echo "Testing Common"
-  test-ui:
-    <<: *defaults
-    steps:
-      - checkout
-      - run:
-          name: Test UI
-          command: echo "Testing UI"
+          npm install -g lerna
+          lerna publish 'patch' --yes
 workflows:
   version: 2
-  cli:
+  monorepo:
     jobs:
-      - check-version-cli
-      - test-cli
-      - build-and-deploy-cli:
-          requires: 
-            - test-cli
-            - check-version-cli
+      - test
+      - publish:
+          requires:
+            - test
           filters:
             branches:
               only: master
-  common:
-    jobs:
-      - check-version-common
-      - build-and-deploy-common:
-          requires: 
-            - check-version-common
-          filters:
-            branches:
-              only: master
-  ui:
-    jobs:
-      - test-ui
