@@ -31,7 +31,17 @@ jobs:
       - run:
           name: Build CLI
           command: echo "Build CLI"
-  test-common:
+  check-version-common:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Checks if cli version is published
+          command: |
+            cd packages/cli
+            VERSION=$(node -pe "require('./package.json').version")
+            ! npm install -g @formicarium/cli@$VERSION
+  build-and-deploy-common:
     <<: *defaults
     steps:
       - checkout
@@ -60,7 +70,13 @@ workflows:
               only: master
   common:
     jobs:
-      - test-common
+      - check-version-common
+      - build-and-deploy-common:
+          requires: 
+            - check-version-common
+          filters:
+            branches:
+              only: master
   ui:
     jobs:
       - test-ui
