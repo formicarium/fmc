@@ -39,7 +39,7 @@ export default class DevspaceCreate extends FMCCommand {
 
   private static parseArg = (arg: any): object => {
     if(arg != null && arg != undefined) {
-      return arg.map(DevspaceCreate.parseArgValue).reduce((acc, arg) => Object.assign(acc, arg))
+      return arg.map(DevspaceCreate.parseArgValue).reduce((acc: object, arg: object) => Object.assign(acc, arg))
     }
     return new Object({})
   }
