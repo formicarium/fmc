@@ -6,12 +6,13 @@ defaults: &defaults
 jobs:
   check-version-cli:
     <<: *defaults
-    working_directory: ~/repo/packages/cli
     steps:
       - checkout
       - run:
           name: Checks if cli version is published
-          command: cat ./packages.json
+          command: |
+            cd packages/cli
+            cat ./packages.json
   test-cli:
     <<: *defaults
     steps:
