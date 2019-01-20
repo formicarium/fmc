@@ -4,6 +4,14 @@ defaults: &defaults
   docker:
     - image: circleci/node:8
 jobs:
+  check-version-cli:
+    <<: *defaults
+    working_directory: ~/repo/packages/cli
+    steps:
+      - checkout
+      - run:
+          name: Checks if cli version is published
+          command: cat ./packages.json
   test-cli:
     <<: *defaults
     steps:
