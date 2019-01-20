@@ -11,8 +11,7 @@ export default class ServiceDeploy extends FMCCommand {
 
   public static flags = {
     ...FMCCommand.flags,
-    help: Flags.help({ char: 'h' }),
-    shard: Flags.string({ char: 's', description: 'service shard' }),
+    help: Flags.help({ char: 'h' })
   }
 
   public static args = [
@@ -20,24 +19,18 @@ export default class ServiceDeploy extends FMCCommand {
   ]
 
   public async run() {
-    const { configService, stingerService, uiService, soilService } = this.system
+    const { configService, stingerService, uiService } = this.system
     const { args, flags } = this.parse(ServiceDeploy)
     const { name } = args
-    const { shard } = flags
 
     const {devspace: {name: currentDevspace}} = await configService.readConfig()
-    const {links} = await soilService.getService(currentDevspace, name)
 
     uiService.jsonToTable({
       name,
     })
 
     uiService.spinner.start('Restarting service...')
-    if(links.stinger) {
-      await stingerService.restartServiceByUrl(links.stinger)
-    } else {
-      uiService.spinner.fail('Could not find stinger interface')
-    }
+    await stingerService.restartService(currentDevspace, name)
     uiService.spinner.succeed()
   }
 }

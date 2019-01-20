@@ -4,7 +4,7 @@ import { Maybe } from '../utils/types'
 interface IService {
   name: string
   repoPath: string
-  stingerUrl: string
+  stingerUrls: string[]
 }
 
 interface IServices {

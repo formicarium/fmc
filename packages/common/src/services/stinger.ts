@@ -14,19 +14,19 @@ export class StingerService {
     this.localDB = localDB
   }
 
-  public restartService = async (namespace: string, serviceName: string): Promise<IStartResponse> => {
+  public restartService = async (namespace: string, serviceName: string): Promise<IStartResponse[]> => {
     const service = await this.localDB.getService(namespace, serviceName)
 
     if (!service) {
       throw new Error(`${serviceName} not found`)
     }
 
-    const { stingerUrl } = service
+    const { stingerUrls } = service
 
-    return this.restartServiceByUrl(stingerUrl)
+    return Promise.all(stingerUrls.map(stingerUrl => this.restartApplicationByUrl(stingerUrl)))
   }
 
-  public restartServiceByUrl = async (stingerUrl: string): Promise<IStartResponse> =>  {
+  public restartApplicationByUrl = async (stingerUrl: string): Promise<IStartResponse> =>  {
     return this.httpClient.request<IStartResponse>({
       method: 'post',
       baseURL: stingerUrl,

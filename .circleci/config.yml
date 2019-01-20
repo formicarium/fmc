@@ -1,0 +1,47 @@
+version: 2
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:8
+jobs:
+  test-cli:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Test CLI
+          command: echo "Testing CLI"
+  build-cli:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Build CLI
+          command: echo "Build CLI"
+  test-common:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Test Common
+          command: echo "Testing Common"
+  test-ui:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Test UI
+          command: echo "Testing UI"
+workflows:
+  version: 2
+  cli:
+    jobs:
+      - test-cli
+      - build-cli:
+          requires: test-cli
+  common:
+    jobs:
+      - test-common
+  ui:
+    jobs:
+      - test-ui
