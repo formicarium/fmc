@@ -44,10 +44,12 @@ workflows:
   version: 2
   cli:
     jobs:
+      - check-version-cli
       - test-cli
       - build-cli:
           requires: 
             - test-cli
+            - check-version-cli
   common:
     jobs:
       - test-common
