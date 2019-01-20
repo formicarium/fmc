@@ -12,7 +12,7 @@ jobs:
           name: Checks if cli version is published
           command: |
             cd packages/cli
-            cat ./packages.json
+            ls
   test-cli:
     <<: *defaults
     steps:
