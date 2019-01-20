@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Test CLI
           command: echo "Testing CLI"
-  build-and=deploy-cli:
+  build-and-deploy-cli:
     <<: *defaults
     steps:
       - checkout
