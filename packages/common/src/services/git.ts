@@ -36,8 +36,7 @@ export class GitService {
     return this.simpleGit(basePath)
       .env('GIT_DIR', GitService.MIRROR_GIT_FOLDER)
       .env('GIT_WORK_TREE', basePath)
-      .env('HOME', process.env.HOME)
-    
+      .env('HOME', process.env.HOME || '')
   }
 
   public addRemote = (basePath: string, name: string, url: string): Promise<any> => {

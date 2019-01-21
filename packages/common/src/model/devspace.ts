@@ -23,6 +23,7 @@ export interface IApplicationLinks {
 }
 export interface IApplication {
   name: string
+  service: string
   devspace: string
   links: IApplicationLinks
 }

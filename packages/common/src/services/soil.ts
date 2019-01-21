@@ -42,7 +42,7 @@ export interface IGetStatusResponse {
 }
 
 export interface ISoilService {
-  createDevspace: (devspaceName: string, setup: Nullable<IApplicationDefinition[]>) => Promise<IDevspace>
+  createDevspace: (devspaceName: string, args: object, setup: Nullable<IApplicationDefinition[]>) => Promise<IDevspace>
   getDevspaces: () => Promise<IDevspace[]>
   getDevspace: (name: string) => Promise<IDevspace>
   getService: (devspace: string, name: string) => Promise<IApplication>
@@ -51,7 +51,7 @@ export interface ISoilService {
     applicationDefinition: IApplicationDefinition | null,
     args: Nullable<IArgs>,
     syncable: boolean,
-  ) => Promise<IApplicationLinks>
+  ) => Promise<IApplication[]>
   getStatus: () => Promise<IGetStatusResponse>
   deleteService: (devspace: string, serviceName: string) => Promise<any>
   deleteDevspace: (devspace: string) => Promise<any>
@@ -67,13 +67,14 @@ export class SoilService implements ISoilService {
     this.httpClient = httpClient
   }
 
-  public createDevspace = async (devspaceName: string, setup: Nullable<IApplicationDefinition[]>): Promise<IDevspace> => {
+  public createDevspace = async (devspaceName: string, args: object, setup: Nullable<IApplicationDefinition[]>): Promise<IDevspace> => {
     return this.httpClient.request<IDevspace>({
       baseURL: this.url,
       url: '/api/devspaces',
       method: 'post',
       data: {
         name: devspaceName,
+        args,
         setup,
       },
     }).then((response) => response.data)
@@ -108,7 +109,7 @@ export class SoilService implements ISoilService {
     applicationDefinition: IApplicationDefinition | null,
     args: Nullable<IArgs>,
     syncable: boolean,
-  ): Promise<IApplicationLinks> => {
+  ): Promise<IApplication[]> => {
     const data = R.pickBy((val) => val !== null, {
       name,
       syncable,
@@ -116,7 +117,7 @@ export class SoilService implements ISoilService {
       definition: applicationDefinition,
     })
 
-    return this.httpClient.request<IApplicationLinks>({
+    return this.httpClient.request<IApplication[]>({
       data,
       method: 'post',
       url: `${this.url}/api/devspaces/${devspace}/services`,

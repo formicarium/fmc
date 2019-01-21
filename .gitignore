@@ -2,3 +2,5 @@ node_modules/
 .vscode/
 .idea/
 .DS_STORE
+*.log
+packages/cli/package-lock.json
