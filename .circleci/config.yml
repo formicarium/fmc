@@ -19,9 +19,7 @@ jobs:
       - checkout
       - run:
           name: Build CLI
-          command: |
-            npm install -g lerna
-            lerna publish 'patch' --yes
+          command: yarn run publish-all
 workflows:
   version: 2
   monorepo:
