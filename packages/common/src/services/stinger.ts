@@ -23,7 +23,7 @@ export class StingerService {
 
     const { stingerUrls } = service
 
-    return Promise.all(stingerUrls.map(stingerUrl => this.restartApplicationByUrl(stingerUrl)))
+    return Promise.all(stingerUrls.map((stingerUrl: string) => this.restartApplicationByUrl(stingerUrl)))
   }
 
   public restartApplicationByUrl = async (stingerUrl: string): Promise<IStartResponse> =>  {
