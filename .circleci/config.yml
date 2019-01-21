@@ -19,7 +19,7 @@ jobs:
       - checkout
       - run:
           name: Build CLI
-          command: yarn run publish-all
+          command: yarn run ci:publish-all
 workflows:
   version: 2
   monorepo:

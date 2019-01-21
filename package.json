@@ -25,5 +25,7 @@
     "check-packages": "yarn clean && yarn build && yarn test && yarn lint",
     "publish-packages": "./scripts/publish"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "lerna": "^3.3.0"
+  }
 }
