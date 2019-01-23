@@ -22,7 +22,7 @@ jobs:
           at: ~/repo
       - run:
           name: Authenticate
-          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/.npmrc
       - run:
           name: Build & Publish CLI
           command: |
