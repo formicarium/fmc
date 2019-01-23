@@ -14,8 +14,7 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "*": ["./*"],
-      "@formicarium/*": ["../*/src"]
+      "*": ["./*"]
     },
     "strict": true,
     "target": "es2017",
