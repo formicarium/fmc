@@ -2,8 +2,7 @@
   "name": "@formicarium/ui",
   "description": "An UI to operate on Formicarium",
   "author": {
-    "name": "Rafael Ribeiro Correia",
-    "email": "rafael.correia.poli@gmail.com"
+    "name": "Formicarium"
   },
   "build": {
     "productName": "Formicarium",

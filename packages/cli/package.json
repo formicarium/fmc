@@ -41,7 +41,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/formicarium/formicarium-cli",
+  "homepage": "https://github.com/formicarium/frontend-monorepo/tree/master/packages/cli",
   "keywords": [
     "oclif"
   ],
