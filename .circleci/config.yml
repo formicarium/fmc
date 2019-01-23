@@ -18,11 +18,15 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+       - attach_workspace:
+          at: ~/repo
       - run:
           name: Build CLI
           command: |
             yarn install
             yarn build
+            echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+            yarn publish from-git
 
 workflows:
   version: 2
