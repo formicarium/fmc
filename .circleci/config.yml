@@ -26,7 +26,7 @@ jobs:
             yarn install
             yarn build
             echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
-            yarn publish from-git
+            yarn lerna publish from-git
 
 workflows:
   version: 2
