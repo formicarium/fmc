@@ -11,11 +11,12 @@ export default abstract class FMCCommand extends Command {
   public static flags = {
     test: Flags.boolean(),
   }
-  protected currentDevspace = this.system.configService.readDevspaceConfig().then((c) => c.name)
+
+  protected currentDevspace = () => this.system.configService.readDevspaceConfig().then((c) => c.name)
 
   protected async init(): Promise<any> {
     this.system = await getSystem()
-    const name = await this.currentDevspace
+    const name = await this.currentDevspace()
     if (name) {
       signale.info(`Currently using devspace: ${chalk.underline(name)}`)
     } else {
@@ -24,7 +25,7 @@ export default abstract class FMCCommand extends Command {
   }
 
   protected selectServiceApplication = async (service: string) => {
-    const applications = await this.system.soilService.getService(await this.currentDevspace, service)
+    const applications = await this.system.soilService.getService(await this.currentDevspace(), service)
     return this.selectApplication(applications)
   }
 
