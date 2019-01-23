@@ -16,7 +16,7 @@
       "build/*"
     ]
   },
-  "version": "1.0.9",
+  "version": "1.0.10",
   "publishConfig": {
     "access": "public"
   },
@@ -24,7 +24,7 @@
   "source": true,
   "license": "MIT",
   "dependencies": {
-    "@formicarium/common": "^1.2.10",
+    "@formicarium/common": "^1.2.11",
     "ansi-to-react": "^3.3.1",
     "apollo-cache": "^1.1.16",
     "apollo-cache-inmemory": "^1.2.9",
