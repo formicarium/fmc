@@ -12,6 +12,7 @@ jobs:
           name: Test
           command: |
             yarn install
+            yarn build
             yarn run test
   publish:
     <<: *defaults
@@ -21,7 +22,8 @@ jobs:
           name: Build CLI
           command: |
             yarn install
-            yarn run ci:publish-all
+            yarn build
+
 workflows:
   version: 2
   monorepo:
