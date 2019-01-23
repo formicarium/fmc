@@ -13,7 +13,7 @@
 To install the Formicarium CLI (fmc) just run:
 
 ```
-yarn add global @formicarium/cli
+yarn global add @formicarium/cli
 ```
 
 # Development Setup
