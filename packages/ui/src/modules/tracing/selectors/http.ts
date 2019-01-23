@@ -11,14 +11,14 @@ export const getHttpPanelRequestsAndResponses = createSelector(
     if (!selectedEdge) { return null }
     const sourceHttpEvent = events.find((event) => event.id === selectedEdge.metadata.fromEvent)
     const destHttpEvent = events.find((event) => event.id === selectedEdge.metadata.toEvent)
-    const sourceHttpEventPair = events.find((event) => getSpanIdFromEvent(event) === getSpanIdFromEvent(sourceHttpEvent) && event.id !== sourceHttpEvent.id)
-    const destHttpEventPair = events.find((event) => getSpanIdFromEvent(event) === getSpanIdFromEvent(destHttpEvent) && event.id !== destHttpEvent.id)
+    const sourceHttpEventPair = sourceHttpEvent && events.find((event) => getSpanIdFromEvent(event) === getSpanIdFromEvent(sourceHttpEvent) && event.id !== sourceHttpEvent.id)
+    const destHttpEventPair = destHttpEvent && events.find((event) => getSpanIdFromEvent(event) === getSpanIdFromEvent(destHttpEvent) && event.id !== destHttpEvent.id)
 
     if (isRequest(getTypeFromEvent(sourceHttpEvent), getDirectionFromEvent(sourceHttpEvent))) {
-      const outProducer = httpEventToRequest(sourceHttpEvent, destHttpEvent.meta.service)
-      const inConsumer = httpEventToRequest(destHttpEvent, sourceHttpEvent.meta.service)
-      const outConsumer = httpEventToRequest(sourceHttpEventPair, destHttpEventPair.meta.service)
-      const inProducer = httpEventToRequest(destHttpEventPair, sourceHttpEventPair.meta.service)
+      const outProducer = destHttpEvent && httpEventToRequest(sourceHttpEvent, destHttpEvent.meta.service)
+      const inConsumer = sourceHttpEvent && httpEventToRequest(destHttpEvent, sourceHttpEvent.meta.service)
+      const outConsumer = destHttpEventPair && httpEventToRequest(sourceHttpEventPair, destHttpEventPair.meta.service)
+      const inProducer = sourceHttpEventPair && httpEventToRequest(destHttpEventPair, sourceHttpEventPair.meta.service)
       return {
         outProducer,
         inConsumer,
@@ -26,10 +26,10 @@ export const getHttpPanelRequestsAndResponses = createSelector(
         outConsumer,
       }
     } else {
-      const outProducer = httpEventToRequest(destHttpEventPair, sourceHttpEventPair.meta.service)
-      const inConsumer = httpEventToRequest(sourceHttpEventPair, destHttpEventPair.meta.service)
-      const outConsumer = httpEventToRequest(destHttpEvent, sourceHttpEvent.meta.service)
-      const inProducer = httpEventToRequest(sourceHttpEvent, destHttpEvent.meta.service)
+      const outProducer = sourceHttpEventPair && httpEventToRequest(destHttpEventPair, sourceHttpEventPair.meta.service)
+      const inConsumer = destHttpEventPair && httpEventToRequest(sourceHttpEventPair, destHttpEventPair.meta.service)
+      const outConsumer = sourceHttpEventPair && httpEventToRequest(destHttpEvent, sourceHttpEvent.meta.service)
+      const inProducer = destHttpEventPair && httpEventToRequest(sourceHttpEvent, destHttpEvent.meta.service)
       return {
         outProducer,
         inConsumer,

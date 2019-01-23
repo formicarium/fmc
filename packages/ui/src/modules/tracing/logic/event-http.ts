@@ -9,8 +9,8 @@ export const httpEventToRequest = (event: IEvent, peerService: string): IRequest
     method,
     url,
   } = event.payload.tags.http
-  const headers = {} // TODO
-  const body = {}    // TODO
+  const headers = {} // event.payload.tags.http.headers // TODO
+  const body = JSON.parse(event.payload.payload)  // TODO
 
   return {
     spanId: getSpanIdFromEvent(event),

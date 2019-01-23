@@ -13,7 +13,7 @@ export interface IWithEventsProps {
 export const WithEvents: React.SFC<IWithEventsProps> = ({
   children
 }) => (
-  <Query query={EVENTS_QUERY}>
+  <Query query={EVENTS_QUERY} pollInterval={1}>
     {({ data, error, loading }) => {
       if (error) {
         return (

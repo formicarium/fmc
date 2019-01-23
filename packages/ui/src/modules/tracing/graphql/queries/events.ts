@@ -66,6 +66,7 @@ export interface ITags {
 }
 export interface IEventPayload {
   context: IPayloadContext
+  payload: string;
   data: string
   timestamp: Nullable<string>
   tags: ITags
@@ -96,8 +97,8 @@ export const EVENTS_QUERY = gql`
           spanId
           traceId
         }
-        data
         timestamp
+        payload
         tags {
           type
           direction

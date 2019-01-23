@@ -2,7 +2,7 @@ import FMCCommand from '../FMCCommand'
 import { flags as Flags } from '@oclif/command'
 import { spawn } from 'child_process'
 import * as inquirer from 'inquirer'
-import { IApplication } from '@formicarium/common/sr'
+import { IApplication } from '@formicarium/common'
 
 export default class Curl extends FMCCommand {
   public static description = 'Make a curl request to the service in the devspace being used. You can pass any extra arguments to curl at the end of the command'
@@ -68,7 +68,7 @@ export default class Curl extends FMCCommand {
       type: 'list',
       choices: applications.map((a) => a.name),
     }])
-    return applications.find((a) => a.name === responses.applicationName)
+    return applications.find((a) => a.name === responses.applicationName)!
   }
 
   public async run() {
@@ -77,8 +77,7 @@ export default class Curl extends FMCCommand {
     const { args: { serviceName, method, path }, argv } = this.parse(Curl)
     const opts = argv.slice(3)
     const applications = await soilService.getService(currentDevspace, serviceName)
-    const app = applications.length > 1 ? await this.getApplication(applications) : applications[0]
-    const { links } = app
+    const { links } = applications.length > 1 ? await this.getApplication(applications) : applications[0]
     const url = `${await this.getLink(links)}${path}`
     this.request(method, url, opts)
   }
