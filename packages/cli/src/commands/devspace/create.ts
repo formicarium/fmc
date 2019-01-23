@@ -8,6 +8,7 @@ export default class DevspaceCreate extends FMCCommand {
 
   public static examples = [
     `$ fmc devspace:create paps`,
+    `$ fmc devspace:create acq --arg sharded`
   ]
 
   public static flags = {
