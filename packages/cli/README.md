@@ -4,11 +4,9 @@ fmc
 A CLI to operate on Formicarium
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/fmc.svg)](https://npmjs.org/package/fmc)
+[![Version](https://img.shields.io/npm/v/fmc.svg)](https://npmjs.org/package/@formicarium/cli)
 [![CircleCI](https://circleci.com/gh/formicarium/formicarium-cli/tree/master.svg?style=shield)](https://circleci.com/gh/formicarium/formicarium-cli/tree/master)
-[![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/formicarium/formicarium-cli?branch=master&svg=true)](https://ci.appveyor.com/project/formicarium/formicarium-cli/branch/master)
-[![Codecov](https://codecov.io/gh/formicarium/formicarium-cli/branch/master/graph/badge.svg)](https://codecov.io/gh/formicarium/formicarium-cli)
-[![Downloads/week](https://img.shields.io/npm/dw/fmc.svg)](https://npmjs.org/package/fmc)
+[![Downloads/week](https://img.shields.io/npm/dw/fmc.svg)](https://npmjs.org/package/@formicarium/cli)
 [![License](https://img.shields.io/npm/l/fmc.svg)](https://github.com/formicarium/formicarium-cli/blob/master/package.json)
 
 <!-- toc -->
