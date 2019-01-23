@@ -28,7 +28,8 @@ jobs:
           command: |
             yarn install
             yarn build
-            yarn lerna publish from-git --yes
+            yarn publish
+
 
 workflows:
   version: 2
