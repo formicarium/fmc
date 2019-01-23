@@ -2,7 +2,6 @@
   "extends": "../tsconfig.settings.json",
   "compilerOptions": {
     "declaration": true,
-    "composite": true,
     "declarationMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -26,9 +25,6 @@
       "dom"
     ]
   },
-  "references": [
-    { "path": "../common" }
-  ],
   "include": [
     "./src/**/*"
   ],

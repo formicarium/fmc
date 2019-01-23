@@ -1,7 +1,6 @@
 import FMCCommand from '../FMCCommand'
 import { flags as Flags } from '@oclif/command'
 import { spawn } from 'child_process'
-import * as inquirer from 'inquirer'
 import { IApplication } from '@formicarium/common'
 
 export default class Curl extends FMCCommand {
