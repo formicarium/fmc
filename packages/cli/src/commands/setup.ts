@@ -2,7 +2,7 @@ import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../FMCCommand'
 
 export default class Setup extends FMCCommand {
-  public static description = 'Configures Formicarium CLI to one cluster'
+  public static description = 'Configures fmc CLI to one cluster'
 
   public static examples = [
     `$ fmc setup https://soil.your.host.here`,
