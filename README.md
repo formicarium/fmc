@@ -8,13 +8,21 @@
 - Electron UI
 - Common
 
-# Setup
+# Installing
+
+To install the Formicarium CLI (fmc) just run:
+
+```
+yarn add global @formicarium/cli
+```
+
+# Development Setup
 On the monorepo root:
 ```
 yarn install
 ```
 
-# Developing
+## Developing
 On the monorepo root:
 ```
 yarn build:watch
@@ -102,7 +110,7 @@ Just add code there and import it on any other package/app.
 If this package/app lives inside the monorepo (just like `UI` and `CLI`), you will always get the latest code version on your imports. (as long as you keep `yarn build:watch` running)
 
 ## Tools
-Anything installed here will be available for the other packages inside the monorepo. 
+Anything installed here will be available for the other packages inside the monorepo.
 
 Good things to be here:
 compilers (typescript), test runners (jest), linters (tslint), semantic-versioning stuff, etc.
