@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.settings.json",
+  "references": [
+    {
+      "path": "common"
+    },
+    {
+      "path": "cli"
+    },
+    {
+      "path": "ui"
+    },
+    {
+      "path": "tools"
+    },
+  ],
+  "files": [
+
+  ],
+  "baseUrl": "./packages",
+    "paths": {
+      "@formicarium/*": ["./*/src"]
+    }
+}

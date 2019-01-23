@@ -26,6 +26,7 @@
     "publish-packages": "./scripts/publish"
   },
   "devDependencies": {
-    "lerna": "^3.3.0"
+    "lerna": "^3.3.0",
+    "typescript": "^3.0.3"
   }
 }

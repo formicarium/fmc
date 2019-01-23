@@ -1,10 +1,14 @@
 {
+  "extends": "../tsconfig.settings.json",
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "lib",
     "module": "commonjs",
+    "declarationMap": true,
+    "esModuleInterop": true,
     "noUnusedLocals": true,
     "noImplicitAny": false,
+    "composite": true,
     "skipLibCheck": true,
     "removeComments": true,
     "preserveConstEnums": true,

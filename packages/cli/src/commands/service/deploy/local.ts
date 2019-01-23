@@ -4,7 +4,7 @@ import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../../FMCCommand'
 import * as fs from 'fs-extra'
 import * as path from 'path'
-import { IApplicationDefinition, IApplication, IArgs, Nullable } from '@formicarium/common'
+import { IApplicationDefinition, IApplication, Nullable } from '@formicarium/common'
 import { parseArg } from '../../../logic/args'
 
 export default class ServiceDeployLocal extends FMCCommand {
@@ -70,7 +70,7 @@ export default class ServiceDeployLocal extends FMCCommand {
      * Deploy service on soil
      */
     uiService.spinner.start('Deploying service...')
-    const response = await this.system.soilService.deployService(devspace.name, serviceName, applicationDefinition, null, true)
+    const response = await this.system.soilService.deployService(devspace.name, serviceName, applicationDefinition, {}, true)
 
     await localDB.registerServiceForDevspace(devspace.name, {
       name: serviceName,
