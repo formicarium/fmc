@@ -45,7 +45,7 @@ export interface ISoilService {
   createDevspace: (devspaceName: string, args: object, setup: Nullable<IApplicationDefinition[]>) => Promise<IDevspace>
   getDevspaces: () => Promise<IDevspace[]>
   getDevspace: (name: string) => Promise<IDevspace>
-  getService: (devspace: string, name: string) => Promise<IApplication>
+  getService: (devspace: string, name: string) => Promise<IApplication[]>
   deployService: (
     devspace: string, name: string,
     applicationDefinition: IApplicationDefinition | null,
@@ -96,8 +96,8 @@ export class SoilService implements ISoilService {
     }).then((response) => response.data)
   }
 
-  public getService = async (devspace: string, name: string): Promise<IApplication> => {
-    return this.httpClient.request<IApplication>({
+  public getService = async (devspace: string, name: string): Promise<IApplication[]> => {
+    return this.httpClient.request<IApplication[]>({
       method: 'get',
       url: `/api/devspaces/${devspace}/services/${name}`,
       baseURL: this.url,

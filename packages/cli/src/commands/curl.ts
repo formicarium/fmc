@@ -2,6 +2,7 @@ import FMCCommand from '../FMCCommand'
 import { flags as Flags } from '@oclif/command'
 import { spawn } from 'child_process'
 import * as inquirer from 'inquirer'
+import { IApplication } from '@formicarium/common'
 
 export default class Curl extends FMCCommand {
   public static description = 'Make a curl request to the service in the devspace being used. You can pass any extra arguments to curl at the end of the command'
@@ -45,29 +46,20 @@ export default class Curl extends FMCCommand {
     })
   }
 
-  private async getLink(links: any) {
+  private async getLink(application: IApplication) {
     const { flags } = this.parse(Curl)
     if (flags.interface === undefined) {
-      const responses = await inquirer.prompt<{ interface: string }>([{
-        name: 'interface',
-        message: 'Select a Interface',
-        type: 'list',
-        choices: Object.keys(links),
-      }])
-      return links[responses.interface]
+      this.selectLink(application)
     } else {
-      return links[flags.interface]
+      return application.links[flags.interface]
     }
   }
 
   public async run() {
-    const { configService, soilService } = this.system
-    const { devspace: { name: currentDevspace } } = await configService.readConfig()
     const { args: { serviceName, method, path }, argv } = this.parse(Curl)
     const opts = argv.slice(3)
-    // console.log(opts)
-    const { links } = await soilService.getService(currentDevspace, serviceName)
-    const url = `${await this.getLink(links)}${path}`
+    const app = await this.selectServiceApplication(serviceName)
+    const url = `${await this.getLink(app)}${path}`
     this.request(method, url, opts)
   }
 }

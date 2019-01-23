@@ -2,6 +2,8 @@ import Command, { flags as Flags } from '@oclif/command'
 import * as signale from 'signale'
 import chalk from 'chalk'
 import { getSystem, ISystem } from './system'
+import * as inquirer from 'inquirer'
+import { IApplication } from '@formicarium/common'
 
 export default abstract class FMCCommand extends Command {
   public system!: ISystem
@@ -9,17 +11,44 @@ export default abstract class FMCCommand extends Command {
   public static flags = {
     test: Flags.boolean(),
   }
+  protected currentDevspace = this.system.configService.readDevspaceConfig().then((c) => c.name)
 
   protected async init(): Promise<any> {
     this.system = await getSystem()
-    const { name } = await this.system.configService.readDevspaceConfig()
-    signale.info(`Currently using devspace: ${chalk.underline(name)}`)
+    const name = await this.currentDevspace
+    if (name) {
+      signale.info(`Currently using devspace: ${chalk.underline(name)}`)
+    } else {
+      signale.warn(`You are not using any devspace! Be sure to run \`fmc devspace:use <devspace>\``)
+    }
   }
 
-  // public async catch(err: Error) {
-  //   // handle any error from the command
-  // }
-  // public async finally(err: Error) {
-  //   // called after run and catch regardless of whether or not the command errored
-  // }
+  protected selectServiceApplication = async (service: string) => {
+    const applications = await this.system.soilService.getService(await this.currentDevspace, service)
+    return this.selectApplication(applications)
+  }
+
+  protected async selectApplication(applications: IApplication[]): Promise<IApplication> {
+    if (applications.length > 1) {
+      const responses = await inquirer.prompt<{ applicationName: string }>([{
+        name: 'applications',
+        message: 'Select an Application',
+        type: 'list',
+        choices: applications.map((a) => a.name),
+      }])
+      return applications.find((a) => a.name === responses.applicationName)!
+    } else {
+      return applications[0]
+    }
+  }
+
+  protected async selectLink({ links }: IApplication): Promise<string> {
+    const responses = await inquirer.prompt<{ interface: string }>([{
+      name: 'interface',
+      message: 'Select a Interface',
+      type: 'list',
+      choices: Object.keys(links),
+    }])
+    return links[responses.interface]
+  }
 }

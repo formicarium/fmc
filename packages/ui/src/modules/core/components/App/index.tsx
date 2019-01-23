@@ -44,17 +44,17 @@ export class App extends React.Component<{}, IState> {
     return (
       <SystemProvider system={this.state.system}>
         <Provider inject={[new SyncState(this.state.system)]}>
-          {/* <ApolloProvider client={client}> */}
-          <MockedHive>
-            <Subscribe to={[SyncState]}>
-              {(syncState: SyncState) => (
-                <BrowserRouter>
-                  <MainLayout syncState={syncState} />
-                </BrowserRouter>
-              )}
-            </Subscribe>
-          </MockedHive>
-          {/* </ApolloProvider> */}
+          <ApolloProvider client={client}>
+            {/* <MockedHive> */}
+              <Subscribe to={[SyncState]}>
+                {(syncState: SyncState) => (
+                  <BrowserRouter>
+                    <MainLayout syncState={syncState} />
+                  </BrowserRouter>
+                )}
+              </Subscribe>
+            {/* </MockedHive> */}
+          </ApolloProvider>
         </Provider>
       </SystemProvider>
     )

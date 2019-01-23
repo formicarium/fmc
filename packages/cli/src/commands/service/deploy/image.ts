@@ -23,7 +23,7 @@ export default class ServiceDeployImage extends FMCCommand {
   }
 
   public static args = [
-    { name: 'serviceName' },
+    { name: 'serviceName', required: true },
   ]
 
   public async run() {
