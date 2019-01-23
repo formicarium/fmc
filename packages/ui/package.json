@@ -17,7 +17,8 @@
   },
   "version": "1.0.17",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "main": "main.js",
   "source": true,
