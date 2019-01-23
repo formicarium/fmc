@@ -28,7 +28,7 @@ jobs:
           command: |
             yarn install
             yarn build
-            yarn publish
+            yarn publish-all
 
 
 workflows:
