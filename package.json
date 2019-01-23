@@ -1,18 +1,8 @@
 {
   "private": true,
-  "publishConfig": {
-    "access": "public"
-  },
-  "name": "@formicarium/frontend-monorepo",
-  "version": "1.0.5",
-  "main": "index.js",
-  "license": "MIT",
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {
-    "lerna": "^3.3.0"
-  },
   "scripts": {
     "build:watch": "lerna run build:watch --parallel",
     "build": "lerna run build",

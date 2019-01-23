@@ -5,11 +5,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "author": "Rafael Ribeiro @rafaelcorreiapoli",
+  "author": "Formicarium",
   "bin": {
     "fmc": "./bin/run"
   },
-  "bugs": "https://github.com/formicarium/formicarium-cli/issues",
+  "bugs": "https://github.com/formicarium/fmc/issues",
   "dependencies": {
     "@formicarium/common": "^1.2.15",
     "@oclif/command": "^1",
@@ -41,7 +41,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/formicarium/frontend-monorepo/tree/master/packages/cli",
+  "homepage": "https://github.com/formicarium/fmc/tree/master/packages/cli",
   "keywords": [
     "oclif"
   ],
@@ -54,7 +54,7 @@
       "@oclif/plugin-help"
     ]
   },
-  "repository": "formicarium/formicarium-cli",
+  "repository": "formicarium/fmc",
   "scripts": {
     "clean": "rimraf lib",
     "build": "tsc -p .",
