@@ -1,4 +1,4 @@
-import {IDevspace, IApplicationDefinition, IApplicationLinks, IApplication} from '../model/devspace'
+import {IDevspace, IApplicationDefinition, IApplication} from '../model/devspace'
 import { IHttpClient } from '../components/http-client'
 import { Nullable } from '../utils/types'
 import * as R from 'ramda'
