@@ -4,7 +4,7 @@ fmc
 A CLI to operate on Formicarium
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/fmc.svg)](https://npmjs.org/package/@formicarium/cli)
+[![Version](https://img.shields.io/npm/v/@formicarium/cli.svg)](https://npmjs.org/package/@formicarium/cli)
 [![CircleCI](https://circleci.com/gh/formicarium/formicarium-cli/tree/master.svg?style=shield)](https://circleci.com/gh/formicarium/formicarium-cli/tree/master)
 [![Downloads/week](https://img.shields.io/npm/dw/fmc.svg)](https://npmjs.org/package/@formicarium/cli)
 [![License](https://img.shields.io/npm/l/fmc.svg)](https://github.com/formicarium/formicarium-cli/blob/master/package.json)
