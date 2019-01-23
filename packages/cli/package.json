@@ -1,6 +1,6 @@
 {
   "name": "@formicarium/cli",
-  "version": "1.4.19",
+  "version": "1.4.20",
   "description": "A CLI to operate on Formicarium",
   "publishConfig": {
     "access": "public"
