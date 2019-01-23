@@ -1,7 +1,7 @@
 import * as ps from 'ps-node'
 import * as os from 'os'
 import { spawn, SpawnOptions } from 'child_process'
-import * as getPort from 'get-port'
+import getPort from 'get-port'
 
 export interface IProcessDescription {
   pid: string

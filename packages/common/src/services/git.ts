@@ -1,6 +1,6 @@
 import { RemoteWithRefs } from 'simple-git/response'
 import * as gitP from 'simple-git/promise'
-import * as moment from 'moment'
+import moment from 'moment'
 import * as fs from 'fs-extra'
 import * as path from 'path'
 
@@ -29,7 +29,7 @@ export class GitService {
   private simpleGit: SimpleGitGetter
 
   constructor() {
-    this.simpleGit = gitP
+    this.simpleGit = gitP as any
   }
 
   private getGit = (basePath: string, log: boolean = false) => {

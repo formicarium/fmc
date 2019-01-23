@@ -34,7 +34,8 @@
     "node-watch": "^0.5.8",
     "ps-node": "^0.1.6",
     "ramda": "^0.25.0",
-    "simple-git": "^1.96.0"
+    "simple-git": "^1.96.0",
+    "typescript": "^3.0.3"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

@@ -1,4 +1,4 @@
-import * as ora from 'ora'
+import ora from 'ora'
 import * as inquirer from 'inquirer'
 import * as signale from 'signale'
 import * as Table from 'tty-table'

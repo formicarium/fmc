@@ -1,5 +1,5 @@
-import * as low from 'lowdb'
-import * as FileAsync from 'lowdb/adapters/FileAsync'
+import low from 'lowdb'
+import FileAsync from 'lowdb/adapters/FileAsync'
 import * as path from 'path'
 import * as os from 'os'
 import {
