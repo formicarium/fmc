@@ -46,39 +46,20 @@ export default class Curl extends FMCCommand {
     })
   }
 
-  private async getLink(links: any) {
+  private async getLink(application: IApplication) {
     const { flags } = this.parse(Curl)
     if (flags.interface === undefined) {
-      const responses = await inquirer.prompt<{ interface: string }>([{
-        name: 'interface',
-        message: 'Select a Interface',
-        type: 'list',
-        choices: Object.keys(links),
-      }])
-      return links[responses.interface]
+      this.selectLink(application)
     } else {
-      return links[flags.interface]
+      return application.links[flags.interface]
     }
   }
 
-  private async getApplication(applications: IApplication[]) {
-    const responses = await inquirer.prompt<{ applicationName: string }>([{
-      name: 'applications',
-      message: 'Select an Application',
-      type: 'list',
-      choices: applications.map((a) => a.name),
-    }])
-    return applications.find((a) => a.name === responses.applicationName)!
-  }
-
   public async run() {
-    const { configService, soilService } = this.system
-    const { devspace: { name: currentDevspace } } = await configService.readConfig()
     const { args: { serviceName, method, path }, argv } = this.parse(Curl)
     const opts = argv.slice(3)
-    const applications = await soilService.getService(currentDevspace, serviceName)
-    const { links } = applications.length > 1 ? await this.getApplication(applications) : applications[0]
-    const url = `${await this.getLink(links)}${path}`
+    const app = await this.selectServiceApplication(serviceName)
+    const url = `${await this.getLink(app)}${path}`
     this.request(method, url, opts)
   }
 }

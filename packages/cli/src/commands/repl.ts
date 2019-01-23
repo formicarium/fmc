@@ -1,6 +1,6 @@
 import FMCCommand from '../FMCCommand'
-import {flags as Flags} from '@oclif/command'
-import {spawn} from 'child_process'
+import { flags as Flags } from '@oclif/command'
+import { spawn } from 'child_process'
 import * as inquirer from 'inquirer'
 
 export default class Repl extends FMCCommand {
@@ -14,7 +14,7 @@ export default class Repl extends FMCCommand {
 
   public static flags = {
     ...FMCCommand.flags,
-    help: Flags.help({char: 'h'}),
+    help: Flags.help({ char: 'h' }),
   }
 
   public static args = [
@@ -38,12 +38,12 @@ export default class Repl extends FMCCommand {
   }
 
   public async run() {
-    const {configService, soilService} = this.system
-    const {devspace: {name: currentDevspace, hiveReplUrl}} = await configService.readConfig()
-    const {args: {serviceName, interfaceName}} = this.parse(Repl)
+    const { configService } = this.system
+    const { devspace: { hiveReplUrl } } = await configService.readConfig()
+    const { args: { serviceName, interfaceName } } = this.parse(Repl)
 
     if (serviceName) {
-      const {links} = await soilService.getService(currentDevspace, serviceName)
+      const { links } = await this.selectServiceApplication(serviceName)
       if (interfaceName) {
         const replUrl = links[interfaceName]
         this.connect(replUrl)
@@ -56,7 +56,6 @@ export default class Repl extends FMCCommand {
           type: 'list',
           choices: nreplInterfaces,
         }])
-
         const nrepl = responses.nreplInterface
         console.info(`You selected ${nrepl} interface. Trying to connect to ${links[nrepl]}`)
         this.connect(links[nrepl])
