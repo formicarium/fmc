@@ -9,7 +9,6 @@ export default abstract class FMCCommand extends Command {
   public system!: ISystem
 
   public static flags = {
-    test: Flags.boolean(),
   }
 
   protected currentDevspace = () => this.system.configService.readDevspaceConfig().then((c) => c.name)

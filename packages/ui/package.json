@@ -15,15 +15,16 @@
       "build/*"
     ]
   },
-  "version": "1.0.15",
+  "version": "1.0.17",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "main": "main.js",
   "source": true,
   "license": "MIT",
   "dependencies": {
-    "@formicarium/common": "^1.2.15",
+    "@formicarium/common": "^1.2.17",
     "ansi-to-react": "^3.3.1",
     "apollo-cache": "^1.1.16",
     "apollo-cache-inmemory": "^1.2.9",

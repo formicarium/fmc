@@ -21,16 +21,19 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run:
-          name: Build CLI
+          name: Authenticate
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/.npmrc
+      - run:
+          name: Build & Publish CLI
           command: |
             yarn install
             yarn build
-            echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
-            yarn lerna publish from-git --yes
+            yarn publish-all
+
 
 workflows:
   version: 2
-  monorepo:
+  fmc:
     jobs:
       - test
       - publish:
