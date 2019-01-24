@@ -1,7 +1,7 @@
 import ora from 'ora'
 import * as inquirer from 'inquirer'
 import * as signale from 'signale'
-import * as Table from 'tty-table'
+import Table from 'tty-table'
 import { IHashMap, Maybe } from '@formicarium/common'
 import { Ora } from '../typings/ora'
 
