@@ -1,7 +1,7 @@
 
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
-import * as Table from 'tty-table'
+import Table from 'tty-table'
 import moment from 'moment'
 import { IApp, AppStatus } from '@formicarium/common'
 
