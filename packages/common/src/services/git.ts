@@ -1,5 +1,5 @@
 import { RemoteWithRefs } from 'simple-git/response'
-import * as gitP from 'simple-git/promise'
+import gitP from 'simple-git/promise'
 import moment from 'moment'
 import * as fs from 'fs-extra'
 import * as path from 'path'
