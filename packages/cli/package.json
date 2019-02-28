@@ -62,6 +62,7 @@
     "test": "nyc mocha --forbid-only \"test/**/*.test.ts\"",
     "test:watch": "nyc mocha --forbid-only \"test/**/*.test.ts\" --watch",
     "lint": "tslint -p tsconfig.json -c tslint.json",
+    "lint:fix": "tslint --fix -p tsconfig.json -c tslint.json",
     "readme": "oclif-dev readme",
     "manifest": "oclif-dev manifest",
     "postpack": "rm -f oclif.manifest.json",

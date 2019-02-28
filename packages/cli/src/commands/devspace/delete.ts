@@ -20,13 +20,13 @@ export default class DevspaceDelete extends FMCCommand {
   public async run() {
     const { args } = this.parse(DevspaceDelete)
     const { name } = args
-      const { soilService, uiService, configService } = this.system
+    const { soilService, uiService, configService } = this.system
     if (await uiService.promptBoolean(`Confirm deleting ${name}? (y/n)`)) {
       uiService.warn(`Deleting ${name}...`)
       await soilService.deleteDevspace(name)
-        console.log(await this.currentDevspace())
-        console.log(name)
-        if (await this.currentDevspace() === name) {
+      console.log(await this.currentDevspace())
+      console.log(name)
+      if (await this.currentDevspace() === name) {
             await configService.unsetDevspaceConfig()
         }
       uiService.success('Devspace Deleted')
