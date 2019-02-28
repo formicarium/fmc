@@ -66,7 +66,7 @@ export class ConfigService implements IConfigService {
         ...currentConfig,
         devspace: {},
     })
- }
+  }
 
   public setSoilURL = async (uri: string): Promise<void> => {
     const currentConfig = await this.readConfig()
