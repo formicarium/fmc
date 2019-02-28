@@ -54,9 +54,9 @@ export default class Curl extends FMCCommand {
       return application.links[flags.interface]
     }
   }
-  
+
   protected showDevspace(): boolean {
-    return false;
+    return false
   }
 
   public async run() {
