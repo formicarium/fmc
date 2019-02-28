@@ -11,6 +11,7 @@ export default class Curl extends FMCCommand {
     `$ fmc curl GET purgatory /api/version`,
     `$ fmc curl POST -i default purgatory /do/something`,
     `$ fmc curl POST purgatory /do/something -d '{...}'`,
+    `$ fmc curl GET s0-purgatory /api/version`,
   ]
 
   public static flags = {
