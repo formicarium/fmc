@@ -25,6 +25,7 @@ export interface IConfigService {
   readDevspaceConfig: () => Promise<IDevspaceConfig>
   readConfig: () => Promise<IConfigContent>
   setDevspaceConfig: (config: IDevspaceConfig) => Promise<void>
+  unsetDevspaceConfig: () => Promise<void>
   setSoilURL: (uri: string) => Promise<void>
 }
 export class ConfigService implements IConfigService {
@@ -56,6 +57,14 @@ export class ConfigService implements IConfigService {
     await fs.writeJson(configFilePath, {
       ...currentConfig,
       devspace: devspaceConfig,
+    })
+  }
+
+  public unsetDevspaceConfig = async (): Promise<void> => {
+    const currentConfig = await this.readConfig()
+    await fs.writeJson(configFilePath, {
+        ...currentConfig,
+        devspace: {},
     })
   }
 

@@ -1,6 +1,6 @@
 {
   "name": "@formicarium/cli",
-  "version": "1.4.26",
+  "version": "1.4.27",
   "description": "A CLI to operate on Formicarium",
   "publishConfig": {
     "access": "public",
@@ -12,7 +12,7 @@
   },
   "bugs": "https://github.com/formicarium/fmc/issues",
   "dependencies": {
-    "@formicarium/common": "^1.2.21",
+    "@formicarium/common": "^1.2.22",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^2",
@@ -62,6 +62,7 @@
     "test": "nyc mocha --forbid-only \"test/**/*.test.ts\"",
     "test:watch": "nyc mocha --forbid-only \"test/**/*.test.ts\" --watch",
     "lint": "tslint -p tsconfig.json -c tslint.json",
+    "lint:fix": "tslint --fix -p tsconfig.json -c tslint.json",
     "readme": "oclif-dev readme",
     "manifest": "oclif-dev manifest",
     "postpack": "rm -f oclif.manifest.json",
