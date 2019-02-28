@@ -20,6 +20,7 @@ export default class Curl extends FMCCommand {
       char: 'i',
       helpValue: '',
       name: 'interface',
+      default: 'default',
       description: 'Interface to send the request',
     }),
   }
@@ -30,7 +31,7 @@ export default class Curl extends FMCCommand {
       required: true,
     },
     {
-      name: 'serviceName',
+      name: 'applicationName',
       required: true,
     },
     {
@@ -53,11 +54,15 @@ export default class Curl extends FMCCommand {
       return application.links[flags.interface]
     }
   }
+  
+  protected showDevspace(): boolean {
+    return false;
+  }
 
   public async run() {
-    const { args: { serviceName, method, path }, argv } = this.parse(Curl)
+    const { args: { applicationName, method, path }, argv } = this.parse(Curl)
     const opts = argv.slice(3)
-    const app = await this.selectServiceApplication(serviceName)
+    const app = await this.getApplicationByName(applicationName)
     const url = `${await this.getLink(app)}${path}`
     this.request(method, url, opts)
   }
