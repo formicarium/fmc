@@ -11,6 +11,7 @@ export default class Curl extends FMCCommand {
     `$ fmc curl GET purgatory /api/version`,
     `$ fmc curl POST -i default purgatory /do/something`,
     `$ fmc curl POST purgatory /do/something -d '{...}'`,
+    `$ fmc curl GET s0-purgatory /api/version`,
   ]
 
   public static flags = {
@@ -20,6 +21,7 @@ export default class Curl extends FMCCommand {
       char: 'i',
       helpValue: '',
       name: 'interface',
+      default: 'default',
       description: 'Interface to send the request',
     }),
   }
@@ -30,7 +32,7 @@ export default class Curl extends FMCCommand {
       required: true,
     },
     {
-      name: 'serviceName',
+      name: 'applicationName',
       required: true,
     },
     {
@@ -54,10 +56,14 @@ export default class Curl extends FMCCommand {
     }
   }
 
+  protected showDevspace(): boolean {
+    return false
+  }
+
   public async run() {
-    const { args: { serviceName, method, path }, argv } = this.parse(Curl)
+    const { args: { applicationName, method, path }, argv } = this.parse(Curl)
     const opts = argv.slice(3)
-    const app = await this.selectServiceApplication(serviceName)
+    const app = await this.getApplicationByName(applicationName)
     const url = `${await this.getLink(app)}${path}`
     this.request(method, url, opts)
   }

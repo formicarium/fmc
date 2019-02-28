@@ -16,11 +16,15 @@ export default abstract class FMCCommand extends Command {
   protected async init(): Promise<any> {
     this.system = await getSystem()
     const name = await this.currentDevspace()
-    if (name) {
-      signale.info(`Currently using devspace: ${chalk.underline(name)}`)
-    } else {
+    if (!name) {
       signale.warn(`You are not using any devspace! Be sure to run \`fmc devspace:use <devspace>\``)
+    } else if (this.showDevspace()) {
+      signale.info(`Currently using devspace: ${chalk.underline(name)}`)
     }
+  }
+
+  protected showDevspace(): boolean {
+    return true
   }
 
   protected selectServiceApplication = async (service: string) => {
@@ -28,10 +32,20 @@ export default abstract class FMCCommand extends Command {
     return this.selectApplication(applications)
   }
 
+  protected getApplicationByName = async (applicationName: string): Promise<IApplication> => {
+    const {applications} = await this.system.soilService.getDevspace(await this.currentDevspace())
+
+    const app: IApplication | undefined = applications.find((a) => a.name === applicationName)
+    if (!app) {
+      signale.error(`Could not find application ${applicationName}`)
+    }
+    return app as IApplication
+  }
+
   protected async selectApplication(applications: IApplication[]): Promise<IApplication> {
     if (applications.length > 1) {
       const responses = await inquirer.prompt<{ applicationName: string }>([{
-        name: 'applications',
+        name: 'applicationName',
         message: 'Select an Application',
         type: 'list',
         choices: applications.map((a) => a.name),
