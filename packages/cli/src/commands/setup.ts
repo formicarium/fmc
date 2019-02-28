@@ -20,11 +20,16 @@ export default class Setup extends FMCCommand {
     },
   ]
 
+  protected showDevspace(): boolean {
+    return false
+  }
+
   public async run() {
     const { uiService } = this.system
     const { args } = this.parse(Setup)
     const { url } = args
     await this.system.configService.setSoilURL(url)
+    await this.system.configService.unsetDevspaceConfig()
     uiService.info(`Formicarium is now pointing to ${url}`)
   }
 }
