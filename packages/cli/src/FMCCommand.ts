@@ -31,7 +31,7 @@ export default abstract class FMCCommand extends Command {
   protected async selectApplication(applications: IApplication[]): Promise<IApplication> {
     if (applications.length > 1) {
       const responses = await inquirer.prompt<{ applicationName: string }>([{
-        name: 'applications',
+        name: 'applicationName',
         message: 'Select an Application',
         type: 'list',
         choices: applications.map((a) => a.name),
