@@ -1,4 +1,4 @@
-import * as watch from 'node-watch'
+import watch from 'node-watch'
 import * as fs from 'fs-extra'
 
 type ChangedEvent = (evt: string, name: string) => void
