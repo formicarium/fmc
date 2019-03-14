@@ -2,6 +2,7 @@
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../../FMCCommand'
 import { parseArg } from '../../../logic/args'
+import { IOutputFlags } from '../../../services/output'
 
 export default class ServiceDeployImage extends FMCCommand {
   public static description = 'Deploys service'
@@ -27,7 +28,7 @@ export default class ServiceDeployImage extends FMCCommand {
   ]
 
   public async run() {
-    const { configService, uiService } = this.system
+    const { configService, uiService, outputService } = this.system
     const { devspace } = await configService.readConfig()
 
     const { args, flags } = this.parse(ServiceDeployImage)
@@ -36,10 +37,10 @@ export default class ServiceDeployImage extends FMCCommand {
 
     const argMap = (arg && arg.length) ? parseArg(arg) : null
 
-    uiService.jsonToTable({
-      serviceName,
-      argMap: argMap ? `${JSON.stringify(argMap)}` : '-',
-    })
+    outputService.put([{
+      service: serviceName,
+      arguments: argMap,
+    }], flags as IOutputFlags)
 
     /**
      * Deploy service on soil

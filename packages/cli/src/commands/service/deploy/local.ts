@@ -6,6 +6,7 @@ import * as fs from 'fs-extra'
 import * as path from 'path'
 import { IApplicationDefinition, IApplication, Nullable } from '@formicarium/common'
 import { parseArg } from '../../../logic/args'
+import { IOutputFlags } from '../../../services/output'
 
 export default class ServiceDeployLocal extends FMCCommand {
   public static description = 'Deploys service'
@@ -43,7 +44,7 @@ export default class ServiceDeployLocal extends FMCCommand {
   }
 
   public async run() {
-    const { configService, tanajuraService, gitService, uiService, localDB } = this.system
+    const { configService, tanajuraService, gitService, uiService, localDB, outputService } = this.system
     const { devspace } = await configService.readConfig()
 
     const { args, flags } = this.parse(ServiceDeployLocal)
@@ -56,13 +57,12 @@ export default class ServiceDeployLocal extends FMCCommand {
     const applicationDefinition: any = absoluteFilePath ? await this.getFileContent<IApplicationDefinition>(absoluteFilePath) : null
     const argMap = (arg && arg.length) ? parseArg(arg) : null
 
-    uiService.jsonToTable({
-      serviceName,
-      absoluteLocalRepoPath,
-      absoluteFilePath,
-      applicationDefinition: applicationDefinition ? `${JSON.stringify(applicationDefinition)}` : '-',
-      argMap: argMap ? `${JSON.stringify(argMap)}` : '-',
-    })
+    outputService.put([{
+      service: serviceName,
+      repository: absoluteLocalRepoPath,
+      filepath: absoluteFilePath,
+      definition: applicationDefinition,
+    }], flags as IOutputFlags)
 
     await gitSetup(devspace.name, serviceName, absoluteLocalRepoPath, devspace.tanajuraApiUrl, tanajuraService, gitService, configService, uiService)
 

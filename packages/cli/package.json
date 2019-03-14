@@ -1,6 +1,6 @@
 {
   "name": "@formicarium/cli",
-  "version": "1.4.29",
+  "version": "1.4.30",
   "description": "A CLI to operate on Formicarium",
   "publishConfig": {
     "access": "public",
@@ -12,18 +12,20 @@
   },
   "bugs": "https://github.com/formicarium/fmc/issues",
   "dependencies": {
-    "@formicarium/common": "^1.2.24",
+    "@formicarium/common": "^1.2.25",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-autocomplete": "^0.1.0",
     "@oclif/plugin-help": "^2",
-    "cli-ux": "^4.7.3",
+    "cli-highlight": "^2.0.0",
+    "cli-ux": "^5.2.1",
     "inquirer": "^6.1.0",
     "ora": "^3.0.0",
     "signale": "^1.2.1",
     "tsconfig-paths": "^3.5.0",
     "tslib": "^1",
-    "tty-table": "^2.6.8"
+    "tty-table": "^2.6.8",
+    "yaml": "^1.4.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.18.0",

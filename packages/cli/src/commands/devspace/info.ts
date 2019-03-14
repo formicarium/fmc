@@ -1,9 +1,15 @@
 import { flags as Flags } from '@oclif/command'
 import Table from 'tty-table'
 import FMCCommand from '../../FMCCommand'
+import { string } from '@oclif/command/lib/flags'
+import { IOutputFlags } from '../../services/output'
 
 const NoVersion = undefined
-
+export interface IDevspaceInfoOutput {
+  service: string,
+  version: string,
+  url: string[]
+}
 export default class DevspaceUse extends FMCCommand {
   public static description = 'Get information for the current devspace'
 
@@ -17,7 +23,8 @@ export default class DevspaceUse extends FMCCommand {
   }
 
   public async run() {
-    const { soilService, hiveService, tanajuraService, configService, uiService } = this.system
+    const { soilService, hiveService, tanajuraService, configService, uiService, outputService } = this.system
+    const { flags } = this.parse(DevspaceUse)
     /*
     * Logging Proggress
     */
@@ -26,33 +33,32 @@ export default class DevspaceUse extends FMCCommand {
     const N_TASKS = 3
     interactive.await(`Getting Versions... [0/${N_TASKS}]`)
     const increment = (v: any) => {
+      // uiService.info("counter = " + counter)
       counter++
-      if (counter === 4) {
-        interactive.success(`Getting Versions... [${counter}/${N_TASKS}]`)
+      if (counter === N_TASKS) {
+        interactive.success(`Getting Versions... [${counter}/${N_TASKS}]\n`)
       } else {
         interactive.await(`Getting Versions... [${counter}/${N_TASKS}]`)
       }
       return v
     }
-    const { devspace: { hiveApiUrl, hiveReplUrl, tanajuraApiUrl, tanajuraGitUrl }, soilUrl } = await configService.readConfig()
 
     /**
      * Get versions
      */
+    const { devspace: { hiveApiUrl, hiveReplUrl, tanajuraApiUrl, tanajuraGitUrl }, soilUrl } = await configService.readConfig()
     const soilVersion = soilService.getVersion().catch(() => NoVersion).then(increment)
     const hiveVersion = hiveService.getVersion().catch(() => NoVersion).then(increment)
     const tanajuraVersion = tanajuraService.getVersion(tanajuraApiUrl).catch(() => NoVersion).then(increment)
-
     /**
-     * Render table
+     * Render output
      */
-    const headers = [{ value: 'Service' }, { value: 'Version' }, { value: 'URL' }]
-    const columns = [
-      ['Hive', await hiveVersion, `${hiveApiUrl}\n${hiveReplUrl}`],
-      ['Tanajura', await tanajuraVersion, `${tanajuraApiUrl}\n${tanajuraGitUrl}`],
-      ['Soil', await soilVersion, soilUrl],
+    const out = [
+      // {service: 'Hive', version: await hiveVersion, url:`${hiveApiUrl}\n${hiveReplUrl}`},
+      {service: 'Hive', version: await hiveVersion, url: [hiveApiUrl, hiveReplUrl]},
+      {service: 'Tanajura', version: await tanajuraVersion, url: [tanajuraApiUrl, tanajuraGitUrl]},
+      {service: 'Soil', version: await soilVersion, url: [soilUrl]},
     ]
-    const table = new Table(headers, columns)
-    uiService.log(table.render())
+    outputService.put(out, flags as IOutputFlags)
   }
 }

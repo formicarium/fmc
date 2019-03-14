@@ -4,11 +4,12 @@ import chalk from 'chalk'
 import { getSystem, ISystem } from './system'
 import * as inquirer from 'inquirer'
 import { IApplication } from '@formicarium/common'
-
+import { outputFlags } from './services/output'
 export default abstract class FMCCommand extends Command {
   public system!: ISystem
 
   public static flags = {
+    ...outputFlags,
   }
 
   protected currentDevspace = () => this.system.configService.readDevspaceConfig().then((c) => c.name)
@@ -19,7 +20,7 @@ export default abstract class FMCCommand extends Command {
     if (!name) {
       signale.warn(`You are not using any devspace! Be sure to run \`fmc devspace:use <devspace>\``)
     } else if (this.showDevspace()) {
-      signale.info(`Currently using devspace: ${chalk.underline(name)}`)
+      signale.info(`Currently using devspace: ${chalk.underline(name)}\n`)
     }
   }
 

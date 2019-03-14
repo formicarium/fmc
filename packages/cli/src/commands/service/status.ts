@@ -4,6 +4,7 @@ import FMCCommand from '../../FMCCommand'
 import Table from 'tty-table'
 import moment from 'moment'
 import { IApp, AppStatus } from '@formicarium/common'
+import { IOutputFlags } from '../../services/output'
 
 const CHECK = '🚀'
 const ERROR = '🔴'
@@ -32,32 +33,20 @@ export default class ServiceStatus extends FMCCommand {
     }
   }
   private renderRow = (app: IApp) => {
-    return [
-      app.name,
-      app.version,
-      this.renderStatus(app.status),
-      this.renderIsSynced(this.isSynced(app)),
-      this.renderDate(app.lastRemoteCommitTimestamp),
-    ]
-  }
-  private render = (apps: IApp[]) => {
-    const headers = [
-      { value: 'Service', width: 30 },
-      { value: 'Version', width: 30  },
-      { value: 'Status', width: 30  },
-      { value: 'Sync', width: 30  },
-      { value: 'Last Sync', width: 30  },
-    ]
-    const columns = apps.map(this.renderRow)
-
-    const table = new Table(headers, columns)
-    return table.render()
+    return {
+      name: app.name,
+      version: app.version,
+      status: this.renderStatus(app.status),
+      sync: this.renderIsSynced(this.isSynced(app)),
+      date: this.renderDate(app.lastRemoteCommitTimestamp),
+    }
   }
 
   public async run() {
-    const { soilService, uiService } = this.system
-
+    const { soilService, uiService, outputService} = this.system
+    const { flags } = this.parse(ServiceStatus)
     const response = await soilService.getStatus()
-    uiService.log(this.render(response.apps))
+
+    outputService.put(response.apps.map(this.renderRow), flags as IOutputFlags)
   }
 }
