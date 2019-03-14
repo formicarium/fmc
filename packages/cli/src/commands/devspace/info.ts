@@ -1,8 +1,8 @@
 import { flags as Flags } from '@oclif/command'
 import Table from 'tty-table'
 import FMCCommand from '../../FMCCommand'
-import { string } from '@oclif/command/lib/flags';
-import { IOutputFlags } from '../../services/output';
+import { string } from '@oclif/command/lib/flags'
+import { IOutputFlags } from '../../services/output'
 
 const NoVersion = undefined
 export interface IDevspaceInfoOutput {
@@ -55,7 +55,7 @@ export default class DevspaceUse extends FMCCommand {
      */
     const out = [
       // {service: 'Hive', version: await hiveVersion, url:`${hiveApiUrl}\n${hiveReplUrl}`},
-      {service: 'Hive', version: await hiveVersion, url:[hiveApiUrl, hiveReplUrl]},
+      {service: 'Hive', version: await hiveVersion, url: [hiveApiUrl, hiveReplUrl]},
       {service: 'Tanajura', version: await tanajuraVersion, url: [tanajuraApiUrl, tanajuraGitUrl]},
       {service: 'Soil', version: await soilVersion, url: [soilUrl]},
     ]

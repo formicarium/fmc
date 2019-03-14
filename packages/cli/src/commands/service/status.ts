@@ -4,7 +4,7 @@ import FMCCommand from '../../FMCCommand'
 import Table from 'tty-table'
 import moment from 'moment'
 import { IApp, AppStatus } from '@formicarium/common'
-import { IOutputFlags } from '../../services/output';
+import { IOutputFlags } from '../../services/output'
 
 const CHECK = '🚀'
 const ERROR = '🔴'

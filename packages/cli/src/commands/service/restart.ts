@@ -1,7 +1,7 @@
 import { getServiceIdentifier } from '@formicarium/common'
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
-import { IOutputFlags } from '../../services/output';
+import { IOutputFlags } from '../../services/output'
 
 export default class ServiceDeploy extends FMCCommand {
   public static description = 'Restart a service deployed in dev mode'

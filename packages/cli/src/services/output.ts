@@ -19,7 +19,7 @@ export const flags = {
     char: 'o',
     description: 'set output type',
     required: false,
-    default: 'table'
+    default: 'table',
   }),
 }
 
@@ -32,12 +32,14 @@ export class OutputService implements IOutputService {
         ...acc,
         [header]: {
           minWidth: 20,
-          get: row => {
+          get: (row) => {
             const value = row[header]
-            if (value instanceof Array)
+            if (value instanceof Array) {
               return value.join('\n')
-            if (value instanceof Object)
+            }
+            if (value instanceof Object) {
               return [...Object.keys(value).map((k) => `${k}: ${value[k]}`), ''].join('\n')
+            }
             return value
           },
         },
@@ -58,18 +60,18 @@ export class OutputService implements IOutputService {
   }
 
   public put<T extends object>(objects: T[], flags: IOutputFlags): void {
-    switch(flags.output) {
+    switch (flags.output) {
       case 'table': {
         this.table(objects, flags)
-        break;
+        break
       }
       case 'json': {
         this.json(objects)
-        break;
+        break
       }
       case 'yaml': {
         this.yaml(objects)
-        break;
+        break
       }
     }
   }

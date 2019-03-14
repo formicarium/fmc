@@ -6,7 +6,7 @@ import * as fs from 'fs-extra'
 import * as path from 'path'
 import { IApplicationDefinition, IApplication, Nullable } from '@formicarium/common'
 import { parseArg } from '../../../logic/args'
-import { IOutputFlags } from '../../../services/output';
+import { IOutputFlags } from '../../../services/output'
 
 export default class ServiceDeployLocal extends FMCCommand {
   public static description = 'Deploys service'
@@ -56,7 +56,7 @@ export default class ServiceDeployLocal extends FMCCommand {
 
     const applicationDefinition: any = absoluteFilePath ? await this.getFileContent<IApplicationDefinition>(absoluteFilePath) : null
     const argMap = (arg && arg.length) ? parseArg(arg) : null
-    
+
     outputService.put([{
       service: serviceName,
       repository: absoluteLocalRepoPath,

@@ -2,7 +2,7 @@
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../../FMCCommand'
 import { parseArg } from '../../../logic/args'
-import { IOutputFlags } from '../../../services/output';
+import { IOutputFlags } from '../../../services/output'
 
 export default class ServiceDeployImage extends FMCCommand {
   public static description = 'Deploys service'
@@ -36,7 +36,7 @@ export default class ServiceDeployImage extends FMCCommand {
     const { arg } = flags
 
     const argMap = (arg && arg.length) ? parseArg(arg) : null
-    
+
     outputService.put([{
       service: serviceName,
       arguments: argMap,

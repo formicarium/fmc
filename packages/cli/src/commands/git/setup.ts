@@ -3,7 +3,7 @@ import {flags as Flags} from '@oclif/command'
 import { gitSetup } from '../../controllers/git'
 import FMCCommand from '../../FMCCommand'
 import { getServiceIdentifier } from '@formicarium/common'
-import { IOutputFlags } from '../../services/output';
+import { IOutputFlags } from '../../services/output'
 
 export default class GitSetup extends FMCCommand {
   public static description = 'Deploys service'

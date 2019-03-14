@@ -1,6 +1,6 @@
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
-import { IOutputFlags } from '../../services/output';
+import { IOutputFlags } from '../../services/output'
 export interface IInterfacesCell {
   [name: string]: string
 }

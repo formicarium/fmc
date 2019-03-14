@@ -22,7 +22,7 @@ import {
   IKubectlService,
 } from '@formicarium/common'
 import { IUIService, UIService } from './services/ui'
-import { IOutputService, OutputService } from './services/output';
+import { IOutputService, OutputService } from './services/output'
 
 export interface ISystem {
   configService: IConfigService
