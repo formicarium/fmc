@@ -18,6 +18,6 @@ export class HiveService {
       method: 'get',
       url: '/version',
       baseURL: this.url,
-    }).then((d) => d.data.version)
+    }).then((d) => d.data.version.toString())
   }
 }

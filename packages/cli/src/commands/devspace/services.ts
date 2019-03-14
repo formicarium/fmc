@@ -1,6 +1,13 @@
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
-
+import { IOutputFlags } from '../../services/output';
+export interface IInterfacesCell {
+  [name: string]: string
+}
+export interface IServiceRow {
+  application: string,
+  interfaces: IInterfacesCell
+}
 export default class DevspaceServices extends FMCCommand {
   public static description = 'Lists the services in your devspace'
 
@@ -18,11 +25,11 @@ export default class DevspaceServices extends FMCCommand {
   ]
 
   public async run() {
-    const { uiService, configService } = this.system
+    const { uiService, configService, outputService } = this.system
     const { name } = await configService.readDevspaceConfig()
-    const { args } = this.parse(DevspaceServices)
+    const { args, flags } = this.parse(DevspaceServices)
 
-    uiService.spinner.start(`Listing services of ${name}`)
+    // uiService.spinner.start(`Listing services of ${name}`)
     const response = await this.system.soilService.getDevspace(name)
 
     if (args.name) {
@@ -35,15 +42,16 @@ export default class DevspaceServices extends FMCCommand {
         uiService.log('\n')
       }
     } else {
-      const table = response.applications.reduce((acc, app) => ({
-        ...acc,
-        [app.name]: Object.keys(app.links).reduce((accLinks, linkName) => ([
+      const table = response.applications.map((app) => ({
+        application: app.name,
+        interfaces: Object.keys(app.links).reduce((accLinks, linkName) => ({
           ...accLinks,
-          `+ ${linkName}: ${app.links[linkName]}`,
-        ]), [] as string[]).join('\n'),
-      }), {})
-      uiService.jsonToTable(table, { value: 'Application', align: 'left', width: 30 }, { value: 'Interfaces', align: 'left' })
+          [linkName]: app.links[linkName],
+        }), {} as IInterfacesCell),
+      }))
+      // uiService.jsonToTable(table, { value: 'Application', align: 'left', width: 30 }, { value: 'Interfaces', align: 'left' })
+      outputService.put(table, flags as IOutputFlags)
     }
-    uiService.spinner.succeed()
+    // uiService.spinner.succeed()
   }
 }

@@ -22,6 +22,7 @@ import {
   IKubectlService,
 } from '@formicarium/common'
 import { IUIService, UIService } from './services/ui'
+import { IOutputService, OutputService } from './services/output';
 
 export interface ISystem {
   configService: IConfigService
@@ -36,6 +37,7 @@ export interface ISystem {
   httpClient: IHttpClient
   filesService: IFilesService
   kubectl: IKubectlService
+  outputService: IOutputService
 }
 
 export const getSystem = async (): Promise<ISystem> => {
@@ -53,6 +55,7 @@ export const getSystem = async (): Promise<ISystem> => {
   const filesService = new FilesService()
   const uiService = new UIService()
   const kubectl = new KubectlService()
+  const outputService = new OutputService()
 
   return {
     configService,
@@ -67,5 +70,6 @@ export const getSystem = async (): Promise<ISystem> => {
     httpClient,
     filesService,
     kubectl,
+    outputService,
   }
 }

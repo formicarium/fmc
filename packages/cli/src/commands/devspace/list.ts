@@ -1,6 +1,15 @@
 import { flags as Flags } from '@oclif/command'
 import Table from 'tty-table'
+import cli from 'cli-ux'
 import FMCCommand from '../../FMCCommand'
+import {IOutputFlags} from '../../services/output'
+
+interface IDevspaceListRow {
+  name: string,
+  hive: string,
+  git: string
+}
+
 export default class DevspaceList extends FMCCommand {
   public static description = 'List availables Devspaces'
 
@@ -14,16 +23,19 @@ export default class DevspaceList extends FMCCommand {
   }
 
   public async run() {
-    const { uiService, configService, soilService } = this.system
+    const { uiService, configService, soilService, outputService } = this.system
     const { devspace: selectedDevspace } = await configService.readConfig()
+    const {flags} = this.parse(DevspaceList)
     const devspaces = await soilService.getDevspaces()
-    const header = [{ value: 'Name' }, { value: 'Hive' }, { value: 'Git' }]
-    const columns = devspaces.map((devspace) => {
-      const check = selectedDevspace && selectedDevspace.name === devspace.name ? ' ☑️ ' : ''
-      return [`${check} ${devspace.name}`, devspace.hive.links.default, devspace.tanajura.links.git]
-    })
 
-    const table = new Table(header, columns)
-    uiService.log(table.render())
+    const columns = devspaces.map((devspace) => {
+      const check = selectedDevspace && selectedDevspace.name === devspace.name ? '*' : ' '
+      return {
+        name: `${check} ${devspace.name}`,
+        hive: devspace.hive.links.default,
+        git: devspace.tanajura.links.git,
+      } as IDevspaceListRow
+    })
+    outputService.put(columns, flags as IOutputFlags)
   }
 }
