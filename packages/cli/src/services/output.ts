@@ -13,7 +13,7 @@ export interface IOutputFlags {
   csv: boolean | undefined
 }
 
-export const flags = {
+export const outputFlags = {
   ...cli.table.flags(),
   output: Flags.string({
     char: 'o',

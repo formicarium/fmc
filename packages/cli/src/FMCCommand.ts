@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import { getSystem, ISystem } from './system'
 import * as inquirer from 'inquirer'
 import { IApplication } from '@formicarium/common'
-import {flags as outputFlags} from './services/output'
+import { outputFlags } from './services/output'
 export default abstract class FMCCommand extends Command {
   public system!: ISystem
 
