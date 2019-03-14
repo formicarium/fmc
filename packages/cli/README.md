@@ -20,7 +20,7 @@ $ npm install -g @formicarium/cli
 $ fmc COMMAND
 running command...
 $ fmc (-v|--version|version)
-@formicarium/cli/1.4.29 darwin-x64 node-v11.9.0
+@formicarium/cli/1.4.30 darwin-x64 node-v11.9.0
 $ fmc --help [COMMAND]
 USAGE
   $ fmc COMMAND
@@ -83,6 +83,14 @@ USAGE
 OPTIONS
   -h, --help                 show CLI help
   -i, --interface=interface  [default: default] Interface to send the request
+  -o, --output=output        [default: table] set output type
+  -x, --extended             show extra columns
+  --columns=columns          only show provided columns (comma-separated)
+  --csv                      output is csv format
+  --filter=filter            filter property by partial string matching, ex: name=foo
+  --no-header                hide table header from output
+  --no-truncate              do not truncate output to fit screen
+  --sort=sort                property to sort by (prepend '-' for descending)
 
 EXAMPLES
   $ fmc curl GET purgatory /api/version
@@ -91,7 +99,7 @@ EXAMPLES
   $ fmc curl GET s0-purgatory /api/version
 ```
 
-_See code: [src/commands/curl.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/curl.ts)_
+_See code: [src/commands/curl.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/curl.ts)_
 
 ## `fmc devspace:create ID`
 
@@ -102,15 +110,23 @@ USAGE
   $ fmc devspace:create ID
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -x, --extended       show extra columns
   --arg=arg
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLES
   $ fmc devspace:create paps
   $ fmc devspace:create acq --arg sharded
 ```
 
-_See code: [src/commands/devspace/create.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/devspace/create.ts)_
+_See code: [src/commands/devspace/create.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/devspace/create.ts)_
 
 ## `fmc devspace:delete NAME`
 
@@ -121,13 +137,21 @@ USAGE
   $ fmc devspace:delete NAME
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLE
   $ fmc devspace:delete paps
 ```
 
-_See code: [src/commands/devspace/delete.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/devspace/delete.ts)_
+_See code: [src/commands/devspace/delete.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/devspace/delete.ts)_
 
 ## `fmc devspace:info`
 
@@ -138,13 +162,21 @@ USAGE
   $ fmc devspace:info
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLE
   $ fmc devspace:info
 ```
 
-_See code: [src/commands/devspace/info.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/devspace/info.ts)_
+_See code: [src/commands/devspace/info.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/devspace/info.ts)_
 
 ## `fmc devspace:list`
 
@@ -155,13 +187,21 @@ USAGE
   $ fmc devspace:list
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLE
   $ fmc devspace:list
 ```
 
-_See code: [src/commands/devspace/list.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/devspace/list.ts)_
+_See code: [src/commands/devspace/list.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/devspace/list.ts)_
 
 ## `fmc devspace:services [NAME]`
 
@@ -172,13 +212,21 @@ USAGE
   $ fmc devspace:services [NAME]
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLE
   $ fmc devspace:services
 ```
 
-_See code: [src/commands/devspace/services.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/devspace/services.ts)_
+_See code: [src/commands/devspace/services.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/devspace/services.ts)_
 
 ## `fmc devspace:use NAME`
 
@@ -189,13 +237,21 @@ USAGE
   $ fmc devspace:use NAME
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLE
   $ fmc devspace:use paps
 ```
 
-_See code: [src/commands/devspace/use.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/devspace/use.ts)_
+_See code: [src/commands/devspace/use.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/devspace/use.ts)_
 
 ## `fmc git:push [SERVICENAME]`
 
@@ -206,14 +262,22 @@ USAGE
   $ fmc git:push [SERVICENAME]
 
 OPTIONS
-  -h, --help   show CLI help
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
   -w, --watch
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLE
   $ fmc git:push
 ```
 
-_See code: [src/commands/git/push.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/git/push.ts)_
+_See code: [src/commands/git/push.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/git/push.ts)_
 
 ## `fmc git:setup [NAME] [LOCALFOLDER]`
 
@@ -224,14 +288,22 @@ USAGE
   $ fmc git:setup [NAME] [LOCALFOLDER]
 
 OPTIONS
-  -h, --help         show CLI help
-  -s, --shard=shard  service shard
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -s, --shard=shard    service shard
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLE
   $ fmc service:setup .
 ```
 
-_See code: [src/commands/git/setup.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/git/setup.ts)_
+_See code: [src/commands/git/setup.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/git/setup.ts)_
 
 ## `fmc help [COMMAND]`
 
@@ -259,7 +331,15 @@ USAGE
   $ fmc repl [SERVICENAME] [INTERFACENAME]
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLES
   $ fmc repl
@@ -267,7 +347,7 @@ EXAMPLES
   $ fmc repl purgatory common-repl
 ```
 
-_See code: [src/commands/repl.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/repl.ts)_
+_See code: [src/commands/repl.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/repl.ts)_
 
 ## `fmc service:delete NAME`
 
@@ -278,14 +358,22 @@ USAGE
   $ fmc service:delete NAME
 
 OPTIONS
-  -h, --help         show CLI help
-  -s, --shard=shard  service shard
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -s, --shard=shard    service shard
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLE
   $ fmc service:delete mancini
 ```
 
-_See code: [src/commands/service/delete.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/service/delete.ts)_
+_See code: [src/commands/service/delete.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/service/delete.ts)_
 
 ## `fmc service:deploy:image SERVICENAME`
 
@@ -296,15 +384,23 @@ USAGE
   $ fmc service:deploy:image SERVICENAME
 
 OPTIONS
-  -a, --arg=arg  an arg to be sent to config server
-  -h, --help     show CLI help
+  -a, --arg=arg        an arg to be sent to config server
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLES
   $ fmc service:deploy:image my-service
   $ fmc service:deploy:image my-service --arg version=5cfc8f3
 ```
 
-_See code: [src/commands/service/deploy/image.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/service/deploy/image.ts)_
+_See code: [src/commands/service/deploy/image.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/service/deploy/image.ts)_
 
 ## `fmc service:deploy:local [SERVICENAME] [LOCALPATH]`
 
@@ -318,12 +414,20 @@ OPTIONS
   -a, --arg=arg            an arg to be sent to config server
   -f, --filePath=filePath  absoluteFilePath
   -h, --help               show CLI help
+  -o, --output=output      [default: table] set output type
+  -x, --extended           show extra columns
+  --columns=columns        only show provided columns (comma-separated)
+  --csv                    output is csv format
+  --filter=filter          filter property by partial string matching, ex: name=foo
+  --no-header              hide table header from output
+  --no-truncate            do not truncate output to fit screen
+  --sort=sort              property to sort by (prepend '-' for descending)
 
 EXAMPLE
   $ fmc service:deploy:local -l . -f my-args.json my-service --arg version=1 --arg xablau=xpto
 ```
 
-_See code: [src/commands/service/deploy/local.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/service/deploy/local.ts)_
+_See code: [src/commands/service/deploy/local.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/service/deploy/local.ts)_
 
 ## `fmc service:logs NAME`
 
@@ -336,12 +440,20 @@ USAGE
 OPTIONS
   -f, --follow=follow  Follow logs
   -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLE
   $ fmc service:logs mancini
 ```
 
-_See code: [src/commands/service/logs.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/service/logs.ts)_
+_See code: [src/commands/service/logs.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/service/logs.ts)_
 
 ## `fmc service:restart NAME`
 
@@ -352,13 +464,21 @@ USAGE
   $ fmc service:restart NAME
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLE
   $ fmc service:restart mancini
 ```
 
-_See code: [src/commands/service/restart.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/service/restart.ts)_
+_See code: [src/commands/service/restart.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/service/restart.ts)_
 
 ## `fmc service:status`
 
@@ -369,13 +489,21 @@ USAGE
   $ fmc service:status
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLE
   $ fmc service:restart mancini
 ```
 
-_See code: [src/commands/service/status.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/service/status.ts)_
+_See code: [src/commands/service/status.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/service/status.ts)_
 
 ## `fmc setup URL`
 
@@ -386,11 +514,19 @@ USAGE
   $ fmc setup URL
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help           show CLI help
+  -o, --output=output  [default: table] set output type
+  -x, --extended       show extra columns
+  --columns=columns    only show provided columns (comma-separated)
+  --csv                output is csv format
+  --filter=filter      filter property by partial string matching, ex: name=foo
+  --no-header          hide table header from output
+  --no-truncate        do not truncate output to fit screen
+  --sort=sort          property to sort by (prepend '-' for descending)
 
 EXAMPLE
   $ fmc setup https://soil.your.host.here
 ```
 
-_See code: [src/commands/setup.ts](https://github.com/formicarium/fmc/blob/v1.4.29/src/commands/setup.ts)_
+_See code: [src/commands/setup.ts](https://github.com/formicarium/fmc/blob/v1.4.30/src/commands/setup.ts)_
 <!-- commandsstop -->
