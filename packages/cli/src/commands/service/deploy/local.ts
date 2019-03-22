@@ -9,7 +9,7 @@ import { parseArg } from '../../../logic/args'
 import { IOutputFlags } from '../../../services/output'
 
 export default class ServiceDeployLocal extends FMCCommand {
-  public static description = 'Deploys service'
+  public static description = 'Deploys service from local files'
 
   public static examples = [
     `$ fmc service:deploy:local -l . -f my-args.json my-service --arg version=1 --arg xablau=xpto`,
@@ -37,9 +37,7 @@ export default class ServiceDeployLocal extends FMCCommand {
     if (!fileExists) {
       throw new Error(`File ${filePath} does not exist`)
     }
-
     const fileContent = await fs.readJson(filePath) as T
-
     return fileContent
   }
 

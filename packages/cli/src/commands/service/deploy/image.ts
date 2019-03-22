@@ -5,7 +5,7 @@ import { parseArg } from '../../../logic/args'
 import { IOutputFlags } from '../../../services/output'
 
 export default class ServiceDeployImage extends FMCCommand {
-  public static description = 'Deploys service'
+  public static description = 'Deploys service image'
 
   public static examples = [
     `$ fmc service:deploy:image my-service`,

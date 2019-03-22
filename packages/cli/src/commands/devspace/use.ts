@@ -3,8 +3,8 @@ import FMCCommand from '../../FMCCommand'
 import chalk from 'chalk'
 import { devspaceToDevspaceConfig } from '@formicarium/common'
 
-export default class DevspaceUse extends FMCCommand {
-  public static description = 'Configures to use one Devspace context'
+export default class DevspcaeInfo extends FMCCommand {
+  public static description = 'Get version information about the current devspace'
 
   public static examples = [
     `$ fmc devspace:use paps`,
@@ -24,7 +24,7 @@ export default class DevspaceUse extends FMCCommand {
 
   public async run() {
     const { configService, soilService, uiService } = this.system
-    const { args } = this.parse(DevspaceUse)
+    const { args } = this.parse(DevspcaeInfo)
     const { name } = args
     const devspace = await soilService.getDevspace(name)
     const devspaceConfig = devspaceToDevspaceConfig(devspace)

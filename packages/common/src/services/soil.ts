@@ -1,4 +1,4 @@
-import {IDevspace, IApplicationDefinition, IApplication} from '../model/devspace'
+import { IDevspace, IApplicationDefinition, IApplication } from '../model/devspace'
 import { IHttpClient } from '../components/http-client'
 import { Nullable } from '../utils/types'
 import * as R from 'ramda'
@@ -41,6 +41,16 @@ export interface IGetStatusResponse {
   apps: IApp[]
 }
 
+export interface IServiceSetService {
+  name: string
+  syncable: boolean
+  args?: object
+}
+
+export interface IServiceSetPayload {
+  services: IServiceSetService[]
+}
+
 export interface ISoilService {
   createDevspace: (devspaceName: string, args: object, setup: Nullable<IApplicationDefinition[]>) => Promise<IDevspace>
   getDevspaces: () => Promise<IDevspace[]>
@@ -52,6 +62,7 @@ export interface ISoilService {
     args: Nullable<IArgs>,
     syncable: boolean,
   ) => Promise<IApplication[]>
+  deployServiceSet: (devspace: string, serviceSet: IServiceSetPayload) => Promise<IApplication[]>
   getStatus: () => Promise<IGetStatusResponse>
   deleteService: (devspace: string, serviceName: string) => Promise<any>
   deleteDevspace: (devspace: string) => Promise<any>
@@ -121,6 +132,17 @@ export class SoilService implements ISoilService {
       data,
       method: 'post',
       url: `${this.url}/api/devspaces/${devspace}/services`,
+    }).then((response) => response.data)
+  }
+
+  public deployServiceSet = async (
+    devspace: string,
+    serviceSet: any,
+  ): Promise<IApplication[]> => {
+    return this.httpClient.request<IApplication[]>({
+      data: serviceSet,
+      method: 'post',
+      url: `${this.url}/api/devspaces/${devspace}/deploy-set`,
     }).then((response) => response.data)
   }
 
