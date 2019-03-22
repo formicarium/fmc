@@ -5,6 +5,13 @@ import { IApplication } from '@formicarium/common'
 import * as _ from 'lodash'
 import { gitSetup } from '../../../controllers/git'
 
+interface IServiceSetConfig {
+  name: string
+  localPath?: string
+  args?: object
+  syncable?: boolean
+}
+
 export default class ServiceDeploySet extends FMCCommand {
 
   public static description = 'Deploys a service set definition'
@@ -42,7 +49,7 @@ export default class ServiceDeploySet extends FMCCommand {
     const { devspace } = await configService.readConfig()
     const { args: { filePath }, flags } = this.parse(ServiceDeploySet)
     const content = await this.getFileContent(filePath)
-    const services: any[] = content.services.map((service) => {
+    const services: IServiceSetConfig[] = content.services.map((service) => {
       if (service.localPath) {
         return { ...service, localPath: this.interpolateEnvVars(service.localPath), syncable: true }
       } else {
@@ -56,7 +63,7 @@ export default class ServiceDeploySet extends FMCCommand {
           service: service.name,
           repository: service.localPath,
         }], flags as any)
-        await gitSetup(devspace.name, service.name, service.localPath, devspace.tanajuraApiUrl, tanajuraService, gitService, configService, uiService)
+        await gitSetup(devspace.name, service.name, service.localPath!, devspace.tanajuraApiUrl, tanajuraService, gitService, configService, uiService)
       }
     }
 
@@ -67,7 +74,7 @@ export default class ServiceDeploySet extends FMCCommand {
       if (service.syncable) {
         await localDB.registerServiceForDevspace(devspace.name, {
           name: service.name,
-          repoPath: service.localPath,
+          repoPath: service.localPath!,
           stingerUrls: response.filter((app) => app.service === service.name).map((app: IApplication) => app.links.stinger),
         })
       }

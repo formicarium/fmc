@@ -1,4 +1,4 @@
-import {IDevspace, IApplicationDefinition, IApplication} from '../model/devspace'
+import { IDevspace, IApplicationDefinition, IApplication } from '../model/devspace'
 import { IHttpClient } from '../components/http-client'
 import { Nullable } from '../utils/types'
 import * as R from 'ramda'
@@ -41,12 +41,14 @@ export interface IGetStatusResponse {
   apps: IApp[]
 }
 
+export interface IServiceSetService {
+  name: string
+  syncable: boolean
+  args?: object
+}
+
 export interface IServiceSetPayload {
-  services: Array<{
-    name: string;
-    syncable: boolean;
-    args?: object
-  }>
+  services: IServiceSetService[]
 }
 
 export interface ISoilService {
