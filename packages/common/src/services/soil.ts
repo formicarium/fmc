@@ -52,6 +52,7 @@ export interface ISoilService {
     args: Nullable<IArgs>,
     syncable: boolean,
   ) => Promise<IApplication[]>
+  deployServiceSet: (devspace: string, serviceSet: any) => Promise<IApplication[]>
   getStatus: () => Promise<IGetStatusResponse>
   deleteService: (devspace: string, serviceName: string) => Promise<any>
   deleteDevspace: (devspace: string) => Promise<any>
@@ -121,6 +122,17 @@ export class SoilService implements ISoilService {
       data,
       method: 'post',
       url: `${this.url}/api/devspaces/${devspace}/services`,
+    }).then((response) => response.data)
+  }
+
+  public deployServiceSet = async (
+    devspace: string,
+    serviceSet: any,
+  ): Promise<IApplication[]> => {
+    return this.httpClient.request<IApplication[]>({
+      data: serviceSet,
+      method: 'post',
+      url: `${this.url}/api/devspaces/${devspace}/deploy-set`,
     }).then((response) => response.data)
   }
 

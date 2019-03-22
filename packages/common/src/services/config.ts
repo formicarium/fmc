@@ -1,6 +1,7 @@
 import * as path from 'path'
 import * as fs from 'fs-extra'
 import * as os from 'os'
+import * as _ from 'lodash'
 
 const homeDir = () => os.homedir()
 const configFilePath = path.resolve(homeDir(), '.fmc/config.json')
@@ -18,6 +19,7 @@ export interface IConfigContent {
   soilUrl: string
   devspace: IDevspaceConfig
   kubectlBin: string
+  curlHeaders: Map<string, string>
 }
 
 export interface IConfigService {
@@ -63,8 +65,8 @@ export class ConfigService implements IConfigService {
   public unsetDevspaceConfig = async (): Promise<void> => {
     const currentConfig = await this.readConfig()
     await fs.writeJson(configFilePath, {
-        ...currentConfig,
-        devspace: {},
+      ...currentConfig,
+      devspace: {},
     })
   }
 
@@ -74,5 +76,10 @@ export class ConfigService implements IConfigService {
       ...currentConfig,
       soilUrl: uri,
     })
+  }
+
+  public setCurlHeader = async (headerName: string, headerValue: string): Promise<void> => {
+    const currentConfig = await this.readConfig()
+    await fs.writeJson(configFilePath, _.set(currentConfig, ['curlHeaders', headerName], headerValue))
   }
 }
