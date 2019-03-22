@@ -50,8 +50,6 @@ export default class ServiceDeploySet extends FMCCommand {
       }
     })
 
-    console.log(services)
-
     for (const service of services) {
       if (service.syncable) {
         outputService.put([{

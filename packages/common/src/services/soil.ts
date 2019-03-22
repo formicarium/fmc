@@ -41,6 +41,14 @@ export interface IGetStatusResponse {
   apps: IApp[]
 }
 
+export interface IServiceSetPayload {
+  services: Array<{
+    name: string;
+    syncable: boolean;
+    args?: object
+  }>
+}
+
 export interface ISoilService {
   createDevspace: (devspaceName: string, args: object, setup: Nullable<IApplicationDefinition[]>) => Promise<IDevspace>
   getDevspaces: () => Promise<IDevspace[]>
@@ -52,7 +60,7 @@ export interface ISoilService {
     args: Nullable<IArgs>,
     syncable: boolean,
   ) => Promise<IApplication[]>
-  deployServiceSet: (devspace: string, serviceSet: any) => Promise<IApplication[]>
+  deployServiceSet: (devspace: string, serviceSet: IServiceSetPayload) => Promise<IApplication[]>
   getStatus: () => Promise<IGetStatusResponse>
   deleteService: (devspace: string, serviceName: string) => Promise<any>
   deleteDevspace: (devspace: string) => Promise<any>

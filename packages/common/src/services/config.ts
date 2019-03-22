@@ -77,9 +77,4 @@ export class ConfigService implements IConfigService {
       soilUrl: uri,
     })
   }
-
-  public setCurlHeader = async (headerName: string, headerValue: string): Promise<void> => {
-    const currentConfig = await this.readConfig()
-    await fs.writeJson(configFilePath, _.set(currentConfig, ['curlHeaders', headerName], headerValue))
-  }
 }
