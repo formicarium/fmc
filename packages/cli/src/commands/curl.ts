@@ -42,7 +42,7 @@ export default class Curl extends FMCCommand {
   ]
 
   private request(method: string, url: string, opts: any) {
-    spawn('curl', [`-X${method}`, url, ...opts], {
+    spawn('curl', [`-X${method.toUpperCase()}`, url, ...opts], {
       stdio: [process.stdin, process.stdout, process.stderr],
     })
   }
