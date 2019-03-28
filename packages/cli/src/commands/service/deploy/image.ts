@@ -3,6 +3,8 @@ import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../../FMCCommand'
 import { parseArg } from '../../../logic/args'
 import { IOutputFlags } from '../../../services/output'
+import { getFileContent } from '../../../common'
+import { IApplicationDefinition } from '@formicarium/common/lib'
 
 export default class ServiceDeployImage extends FMCCommand {
   public static description = 'Deploys service image'
@@ -21,6 +23,10 @@ export default class ServiceDeployImage extends FMCCommand {
       multiple: true,
       required: false,
     }),
+    filePath: Flags.string({
+      char: 'f',
+      description: 'path to a definition file to be used',
+    }),
   }
 
   public static args = [
@@ -33,7 +39,7 @@ export default class ServiceDeployImage extends FMCCommand {
 
     const { args, flags } = this.parse(ServiceDeployImage)
     const { serviceName } = args
-    const { arg } = flags
+    const { arg, filePath } = flags
 
     const argMap = (arg && arg.length) ? parseArg(arg) : null
 
@@ -42,11 +48,13 @@ export default class ServiceDeployImage extends FMCCommand {
       arguments: argMap,
     }], flags as IOutputFlags)
 
+    const definitionContent = filePath ? await getFileContent(filePath) : null
+
     /**
      * Deploy service on soil
      */
     uiService.spinner.start('Deploying service...')
-    await this.system.soilService.deployService(devspace.name, serviceName, null as any, argMap as any, false)
+    await this.system.soilService.deployService(devspace.name, serviceName, definitionContent as IApplicationDefinition, argMap as any, false)
 
     uiService.spinner.succeed()
   }
