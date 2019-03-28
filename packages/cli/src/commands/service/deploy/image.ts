@@ -25,6 +25,7 @@ export default class ServiceDeployImage extends FMCCommand {
     }),
     filePath: Flags.string({
       char: 'f',
+      description: 'path to a definition file to be used',
     }),
   }
 
