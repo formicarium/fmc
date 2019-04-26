@@ -31,7 +31,7 @@ export default class ServiceDelete extends FMCCommand {
       const apps = await soilService.getService(devspace.name, name)
       await soilService.deleteService(devspace.name, name)
       uiService.warn(`Deleting remote repos for ${name} from ${devspace.name}...`)
-      await apps.forEach(app => {
+      await apps.forEach((app) => {
         tanajuraService.deleteRepo(config.devspace.tanajuraApiUrl, app.name)
       })
       uiService.warn(`Deleting local repo on ${repoPath}...`)
