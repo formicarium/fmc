@@ -1,7 +1,7 @@
 import { LowdbAsync } from 'lowdb'
 import { Maybe } from '../utils/types'
 
-interface IService {
+export interface IService {
   name: string
   repoPath: string
   stingerUrls: string[]
