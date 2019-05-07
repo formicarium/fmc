@@ -16,13 +16,14 @@ export interface IGitService {
   getRemotes: (basePath: string) => Promise<RemoteWithRefs[]>
   removeRemote: (basePath: string, remoteName: string) => Promise<void>
   checkIfRepo: (basePath: string) => Promise<boolean>
+  deleteRepo: (basePath: string) => Promise<void>
   gitAddAll: (basePath: string) => Promise<void>
   gitCommit: (basePath: string, skipPull?: boolean) => Promise<gitP.CommitSummary>
   createMirrorRepo: (basePath: string) => Promise<void>
   alreadyHasMirrorRepo: (basePath: string) => Promise<boolean>
 }
 
-export class GitService {
+export class GitService implements IGitService {
   private static ORIGINAL_GIT_FOLDER = '.git'
   private static MIRROR_GIT_FOLDER = '.fmcgit'
 
@@ -111,4 +112,9 @@ export class GitService {
   }
 
   public alreadyHasMirrorRepo = async (basePath: string): Promise<boolean> => fs.pathExists(this.getMirrorGitRepoPath(basePath))
+
+  public deleteRepo = async (basePath: string): Promise<void> => {
+    const gitpath = `${basePath}/${GitService.MIRROR_GIT_FOLDER}`
+    fs.removeSync(gitpath)
+  }
 }
