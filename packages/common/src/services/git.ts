@@ -93,7 +93,6 @@ export class GitService implements IGitService {
 
   private isGPGSignConfigSet = async (basePath: string) => {
     let gpgsign: string = await this.getGitConfig(basePath, "commit.gpgsign")
-    console.log("The gpgsign is... ", gpgsign)
     return gpgsign === "true"
   }
   private addGPGSignConfig = async (basePath: string) => {
