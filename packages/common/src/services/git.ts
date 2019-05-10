@@ -39,6 +39,19 @@ export class GitService implements IGitService {
       .env('GIT_WORK_TREE', basePath)
       .env('HOME', process.env.HOME || '')
   }
+  public gitConfig = async (basePath: string, configPath: string, value: string) => {
+    return this.getGit(basePath).addConfig(configPath, value)
+  }
+
+  public getGitConfig = async (basePath: string, configPath: string): Promise<string> => {
+    return this.getGit(basePath).raw(
+      [
+        'config',
+        '--get',
+        configPath
+      ]
+    )
+  }
 
   public addRemote = (basePath: string, name: string, url: string): Promise<any> => {
     return this.getGit(basePath).addRemote(name, url)
@@ -77,13 +90,26 @@ export class GitService implements IGitService {
     return this.getGit(basePath).add(['.'])
   }
 
-  public gitCommit = async (basePath: string, skipPull?: boolean): Promise<gitP.CommitSummary> => {
-    return this.getGit(basePath)
-      .commit(this.getCommitMessage(skipPull), undefined, {
-        '--allow-empty': true,
-        '--author': `${FMC_GIT_AUTHOR} <${FMC_GIT_EMAIL}>`,
-      })
+
+  private isGPGSignConfigSet = async (basePath: string) => {
+    let gpgsign: string = await this.getGitConfig(basePath, "commit.gpgsign")
+    console.log("The gpgsign is... ", gpgsign)
+    return gpgsign === "true"
   }
+  private addGPGSignConfig = async (basePath: string) => {
+    await this.gitConfig(basePath, "commit.gpgsign", "false")
+  }
+
+  public gitCommit = async (basePath: string, skipPull?: boolean): Promise<gitP.CommitSummary> => {
+    if(!await this.isGPGSignConfigSet(basePath)) {
+      this.addGPGSignConfig(basePath)
+    }
+    return this.getGit(basePath).commit(this.getCommitMessage(skipPull), undefined, {
+      '--allow-empty': true,
+      '--author': `${FMC_GIT_AUTHOR} <${FMC_GIT_EMAIL}>`,
+    })
+  }
+
 
   private hasAlreadyExcluded = (lines: string[]) => !!lines.find((line) => line === GitService.MIRROR_GIT_FOLDER)
   private addExclude = (lines: string[]) => [...lines, GitService.MIRROR_GIT_FOLDER]
@@ -105,6 +131,7 @@ export class GitService implements IGitService {
 
   public createMirrorRepo = async (basePath: string): Promise<void> => {
     await this.getGit(basePath).init(false)
+    await this.addGPGSignConfig(basePath)
     await this.safelyAddExcludeToGit(basePath, GitService.ORIGINAL_GIT_FOLDER)
     await this.safelyAddExcludeToGit(basePath, GitService.MIRROR_GIT_FOLDER)
     await this.gitAddAll(basePath)
