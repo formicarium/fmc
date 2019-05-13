@@ -105,7 +105,8 @@ export class GitService implements IGitService {
     }
     return this.getGit(basePath).commit(this.getCommitMessage(skipPull), undefined, {
       '--allow-empty': true,
-      '--author': `${FMC_GIT_AUTHOR} <${FMC_GIT_EMAIL}>`,
+      '--no-verify': true,
+      '--author': `${FMC_GIT_AUTHOR} <${FMC_GIT_EMAIL}>`
     })
   }
 
