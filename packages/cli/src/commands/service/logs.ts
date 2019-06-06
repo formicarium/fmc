@@ -32,7 +32,7 @@ export default class ServiceLogs extends FMCCommand {
       return
     }
     const podName = pod.metadata.name
-    const childProcess = kubectl.streamLogs(devspace.name, podName, {bin: config.kubectlBin})
+    const childProcess = kubectl.streamLogs(devspace.name, podName, name, {bin: config.kubectlBin})
     childProcess.stdout.on('data', (buf) => {
       console.log(buf.toString())
     })
