@@ -38,9 +38,9 @@ const scripts = (command: string = 'kubectl') => ({
     command,
     args: ['port-forward', podName, `"${localPort}":"${containerPort}"`, '-n', namespace],
   }),
-  logs: (podName: string, namespace: string): ICommandAndArgs => ({
+  logs: (podName: string, containerName: string, namespace: string): ICommandAndArgs => ({
     command,
-    args: ['logs', podName, '-n', namespace, '-f', '--tail', `${DEFAULT_TAIL_SIZE}`],
+    args: ['logs', podName, '-c', containerName, '-n', namespace, '-f', '--tail', `${DEFAULT_TAIL_SIZE}`],
   }),
   version: (): ICommandAndArgs => ({
     command,
@@ -61,9 +61,10 @@ const spawnCommandAndArgs = (commandAndArgs: ICommandAndArgs, options?: SpawnOpt
 export interface IKubectlServiceOptions {
   bin?: string
 }
+
 export interface IKubectlService {
   getPodByLabel: (namespace: string, label: string, options?: IKubectlServiceOptions) => Promise<Nullable<IPod>>
-  streamLogs: (namespace: string, label: string, options?: IKubectlServiceOptions) => ChildProcess
+  streamLogs: (namespace: string, podName: string, containerName: string, options?: IKubectlServiceOptions) => ChildProcess
   portForward: (namespace: string, podName: string, localPort: number, containerPort: number, options?: IKubectlServiceOptions) => ChildProcess
   version: (options?: IKubectlServiceOptions) => Promise<IKubectlVersion>
 }
@@ -73,8 +74,8 @@ export class KubectlService implements IKubectlService {
     .then((response) => response.items[0])
   }
 
-  public streamLogs = (namespace: string, podName: string, options: IKubectlServiceOptions = {}): ChildProcess => {
-    return spawnCommandAndArgs(scripts(options.bin).logs(podName, namespace), {shell: true})
+  public streamLogs = (namespace: string, podName: string, containerName: string, options: IKubectlServiceOptions = {}): ChildProcess => {
+    return spawnCommandAndArgs(scripts(options.bin).logs(podName, containerName, namespace), {shell: true})
   }
 
   public portForward = (namespace: string, podName: string, localPort: number, containerPort: number, options: IKubectlServiceOptions = {}): ChildProcess => {
