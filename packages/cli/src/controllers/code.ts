@@ -38,8 +38,9 @@ const getGitIgnoreFilter = async (localFolderPath: string): Promise<(filepath: s
     return (filepath: string) => true
 }
 
-export const codeWatch = async (system: ISystem, localFolderPath: string, devspaceName: string) => {
-    const { uiService, filesService, gitService } = system
+export const codeWatch = async (system: ISystem, serviceName: string, devspaceName: string) => {
+    const { uiService, filesService, gitService, localDB } = system
+    const localFolderPath = await getRepoPath(serviceName, devspaceName, localDB)
     const interactive = uiService.newInteractive()
 
     const gitIgnoreFilter: (path: string) => boolean = await getGitIgnoreFilter(localFolderPath)
@@ -75,6 +76,6 @@ export const codePush = async (system: ISystem, serviceName: string, watch: bool
     }
 
     if (watch) {
-        codeWatch(system, localFolderPath, devspace.name)
+        codeWatch(system, serviceName, devspace.name)
     }
 }
