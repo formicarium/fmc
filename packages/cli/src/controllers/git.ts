@@ -142,4 +142,3 @@ export const gitPush = async (namespace: string, localFolderPath: string, gitSer
   }
   await gitService.push(localFolderPath, remoteName, 'tanajura')
 }
-

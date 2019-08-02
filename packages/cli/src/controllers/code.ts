@@ -62,7 +62,7 @@ export const codePush = async (system: ISystem, serviceName: string, watch: bool
     const { uiService, gitService, configService, localDB, filesService } = system
     const { devspace } = await configService.readConfig()
     const localFolderPath = await getRepoPath(serviceName, devspace.name, localDB)
-    
+
     // Pushing code
     uiService.spinner.start('Pushing...')
     await syncFlow(devspace.name, localFolderPath, gitService)
@@ -73,7 +73,7 @@ export const codePush = async (system: ISystem, serviceName: string, watch: bool
         uiService.log('creating file')
         await gitService.createMirrorRepo(localFolderPath)
     }
-  
+
     if (watch) {
         codeWatch(system, localFolderPath, devspace.name)
     }
