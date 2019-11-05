@@ -8,7 +8,7 @@ import { outputFlags } from './services/output'
 export default abstract class FMCCommand extends Command {
   public system!: ISystem
 
-  public static flags = {
+  public static flags: any = {
     ...outputFlags,
   }
 

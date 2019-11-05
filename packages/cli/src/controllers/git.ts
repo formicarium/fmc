@@ -7,8 +7,10 @@ import {
   isTanajuraAlreadyInRemotes,
   getTanajuraGitUrl,
   areRemotesEqual,
+  LocalDB,
 } from '@formicarium/common'
 import { IUIService } from '../services/ui'
+import { IService } from '@formicarium/common/src/services/db'
 
 export const shouldDeleteTanajuraRepo = async (serviceName: string, ui: IUIService): Promise<boolean> => {
   return ui.promptBoolean(`${serviceName} is already on remote git server, delete it ? (y/n)`)
@@ -141,4 +143,13 @@ export const gitPush = async (namespace: string, localFolderPath: string, gitSer
     throw new RemoteNotRegistered()
   }
   await gitService.push(localFolderPath, remoteName, 'tanajura')
+}
+
+export const deleteLocalRepoIfExists = async (uiService: IUIService, gitService: IGitService, localDB: LocalDB, devspaceName: string, serviceName: string) => {
+  const service = await localDB.getService(devspaceName, serviceName) as IService
+  if (service && service.repoPath) {
+    uiService.warn(`Deleting local repo on ${service.repoPath}...`)
+    gitService.deleteRepo(service.repoPath)
+    uiService.success('Local repo deleted')
+  } else uiService.warn('Could not find local repository')
 }
