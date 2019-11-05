@@ -151,5 +151,7 @@ export const deleteLocalRepoIfExists = async (uiService: IUIService, gitService:
     uiService.warn(`Deleting local repo on ${service.repoPath}...`)
     gitService.deleteRepo(service.repoPath)
     uiService.success('Local repo deleted')
-  } else uiService.warn('Could not find local repository')
+  } else {
+    uiService.warn('Could not find local repository')
+  }
 }

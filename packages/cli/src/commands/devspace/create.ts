@@ -1,4 +1,4 @@
-import { flags as Flags, flags } from '@oclif/command'
+import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
 import { createDevspace } from '../../controllers/devspace'
 import {parseArg} from '../../logic/args'
