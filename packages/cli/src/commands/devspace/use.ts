@@ -1,9 +1,8 @@
 import { flags as Flags } from '@oclif/command'
 import FMCCommand from '../../FMCCommand'
-import chalk from 'chalk'
-import { devspaceToDevspaceConfig } from '@formicarium/common'
+import * as DevspaceController from '../../controllers/devspace'
 
-export default class DevspcaeInfo extends FMCCommand {
+export default class DevspaceUse extends FMCCommand {
   public static description = 'Get version information about the current devspace'
 
   public static examples = [
@@ -23,12 +22,9 @@ export default class DevspcaeInfo extends FMCCommand {
   ]
 
   public async run() {
-    const { configService, soilService, uiService } = this.system
-    const { args } = this.parse(DevspcaeInfo)
+    const { args } = this.parse(DevspaceUse)
     const { name } = args
-    const devspace = await soilService.getDevspace(name)
-    const devspaceConfig = devspaceToDevspaceConfig(devspace)
-    await configService.setDevspaceConfig(devspaceConfig)
-    uiService.info(`Now using Devspace: ${chalk.underline(name)}`)
+
+    DevspaceController.useDevspace(this.system, name)
   }
 }

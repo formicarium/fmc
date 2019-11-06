@@ -1,5 +1,6 @@
 import { LowdbAsync } from 'lowdb'
 import { Maybe } from '../utils/types'
+import R from 'ramda'
 
 export interface IService {
   name: string
@@ -45,6 +46,14 @@ export class LocalDB {
 
   public getDevspaceServices = (devspace: string): IDevspace => {
     return this.db.get('devspaces').get(devspace).value()
+  }
+
+  public registerExistingDevspace = async (devspace: string, serviceList: IService[]): Promise<IDevspace> => {
+    const services = R.reduce((services: IServices, service: IService) => {
+      return {...services, [service.name]: R.merge(service, this.getService(devspace, service.name))}
+    }, {}, serviceList)
+    await this.db.set(`devspaces.${devspace}`, services).write()
+    return this.getDevspaceServices(devspace)
   }
 
   public registerServiceForDevspace = (devspace: string, service: IService): Promise<IDevspace> => {
