@@ -10,7 +10,7 @@ export interface IDevspaceInfoOutput {
   version: string,
   url: string[]
 }
-export default class DevspaceUse extends FMCCommand {
+export default class DevspaceInfo extends FMCCommand {
   public static description = 'Get information for the current devspace'
 
   public static examples = [
@@ -24,7 +24,7 @@ export default class DevspaceUse extends FMCCommand {
 
   public async run() {
     const { soilService, hiveService, tanajuraService, configService, uiService, outputService } = this.system
-    const { flags } = this.parse(DevspaceUse)
+    const { flags } = this.parse(DevspaceInfo)
     /*
     * Logging Proggress
     */
