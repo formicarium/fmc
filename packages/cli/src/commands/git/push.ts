@@ -42,8 +42,11 @@ export default class GitPush extends FMCCommand {
     if (!service) {
       throw new Error(`${serviceName} in ${namespace} not found`)
     }
+    if (!service.repoPath) {
+      throw new Error(`Could not find local repository for this service`)
+    }
 
-    return service.repoPath
+    return service.repoPath as string
   }
 
   private syncFlow = async (namespace: string, localFolderPath: string, gitService: IGitService) => {

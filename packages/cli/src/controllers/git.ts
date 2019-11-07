@@ -10,7 +10,7 @@ import {
   LocalDB,
 } from '@formicarium/common'
 import { IUIService } from '../services/ui'
-import { IService } from '@formicarium/common/src/services/db'
+import { IService } from '@formicarium/common/lib/services/db'
 
 export const shouldDeleteTanajuraRepo = async (serviceName: string, ui: IUIService): Promise<boolean> => {
   return ui.promptBoolean(`${serviceName} is already on remote git server, delete it ? (y/n)`)

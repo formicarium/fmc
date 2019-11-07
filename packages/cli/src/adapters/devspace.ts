@@ -1,5 +1,5 @@
 import { IApplication } from '@formicarium/common'
-import * as db from '@formicarium/common/src/services/db'
+import * as db from '@formicarium/common/lib/services/db'
 import R from 'ramda'
 
 const applicationToService = (serviceName: string, apps: IApplication[]): db.IService => {

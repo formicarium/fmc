@@ -5,7 +5,7 @@ import { IApplicationDefinition, LocalDB, IDevspace, devspaceToDevspaceConfig } 
 import { ISystem } from '../system'
 import * as DevspaceAdapter from '../adapters/devspace'
 import chalk from 'chalk'
-import * as db from '@formicarium/common/src/services/db'
+import * as db from '@formicarium/common/lib/services/db'
 
 export const createDevspace = async (id: string, args: object, system: ISystem) => {
   let setup: any

@@ -1,40 +1,40 @@
 import {expect, test} from '@oclif/test'
 import * as DevspaceAdapter from '../../src/adapters/devspace'
 import { IApplication } from '@formicarium/common'
-import * as db from '@formicarium/common/src/services/db'
+import * as db from '@formicarium/common/lib/services/db'
 describe('DevspaceAdapter', () => {
     it('applicationsToServices', () => {
 
         const apps: IApplication[] = [
             {
-                name: "mortician",
-                service: "mortician",
-                devspace: "some",
+                name: 'mortician',
+                service: 'mortician',
+                devspace: 'some',
                 links: {
-                    stinger: "https://stinger.mortician/",
+                    stinger: 'https://stinger.mortician/',
                 },
             },
             {
-                name: "auth",
-                service: "auth",
-                devspace: "some",
+                name: 'auth',
+                service: 'auth',
+                devspace: 'some',
                 links: {
-                    stinger: "https://stinger.auth/",
+                    stinger: 'https://stinger.auth/',
                 },
             },
         ]
         const expected: db.IService[] = [
             {
-                name: "mortician",
+                name: 'mortician',
                 stingerUrls: [
-                    "https://stinger.mortician/"
-                ]
+                    'https://stinger.mortician/',
+                ],
             },
             {
-                name: "auth",
+                name: 'auth',
                 stingerUrls: [
-                    "https://stinger.auth/"
-                ]
+                    'https://stinger.auth/',
+                ],
             },
         ]
         const value = DevspaceAdapter.applicationsToServices(apps)
