@@ -1,6 +1,6 @@
 {
   "name": "@formicarium/cli",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "A CLI to operate on Formicarium",
   "publishConfig": {
     "access": "public",
@@ -12,7 +12,7 @@
   },
   "bugs": "https://github.com/formicarium/fmc/issues",
   "dependencies": {
-    "@formicarium/common": "^1.5.1",
+    "@formicarium/common": "^1.5.2",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-autocomplete": "^0.1.0",
@@ -28,7 +28,7 @@
     "yaml": "^1.4.0"
   },
   "devDependencies": {
-    "@formicarium/tools": "^1.2.1",
+    "@formicarium/tools": "^1.2.2",
     "@oclif/dev-cli": "^1.18.0",
     "@oclif/test": "^1",
     "@types/chai": "^4",
