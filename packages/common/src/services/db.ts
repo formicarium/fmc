@@ -4,7 +4,7 @@ import R from 'ramda'
 
 export interface IService {
   name: string
-  repoPath: string
+  repoPath?: string
   stingerUrls: string[]
 }
 

@@ -28,6 +28,7 @@
     "yaml": "^1.4.0"
   },
   "devDependencies": {
+    "@formicarium/tools": "^1.2.1",
     "@oclif/dev-cli": "^1.18.0",
     "@oclif/test": "^1",
     "@types/chai": "^4",
