@@ -20,6 +20,8 @@ import {
   httpClient,
   KubectlService,
   IKubectlService,
+  IPitfallService,
+  PitfallService,
 } from '@formicarium/common'
 import { IUIService, UIService } from './services/ui'
 import { IOutputService, OutputService } from './services/output'
@@ -38,11 +40,12 @@ export interface ISystem {
   filesService: IFilesService
   kubectl: IKubectlService
   outputService: IOutputService
+  pitfallService: IPitfallService
 }
 
 export const getSystem = async (): Promise<ISystem> => {
   const configService = new ConfigService()
-  const { devspace: { hiveApiUrl, configServerUrl }, soilUrl } = await configService.readConfig()
+  const { devspace: { hiveApiUrl, configServerUrl }, soilUrl, pitfallUrl } = await configService.readConfig()
   const hiveService = new HiveService(hiveApiUrl, httpClient)
   const soilService = new SoilService(soilUrl, httpClient)
   const gitService = new GitService()
@@ -56,6 +59,7 @@ export const getSystem = async (): Promise<ISystem> => {
   const uiService = new UIService()
   const kubectl = new KubectlService()
   const outputService = new OutputService()
+  const pitfallService = new PitfallService(pitfallUrl, httpClient)
 
   return {
     configService,
@@ -71,5 +75,6 @@ export const getSystem = async (): Promise<ISystem> => {
     filesService,
     kubectl,
     outputService,
+    pitfallService,
   }
 }

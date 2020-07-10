@@ -10,6 +10,7 @@ export default class Setup extends FMCCommand {
 
   public static flags = {
     ...FMCCommand.flags,
+    pitfall: Flags.boolean({ char: 'p' }),
     help: Flags.help({ char: 'h' }),
   }
 
@@ -25,11 +26,18 @@ export default class Setup extends FMCCommand {
   }
 
   public async run() {
-    const { uiService } = this.system
-    const { args } = this.parse(Setup)
+    const { uiService, configService } = this.system
+    const { args, flags } = this.parse(Setup)
+    const { pitfall } = flags
     const { url } = args
-    await this.system.configService.setSoilURL(url)
-    await this.system.configService.unsetDevspaceConfig()
-    uiService.info(`Formicarium is now pointing to ${url}`)
+
+    if (pitfall) {
+      await configService.setPitfallURL(url)
+      uiService.info(`Formicarium Pitfall is now configured to ${url}`)
+    } else {
+      await configService.setSoilURL(url)
+      await configService.unsetDevspaceConfig()
+      uiService.info(`Formicarium is now pointing to ${url}`)
+    }
   }
 }

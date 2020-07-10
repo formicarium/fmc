@@ -17,6 +17,7 @@ export interface IDevspaceConfig {
 
 export interface IConfigContent {
   soilUrl: string
+  pitfallUrl: string
   devspace: IDevspaceConfig
   kubectlBin: string
   curlHeaders: Map<string, string>
@@ -29,6 +30,7 @@ export interface IConfigService {
   setDevspaceConfig: (config: IDevspaceConfig) => Promise<void>
   unsetDevspaceConfig: () => Promise<void>
   setSoilURL: (uri: string) => Promise<void>
+  setPitfallURL: (uri: string) => Promise<void>
 }
 export class ConfigService implements IConfigService {
 
@@ -67,6 +69,14 @@ export class ConfigService implements IConfigService {
     await fs.writeJson(configFilePath, {
       ...currentConfig,
       devspace: {},
+    })
+  }
+
+  public setPitfallURL = async (uri: string): Promise<void> => {
+    const currentConfig = await this.readConfig()
+    await fs.writeJson(configFilePath, {
+      ...currentConfig,
+      pitfallUrl: uri,
     })
   }
 
