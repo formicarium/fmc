@@ -20,7 +20,7 @@
     "/lib"
   ],
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "child-process-promise": "^2.2.1",
     "fs-extra": "^6.0.1",
     "get-port": "^4.0.0",
